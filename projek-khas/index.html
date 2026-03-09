@@ -169,7 +169,7 @@
 <!-- JAVASCRIPT -->
 <script>
     // ========== DATA INOVASI (LENGKAP) ==========
-    window.inovasiData = [
+    const inovasiData = [
         {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
         {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 2",inventor:"Mecharattus",projek:"Mecharattus",kategori:"Inovasi Operasi Ladang",obj:"Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran"},
         {bil:3,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 1",inventor:"Ibms",projek:"Intergrated Bunch Monitoring Sistem (IBMS)",kategori:"Digital & Data",obj:"Mempercepatkan Proses Membuat Rumusan Bbc"},
@@ -210,7 +210,7 @@
 
     // ========== FUNGSI POPUP KATEGORI ==========
     function showKategoriPopup(kategori) {
-        const projekDalamKategori = window.inovasiData.filter(item => item.kategori === kategori);
+        const projekDalamKategori = inovasiData.filter(item => item.kategori === kategori);
         
         let listHTML = '<ul style="list-style: none; padding: 0; margin: 1rem 0; max-height: 300px; overflow-y: auto;">';
         projekDalamKategori.forEach(item => {
@@ -234,80 +234,6 @@
         document.getElementById('detailPopup').style.display = 'flex';
     }
 
-    // ========== KATEGORI STATS ==========
-    const kategoriCount = {
-        "Digital & Data": 0,
-        "Inovasi Operasi Ladang": 0,
-        "ESG & Kesejahteraan": 0,
-        "Kejuruteraan & Infrastruktur": 0
-    };
-    
-    window.inovasiData.forEach(item => {
-        if (kategoriCount.hasOwnProperty(item.kategori)) {
-            kategoriCount[item.kategori]++;
-        }
-    });
-
-    const kategoriContainer = document.getElementById('kategoriContainer');
-    if (kategoriContainer) {
-        let html = '';
-        for (const [kategori, count] of Object.entries(kategoriCount)) {
-            html += `
-                <div class="kategori-item" onclick="showKategoriPopup('${kategori}')" style="cursor: pointer;">
-                    <span class="kategori-name">${kategori}</span>
-                    <span class="kategori-count">${count}</span>
-                </div>
-            `;
-        }
-        kategoriContainer.innerHTML = html;
-        document.getElementById('totalProduk').innerText = window.inovasiData.length;
-    }
-
-    // ========== GRAF WILAYAH ==========
-    const wilayahCount = {
-        "Gua Musang":5, "Mempaga":5, "Johor Bahru":3, "Kuantan":10, "Segamat":2, 
-        "Alor Setar":6, "Raja Alias":2, "Trolak":1, "Terengganu":2, "Jengka":0
-    };
-    
-    const ctx = document.getElementById('wilayahChart')?.getContext('2d');
-    if(ctx) {
-        new Chart(ctx, {
-            type:'bar',
-            data: {
-                labels: Object.keys(wilayahCount),
-                datasets: [{
-                    data: Object.values(wilayahCount),
-                    backgroundColor:'#00bcd4',
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { 
-                    y: { beginAtZero: true, grid: { color:'#1f4a5c' }, ticks: { color:'#b0d4e0' } },
-                    x: { ticks: { color:'#c4dde8', maxRotation: 45 } } 
-                }
-            }
-        });
-    }
-
-    // ========== SLIDER AUTO ==========
-    const sliderImg = document.getElementById('sliderImage');
-    const posters = [
-        "https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Inovasi+1",
-        "https://via.placeholder.com/600x400/103f4c/4dd0e1?text=Poster+Inovasi+2",
-        "https://via.placeholder.com/600x400/1a4b5e/80deea?text=Poster+Inovasi+3",
-        "https://via.placeholder.com/600x400/0b4555/00bcd4?text=Poster+Inovasi+4",
-        "https://via.placeholder.com/600x400/134f60/4dd0e1?text=Poster+Inovasi+5"
-    ];
-    let idx = 0;
-    setInterval(() => {
-        idx = (idx+1) % posters.length;
-        if(sliderImg) sliderImg.src = posters[idx];
-    }, 2000);
-
     // ========== POPUP FUNCTIONS ==========
     function closePopup() { 
         document.getElementById('reminderPopup').style.display = 'none'; 
@@ -317,10 +243,97 @@
         document.getElementById('detailPopup').style.display = 'none';
     }
 
-    // Expose functions to global scope
+    // ========== KATEGORI STATS ==========
+    function renderKategoriStats() {
+        const kategoriCount = {
+            "Digital & Data": 0,
+            "Inovasi Operasi Ladang": 0,
+            "ESG & Kesejahteraan": 0,
+            "Kejuruteraan & Infrastruktur": 0
+        };
+        
+        inovasiData.forEach(item => {
+            if (kategoriCount.hasOwnProperty(item.kategori)) {
+                kategoriCount[item.kategori]++;
+            }
+        });
+
+        const kategoriContainer = document.getElementById('kategoriContainer');
+        if (kategoriContainer) {
+            let html = '';
+            for (const [kategori, count] of Object.entries(kategoriCount)) {
+                html += `
+                    <div class="kategori-item" onclick="showKategoriPopup('${kategori}')">
+                        <span class="kategori-name">${kategori}</span>
+                        <span class="kategori-count">${count}</span>
+                    </div>
+                `;
+            }
+            kategoriContainer.innerHTML = html;
+            document.getElementById('totalProduk').innerText = inovasiData.length;
+        }
+    }
+
+    // ========== GRAF WILAYAH ==========
+    function renderWilayahChart() {
+        const wilayahCount = {
+            "Gua Musang":5, "Mempaga":5, "Johor Bahru":3, "Kuantan":10, "Segamat":2, 
+            "Alor Setar":6, "Raja Alias":2, "Trolak":1, "Terengganu":2, "Jengka":0
+        };
+        
+        const ctx = document.getElementById('wilayahChart')?.getContext('2d');
+        if(ctx) {
+            new Chart(ctx, {
+                type:'bar',
+                data: {
+                    labels: Object.keys(wilayahCount),
+                    datasets: [{
+                        data: Object.values(wilayahCount),
+                        backgroundColor:'#00bcd4',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        y: { beginAtZero: true, grid: { color:'#1f4a5c' }, ticks: { color:'#b0d4e0' } },
+                        x: { ticks: { color:'#c4dde8', maxRotation: 45 } } 
+                    }
+                }
+            });
+        }
+    }
+
+    // ========== SLIDER AUTO ==========
+    function initSlider() {
+        const sliderImg = document.getElementById('sliderImage');
+        const posters = [
+            "https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Inovasi+1",
+            "https://via.placeholder.com/600x400/103f4c/4dd0e1?text=Poster+Inovasi+2",
+            "https://via.placeholder.com/600x400/1a4b5e/80deea?text=Poster+Inovasi+3",
+            "https://via.placeholder.com/600x400/0b4555/00bcd4?text=Poster+Inovasi+4",
+            "https://via.placeholder.com/600x400/134f60/4dd0e1?text=Poster+Inovasi+5"
+        ];
+        let idx = 0;
+        setInterval(() => {
+            idx = (idx+1) % posters.length;
+            if(sliderImg) sliderImg.src = posters[idx];
+        }, 2000);
+    }
+
+    // ========== INITIALIZE SEMUA ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        renderKategoriStats();
+        renderWilayahChart();
+        initSlider();
+    });
+
+    // Expose functions to global scope (untuk onclick)
+    window.showKategoriPopup = showKategoriPopup;
     window.closePopup = closePopup;
     window.closeDetailPopup = closeDetailPopup;
-    window.showKategoriPopup = showKategoriPopup;
 </script>
 </body>
 </html>
