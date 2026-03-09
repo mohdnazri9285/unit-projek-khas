@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Budget Tracker · Unit Projek Khas</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles for budget tracker */
+        .stats-badge {
+            background: #0c2635;
+            border-radius: 60px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid #1b5e7a;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .stat-label {
+            color: var(--cyan);
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-lulus {
+            background: rgba(0, 200, 100, 0.2);
+            color: #00c864;
+            border: 1px solid #00c864;
+        }
+        
+        .status-proses {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
+        .status-ditolak {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+            border: 1px solid #ff4444;
+        }
+        
+        .amount {
+            font-weight: 700;
+            color: var(--cyan);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="logo-area">
+            <img class="logo-img" src="image/logo-fpm.png" alt="Logo" onerror="this.src='https://via.placeholder.com/48x48/00bcd4/ffffff?text=UPK';">
+            <span class="title-unit">UNIT PROJEK KHAS</span>
+        </div>
+        <div class="nav-tabs">
+            <a href="index.html"><button class="nav-btn"><i class="fas fa-home"></i> HOME</button></a>
+            <a href="inovasi.html"><button class="nav-btn"><i class="fas fa-flask"></i> PRODUK INOVASI</button></a>
+            <a href="paten.html"><button class="nav-btn"><i class="fas fa-crown"></i> PRODUK PATEN</button></a>
+            <a href="sop.html"><button class="nav-btn"><i class="fas fa-file-alt"></i> SOP & BORANG</button></a>
+            <a href="coe.html"><button class="nav-btn"><i class="fas fa-star"></i> COE</button></a>
+            <a href="budget.html"><button class="nav-btn active"><i class="fas fa-coins"></i> BUDGET</button></a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-coins"></i> BUDGET TRACKER INOVASI 2024-2026</div>
+            
+            <!-- Stats Overview -->
+            <div class="stats-badge">
+                <div class="stat-item">
+                    <i class="fas fa-wallet" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Total Bajet</div>
+                        <div class="stat-value" id="totalBudget">RM 0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-check-circle" style="color: #00c864; font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Lulus</div>
+                        <div class="stat-value" id="totalLulus">0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock" style="color: #ffa500; font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Diproses</div>
+                        <div class="stat-value" id="totalProses">0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-times-circle" style="color: #ff4444; font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Ditolak</div>
+                        <div class="stat-value" id="totalDitolak">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filter-row">
+                <select id="wilayahFilter" class="filter-select" style="flex: 1;">
+                    <option value="SEMUA">Semua Wilayah</option>
+                </select>
+                
+                <select id="statusFilter" class="filter-select" style="flex: 1;">
+                    <option value="SEMUA">Semua Status</option>
+                    <option value="Lulus">✅ Lulus</option>
+                    <option value="Dalam Proses">⏳ Dalam Proses</option>
+                    <option value="Tidak Berjaya">❌ Tidak Berjaya</option>
+                </select>
+                
+                <button class="filter-reset" onclick="resetFilters()"><i class="fas fa-undo-alt"></i> Reset</button>
+            </div>
+            
+            <!-- Table -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bil</th>
+                            <th>Wilayah</th>
+                            <th>Nama Projek</th>
+                            <th>Nilai (RM)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="budgetTableBody">
+                        <!-- JS will populate -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 3</span>
+                <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer>
+        <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
+    </footer>
+</div>
+
+<script>
+    // Data inovasi dari sistem lama (36 projek)
+    const inovasiData = [
+        {wilayah:"Gua Musang", projek:"Manpower Rekod (Mpr)"},
+        {wilayah:"Gua Musang", projek:"Mecharattus"},
+        {wilayah:"Gua Musang", projek:"Intergrated Bunch Monitoring Sistem (IBMS)"},
+        {wilayah:"Gua Musang", projek:"Efuel Tracer"},
+        {wilayah:"Gua Musang", projek:"Elaeis Root"},
+        {wilayah:"Mempaga", projek:"Magnetobucket"},
+        {wilayah:"Mempaga", projek:"Klau Cross Water"},
+        {wilayah:"Mempaga", projek:"Predanest-klau"},
+        {wilayah:"Mempaga", projek:"Rodentxklau (Smart Rat Trap Box)"},
+        {wilayah:"Mempaga", projek:"E-checkroll"},
+        {wilayah:"Johor Bahru", projek:"Pluvio Data Sense (Pds)"},
+        {wilayah:"Johor Bahru", projek:"Tunggal Piezometer"},
+        {wilayah:"Johor Bahru", projek:"Wira Soil Lestari"},
+        {wilayah:"Kuantan", projek:"Finger-kit Note"},
+        {wilayah:"Kuantan", projek:"Jumbo Informer"},
+        {wilayah:"Kuantan", projek:"Agromeasure Pro"},
+        {wilayah:"Kuantan", projek:"Bailey Bridge"},
+        {wilayah:"Kuantan", projek:"Mud Grip"},
+        {wilayah:"Kuantan", projek:"Spy Cam Bbc"},
+        {wilayah:"Kuantan", projek:"Ryg Platform Counting"},
+        {wilayah:"Kuantan", projek:"Agro Bait Box Cencus (Abc)"},
+        {wilayah:"Kuantan", projek:"Agro Water Level"},
+        {wilayah:"Kuantan", projek:"Smart Water System Mini (Swsm)"},
+        {wilayah:"Segamat", projek:"Rootex (Root Extraction Tool)"},
+        {wilayah:"Segamat", projek:"Eogs (Eco Owl Guard System)"},
+        {wilayah:"Alor Setar", projek:"2-stroke"},
+        {wilayah:"Alor Setar", projek:"Smart Terrace Tool"},
+        {wilayah:"Alor Setar", projek:"Sharp Shooter Seed (3s)"},
+        {wilayah:"Alor Setar", projek:"E-perolehan"},
+        {wilayah:"Alor Setar", projek:"E-quit"},
+        {wilayah:"Alor Setar", projek:"E-mandor"},
+        {wilayah:"Raja Alias", projek:"Fertilizer Box"},
+        {wilayah:"Raja Alias", projek:"Escalator Loose Friut Collector (ELFC)"},
+        {wilayah:"Trolak", projek:"1 Document Centre Wilayah Trolak (1dct)"},
+        {wilayah:"Terengganu", projek:"E-trespasser Alert V2"},
+        {wilayah:"Terengganu", projek:"Tank Fertilizer (Ft)"}
+    ];
+
+    // Generate budget data with random amounts and status
+    function generateBudgetData() {
+        return inovasiData.map((item, index) => {
+            // Random amount between 5,000 and 65,000
+            const amount = Math.floor(Math.random() * (65000 - 5000 + 1)) + 5000;
+            
+            // Random status with weighted distribution
+            const rand = Math.random();
+            let status;
+            if (rand < 0.4) status = "Lulus";
+            else if (rand < 0.75) status = "Dalam Proses";
+            else status = "Tidak Berjaya";
+            
+            return {
+                bil: index + 1,
+                wilayah: item.wilayah,
+                projek: item.projek,
+                amount: amount,
+                status: status
+            };
+        });
+    }
+
+    let budgetData = generateBudgetData();
+    let currentPage = 1;
+    const rowsPerPage = 15;
+    let filteredData = [...budgetData];
+
+    // Populate wilayah filter
+    function populateWilayahFilter() {
+        const wilayahSet = new Set(budgetData.map(item => item.wilayah));
+        const sortedWilayah = Array.from(wilayahSet).sort();
+        const filterSelect = document.getElementById('wilayahFilter');
+        
+        sortedWilayah.forEach(wilayah => {
+            const option = document.createElement('option');
+            option.value = wilayah;
+            option.textContent = wilayah;
+            filterSelect.appendChild(option);
+        });
+    }
+
+    // Update stats
+    function updateStats(data) {
+        const total = data.reduce((sum, item) => sum + item.amount, 0);
+        const lulus = data.filter(item => item.status === "Lulus").length;
+        const proses = data.filter(item => item.status === "Dalam Proses").length;
+        const ditolak = data.filter(item => item.status === "Tidak Berjaya").length;
+        
+        document.getElementById('totalBudget').textContent = 'RM ' + total.toLocaleString('ms-MY');
+        document.getElementById('totalLulus').textContent = lulus;
+        document.getElementById('totalProses').textContent = proses;
+        document.getElementById('totalDitolak').textContent = ditolak;
+    }
+
+    // Render table
+    function renderTable() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const pageData = filteredData.slice(start, end);
+        
+        const tbody = document.getElementById('budgetTableBody');
+        tbody.innerHTML = pageData.map(item => {
+            let statusClass, statusIcon, statusText;
+            
+            if (item.status === "Lulus") {
+                statusClass = "status-lulus";
+                statusIcon = "✅";
+                statusText = "Lulus";
+            } else if (item.status === "Dalam Proses") {
+                statusClass = "status-proses";
+                statusIcon = "⏳";
+                statusText = "Diproses";
+            } else {
+                statusClass = "status-ditolak";
+                statusIcon = "❌";
+                statusText = "Ditolak";
+            }
+            
+            return `
+                <tr>
+                    <td>${item.bil}</td>
+                    <td>${item.wilayah}</td>
+                    <td>${item.projek}</td>
+                    <td class="amount">RM ${item.amount.toLocaleString('ms-MY')}</td>
+                    <td><span class="status-badge ${statusClass}">${statusIcon} ${statusText}</span></td>
+                </tr>
+            `;
+        }).join('');
+        
+        // Update pagination
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+        
+        // Update stats
+        updateStats(filteredData);
+    }
+
+    // Change page
+    window.changePage = function(direction) {
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        currentPage += direction;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderTable();
+    };
+
+    // Apply filters
+    function applyFilters() {
+        const wilayah = document.getElementById('wilayahFilter').value;
+        const status = document.getElementById('statusFilter').value;
+        
+        filteredData = budgetData.filter(item => {
+            const matchWilayah = wilayah === "SEMUA" || item.wilayah === wilayah;
+            const matchStatus = status === "SEMUA" || item.status === status;
+            return matchWilayah && matchStatus;
+        });
+        
+        currentPage = 1;
+        renderTable();
+    }
+
+    // Reset filters
+    window.resetFilters = function() {
+        document.getElementById('wilayahFilter').value = "SEMUA";
+        document.getElementById('statusFilter').value = "SEMUA";
+        filteredData = [...budgetData];
+        currentPage = 1;
+        renderTable();
+    };
+
+    // Event listeners
+    document.getElementById('wilayahFilter').addEventListener('change', applyFilters);
+    document.getElementById('statusFilter').addEventListener('change', applyFilters);
+
+    // Initialize
+    populateWilayahFilter();
+    renderTable();
+</script>
+</body>
+</html>
