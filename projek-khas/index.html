@@ -12,6 +12,27 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles for kategori popup */
+        #detailPopupContent ul::-webkit-scrollbar {
+            width: 4px;
+        }
+        #detailPopupContent ul::-webkit-scrollbar-track {
+            background: #1a2833;
+        }
+        #detailPopupContent ul::-webkit-scrollbar-thumb {
+            background: var(--cyan);
+            border-radius: 10px;
+        }
+        .kategori-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .kategori-item:hover {
+            transform: translateX(5px);
+            background: #1f4a5a;
+        }
+    </style>
 </head>
 <body>
 <div class="app-wrapper">
@@ -49,7 +70,7 @@
         </div>
     </div>
 
-    <!-- POPUP DETAIL PRODUK -->
+    <!-- POPUP DETAIL PRODUK (Digunakan untuk popup kategori) -->
     <div id="detailPopup" class="popup-overlay" style="display: none;">
         <div class="popup-card popup-detail" id="detailPopupContent">
             <!-- Akan diisi JavaScript -->
@@ -69,7 +90,7 @@
                 <div class="kategori-stats">
                     <div style="display: flex; gap: 8px; margin-bottom: 1rem; color: var(--cyan);">
                         <i class="fas fa-tags"></i>
-                        <span>INOVASI MENGIKUT KATEGORI</span>
+                        <span>INOVASI MENGIKUT KATEGORI (klik untuk lihat senarai)</span>
                     </div>
                     <div class="kategori-grid" id="kategoriContainer"></div>
                     <div class="kategori-total" style="text-align: right; margin-top: 1rem; color: var(--cyan);">
@@ -96,7 +117,7 @@
                     <li class="info-item"><i class="fas fa-calendar-alt"></i> SCREENING & PITCHING PRODUK INOVASI: 16 MAC 2026, IBU PEJABAT FPMSB</li>
                 </ul>
             </div>
-
+            
             <!-- CARTA ORGANISASI DENGAN EMAIL -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-sitemap"></i> CARTA ORGANISASI UNIT PROJEK KHAS</div>
@@ -110,7 +131,7 @@
                     <div class="org-row" style="justify-content: center;">
                         <div class="org-card" style="max-width: 300px;"><i class="fas fa-user-cog"></i><div><div class="org-name">Penyelaras Projek Khas</div></div></div>
                     </div>
-
+                    
                     <!-- 10 penyelaras -->
                     <div class="org-row">
                         <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Harizal Bin Baharudin</div><div class="org-wilayah">FPMSB Wilayah Mempaga</div><div class="org-email">harizal.b@felda.net.my</div></div></div>
@@ -132,13 +153,13 @@
                         <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Zulhairi Bin Zakaria</div><div class="org-wilayah">FPMSB Wilayah Terengganu</div><div class="org-email">zulhairi.z@felda.net.my</div></div></div>
                         <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Asrul Bin Shofhai</div><div class="org-wilayah">FPMSB Wilayah Segamat</div><div class="org-email">asrul.s@felda.net.my</div></div></div>
                     </div>
-
+                    
                     <p style="text-align:center; color:var(--cyan); margin-top:10px;">10 Penyelaras Inovasi Wilayah</p>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!-- FOOTER -->
     <footer>
         <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
@@ -147,7 +168,7 @@
 
 <!-- JAVASCRIPT -->
 <script>
-    // Data inovasi (global)
+    // ========== DATA INOVASI (LENGKAP) ==========
     window.inovasiData = [
         {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
         {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 2",inventor:"Mecharattus",projek:"Mecharattus",kategori:"Inovasi Operasi Ladang",obj:"Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran"},
@@ -187,14 +208,40 @@
         {bil:36,wilayah:"Terengganu",rancangan:"Fpmsb Kerteh 5",inventor:"Tank Fertilizer (Ft)",projek:"Tank Fertilizer (Ft)",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Pembaziran Baja - Mempercepat Proses Pengagihan Baja - Mengurangkan Risiko Tumpahan Baja - Meningkatkan Produktiviti Pembajaan"}
     ];
 
-    // KATEGORI STATS
+    // ========== FUNGSI POPUP KATEGORI ==========
+    function showKategoriPopup(kategori) {
+        const projekDalamKategori = window.inovasiData.filter(item => item.kategori === kategori);
+        
+        let listHTML = '<ul style="list-style: none; padding: 0; margin: 1rem 0; max-height: 300px; overflow-y: auto;">';
+        projekDalamKategori.forEach(item => {
+            listHTML += `<li style="padding: 0.5rem 0; border-bottom: 1px solid #1c5568; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-flask" style="color: var(--cyan); font-size: 0.8rem;"></i>
+                <span>${item.projek}</span>
+            </li>`;
+        });
+        listHTML += '</ul>';
+        
+        const popup = document.getElementById('detailPopupContent');
+        popup.innerHTML = `
+            <button class="popup-close" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i></button>
+            <h3><i class="fas fa-tags" style="color: var(--cyan);"></i> ${kategori} (${projekDalamKategori.length} projek)</h3>
+            ${listHTML}
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <button class="btn-primary" onclick="closeDetailPopup()">Tutup</button>
+            </div>
+        `;
+        
+        document.getElementById('detailPopup').style.display = 'flex';
+    }
+
+    // ========== KATEGORI STATS ==========
     const kategoriCount = {
         "Digital & Data": 0,
         "Inovasi Operasi Ladang": 0,
         "ESG & Kesejahteraan": 0,
         "Kejuruteraan & Infrastruktur": 0
     };
-
+    
     window.inovasiData.forEach(item => {
         if (kategoriCount.hasOwnProperty(item.kategori)) {
             kategoriCount[item.kategori]++;
@@ -206,7 +253,7 @@
         let html = '';
         for (const [kategori, count] of Object.entries(kategoriCount)) {
             html += `
-                <div class="kategori-item">
+                <div class="kategori-item" onclick="showKategoriPopup('${kategori}')" style="cursor: pointer;">
                     <span class="kategori-name">${kategori}</span>
                     <span class="kategori-count">${count}</span>
                 </div>
@@ -216,12 +263,12 @@
         document.getElementById('totalProduk').innerText = window.inovasiData.length;
     }
 
-    // GRAF WILAYAH
+    // ========== GRAF WILAYAH ==========
     const wilayahCount = {
-        "Gua Musang":5, "Mempaga":5, "Johor Bahru":3, "Kuantan":10, "Segamat":2,
+        "Gua Musang":5, "Mempaga":5, "Johor Bahru":3, "Kuantan":10, "Segamat":2, 
         "Alor Setar":6, "Raja Alias":2, "Trolak":1, "Terengganu":2, "Jengka":0
     };
-
+    
     const ctx = document.getElementById('wilayahChart')?.getContext('2d');
     if(ctx) {
         new Chart(ctx, {
@@ -238,15 +285,15 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
-                scales: {
+                scales: { 
                     y: { beginAtZero: true, grid: { color:'#1f4a5c' }, ticks: { color:'#b0d4e0' } },
-                    x: { ticks: { color:'#c4dde8', maxRotation: 45 } }
+                    x: { ticks: { color:'#c4dde8', maxRotation: 45 } } 
                 }
             }
         });
     }
 
-    // SLIDER AUTO
+    // ========== SLIDER AUTO ==========
     const sliderImg = document.getElementById('sliderImage');
     const posters = [
         "https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Inovasi+1",
@@ -261,63 +308,19 @@
         if(sliderImg) sliderImg.src = posters[idx];
     }, 2000);
 
-    // POPUP FUNCTIONS
-    function closePopup() {
-        document.getElementById('reminderPopup').style.display = 'none';
+    // ========== POPUP FUNCTIONS ==========
+    function closePopup() { 
+        document.getElementById('reminderPopup').style.display = 'none'; 
     }
 
-    window.showDetailPopup = function(bil) {
-        const item = window.inovasiData.find(i => i.bil === bil);
-        if (!item) return;
-
-        const popup = document.getElementById('detailPopupContent');
-        popup.innerHTML = `
-            <button class="popup-close" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i></button>
-            <h3><i class="fas fa-flask" style="color: var(--cyan);"></i> ${item.projek}</h3>
-
-            <div class="detail-row">
-                <div class="detail-label">Wilayah</div>
-                <div class="detail-value">${item.wilayah}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Bil</div>
-                <div class="detail-value">${item.bil}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Kategori</div>
-                <div class="detail-value">${item.kategori}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Inventor</div>
-                <div class="detail-value">${item.inventor}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Rancangan</div>
-                <div class="detail-value">${item.rancangan}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Objektif & Matlamat</div>
-                <div class="detail-value">${item.obj}</div>
-            </div>
-
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <button class="btn-primary" onclick="closeDetailPopup()">Tutup</button>
-            </div>
-        `;
-
-        document.getElementById('detailPopup').style.display = 'flex';
-    };
-
-    window.closeDetailPopup = function() {
+    function closeDetailPopup() {
         document.getElementById('detailPopup').style.display = 'none';
-    };
+    }
 
+    // Expose functions to global scope
     window.closePopup = closePopup;
+    window.closeDetailPopup = closeDetailPopup;
+    window.showKategoriPopup = showKategoriPopup;
 </script>
 </body>
-
 </html>
-
-
-
-
