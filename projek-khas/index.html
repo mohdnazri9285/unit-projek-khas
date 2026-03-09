@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Home · Unit Projek Khas</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-wrapper">
+    <!-- Navigation - HOME active -->
+    <div class="navbar">
+        <div class="logo-area">
+            <img class="logo-img" src="images/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/48x48/00bcd4/ffffff?text=UPK';">
+            <span class="title-unit">UNIT PROJEK KHAS</span>
+        </div>
+        <div class="nav-tabs">
+            <a href="index.html"><button class="nav-btn active"><i class="fas fa-home"></i> HOME</button></a>
+            <a href="inovasi.html"><button class="nav-btn"><i class="fas fa-flask"></i> PRODUK INOVASI</button></a>
+            <a href="paten.html"><button class="nav-btn"><i class="fas fa-crown"></i> PRODUK PATEN</button></a>
+            <a href="sop.html"><button class="nav-btn"><i class="fas fa-file-alt"></i> SOP & BORANG</button></a>
+            <a href="coe.html"><button class="nav-btn"><i class="fas fa-star"></i> COE</button></a>
+        </div>
+    </div>
+
+    <!-- POPUP REMINDER -->
+    <div id="reminderPopup" class="popup-overlay" style="display: flex;">
+        <div class="popup-card">
+            <button class="popup-close" onclick="closePopup()"><i class="fas fa-times-circle"></i></button>
+            <h2 style="color: var(--cyan); margin-bottom: 1rem;"><i class="fas fa-exclamation-triangle"></i> PERINGATAN!</h2>
+            <div class="popup-message">
+                <p><strong>PERMOHONAN BAJET INOVASI Q1</strong></p>
+                <p><strong>DITUTUP PADA</strong></p>
+                <div class="deadline">31 MAC 2026</div>
+                <div style="background: #08212b; padding: 0.8rem; border-radius: 40px; border: 1px dashed var(--cyan);">
+                    <i class="fas fa-envelope"></i> email ke: lurahbilut.ftp@felda.net.my
+                </div>
+                <p style="margin-top: 1rem;">ATAU hantar kepada Penyelaras Inovasi Wilayah</p>
+            </div>
+            <button class="btn-primary" onclick="closePopup()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- POPUP DETAIL PRODUK -->
+    <div id="detailPopup" class="popup-overlay" style="display: none;">
+        <div class="popup-card popup-detail" id="detailPopupContent">
+            <!-- Akan diisi JavaScript -->
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <!-- PAGE HOME -->
+        <div class="grid-2" style="margin-bottom: 2rem;">
+            <!-- GRAF + KATEGORI -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-bar"></i> INOVASI 2026 MENGIKUT WILAYAH</div>
+                <div class="chart-container">
+                    <canvas id="wilayahChart" style="width:100%; height:240px;"></canvas>
+                </div>
+                <div class="kategori-stats">
+                    <div style="display: flex; gap: 8px; margin-bottom: 1rem; color: var(--cyan);">
+                        <i class="fas fa-tags"></i>
+                        <span>INOVASI MENGIKUT KATEGORI</span>
+                    </div>
+                    <div class="kategori-grid" id="kategoriContainer"></div>
+                    <div class="kategori-total" style="text-align: right; margin-top: 1rem; color: var(--cyan);">
+                        Jumlah: <span id="totalProduk">36</span> produk
+                    </div>
+                </div>
+            </div>
+            <!-- SLIDER GALERI -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-images"></i> GALERI POSTER</div>
+                <div class="slider-container" id="posterSlider">
+                    <img id="sliderImage" class="slider-img" src="https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Inovasi" alt="poster">
+                    <div class="slider-overlay" id="sliderCaption">Galeri Inovasi</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFO + CARTA ORGANISASI -->
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-bullhorn"></i> INFORMASI TERKINI</div>
+                <ul class="info-list">
+                    <li class="info-item"><i class="fas fa-check-circle"></i> PERMOHONAN INOVASI TELAH DIBUKA SEHINGGA 31 MAC 2026</li>
+                    <li class="info-item"><i class="fas fa-calendar-alt"></i> SCREENING & PITCHING PRODUK INOVASI: 16 MAC 2026, IBU PEJABAT FPMSB</li>
+                </ul>
+            </div>
+
+            <!-- CARTA ORGANISASI DENGAN EMAIL -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-sitemap"></i> CARTA ORGANISASI UNIT PROJEK KHAS</div>
+                <div class="org-tree">
+                    <div class="org-row" style="justify-content: center;">
+                        <div class="org-card" style="max-width: 300px;"><i class="fas fa-user-tie"></i><div><div class="org-name">Ketua Pembangunan Strategik</div></div></div>
+                    </div>
+                    <div class="org-row" style="justify-content: center;">
+                        <div class="org-card" style="max-width: 300px;"><i class="fas fa-user-tie"></i><div><div class="org-name">Ketua Unit Projek Khas</div></div></div>
+                    </div>
+                    <div class="org-row" style="justify-content: center;">
+                        <div class="org-card" style="max-width: 300px;"><i class="fas fa-user-cog"></i><div><div class="org-name">Penyelaras Projek Khas</div></div></div>
+                    </div>
+
+                    <!-- 10 penyelaras -->
+                    <div class="org-row">
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Harizal Bin Baharudin</div><div class="org-wilayah">FPMSB Wilayah Mempaga</div><div class="org-email">harizal.b@felda.net.my</div></div></div>
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Sharunizam Bin Othman</div><div class="org-wilayah">FPMSB Wilayah Trolak</div><div class="org-email">sharunizam.o@felda.net.my</div></div></div>
+                    </div>
+                    <div class="org-row">
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Mohd Hairi Bin Azizan</div><div class="org-wilayah">FPMSB Wilayah Jengka</div><div class="org-email">hairi.a@felda.net.my</div></div></div>
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Mohd Nor Azmin</div><div class="org-wilayah">FPMSB Wilayah Raja Alias</div><div class="org-email">azmin.aa@felda.net.my</div></div></div>
+                    </div>
+                    <div class="org-row">
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Muhammad Azri</div><div class="org-wilayah">FPMSB Wilayah Kuantan</div><div class="org-email">azri.suleiman@felda.net.my</div></div></div>
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Mohd Hafizullah</div><div class="org-wilayah">FPMSB Wilayah Alor Setar</div><div class="org-email">hafizullah.aa@felda.net.my</div></div></div>
+                    </div>
+                    <div class="org-row">
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Rahmat Bin Yunus</div><div class="org-wilayah">FPMSB Wilayah Gua Musang</div><div class="org-email">rahmat.y@felda.net.my</div></div></div>
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En Taufik Bin Abdullah</div><div class="org-wilayah">FPMSB Wilayah Johor Bahru</div><div class="org-email">taufik.a@felda.net.my</div></div></div>
+                    </div>
+                    <div class="org-row">
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Zulhairi Bin Zakaria</div><div class="org-wilayah">FPMSB Wilayah Terengganu</div><div class="org-email">zulhairi.z@felda.net.my</div></div></div>
+                        <div class="org-card"><i class="fas fa-user-check"></i><div class="org-details"><div class="org-name">En. Asrul Bin Shofhai</div><div class="org-wilayah">FPMSB Wilayah Segamat</div><div class="org-email">asrul.s@felda.net.my</div></div></div>
+                    </div>
+
+                    <p style="text-align:center; color:var(--cyan); margin-top:10px;">10 Penyelaras Inovasi Wilayah</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
+    </footer>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+    // Data inovasi (global)
+    window.inovasiData = [
+        {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
+        {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 2",inventor:"Mecharattus",projek:"Mecharattus",kategori:"Inovasi Operasi Ladang",obj:"Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran"},
+        {bil:3,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 1",inventor:"Ibms",projek:"Intergrated Bunch Monitoring Sistem (IBMS)",kategori:"Digital & Data",obj:"Mempercepatkan Proses Membuat Rumusan Bbc"},
+        {bil:4,wilayah:"Gua Musang",rancangan:"Fpmsb Chiku 5",inventor:"Efuel Tracer",projek:"Efuel Tracer",kategori:"Digital & Data",obj:"Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko"},
+        {bil:5,wilayah:"Gua Musang",rancangan:"Fpmsb Chiku 6",inventor:"Elaeis Root",projek:"Elaeis Root",kategori:"ESG & Kesejahteraan",obj:"Penggunaan Sisa Industri (Fiber Sawit) - Mengawal Kelembapan Tanah. - Penjagaan Rumpai. - Penghasilan Produk Biodegradasi / Lestari - Penjimatan Kos Kawalan Rumpai."},
+        {bil:6,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Magnetobucket",projek:"Magnetobucket",kategori:"Inovasi Operasi Ladang",obj:"Membantu Memudahkan Kerja - Kerja Mengutip Dan Mengasingkan Biji Relai Di Lorong Tuai & Di Platform - Meminimumkan Kotoran/5ampah Daripada Turut Dikutip Ber5ama Biji Relai Melalui Sistem Penapisan - Dapat Membantu Mengurangkan Vops Di Setiap Bulatan Pokok"},
+        {bil:7,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Klau Cross Water",projek:"Klau Cross Water",kategori:"Inovasi Operasi Ladang",obj:"Merupakan 1 Sistem Penghadang Air (Water Barrier) - Menangani Masalah Tebing Kolam Pecah Secara Pantas - Mencegah Hakisan Tanah Yang Lebih Serius - Meminimumkan Pembaziran Sumber Air - Menyediakan Penyelesaian 'Fast Response'"},
+        {bil:8,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Predanest-klau",projek:"Predanest-klau",kategori:"ESG & Kesejahteraan",obj:"Menyediakan Rumah Selamat Dan Mudah Penyelenggaraan Untuk Burung Pungguk Di Kawasan Ladang - Menggalakan Burung Pungguk Menjadi Predator Semula Jadi Bagi Mengawal Populasi Tikus - Meningkatkan Ekosistem Ladang Yang Seimbang Dan Mesra Alam"},
+        {bil:9,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Rodentxklau",projek:"Rodentxklau (Smart Rat Trap Box)",kategori:"Inovasi Operasi Ladang",obj:"Mengoptimumkan Kos Kawalan Perosak Jangka Masa Panjang - Mengurangkan Populasi Tikus Di Kawasan Ladang Secara Sistematik & Berkesan - Reka Bentuk Yang Tidak Memerlukan Kekerapan Dalam Pengunaan Kos Penyelenggaraan - Reka Bentuk Dilengkapi Septik Tank Bagi Memudahkan Proses Penguraian Semula Bangkai Tikus"},
+        {bil:10,wilayah:"Mempaga",rancangan:"Fpmsb Lurah Bilut",inventor:"E-checkroll",projek:"E-checkroll",kategori:"Digital & Data",obj:"Alternatif Kepada Buku Pocket Checroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll"},
+        {bil:11,wilayah:"Johor Bahru",rancangan:"Fpmsb Gugusan Tenggaroh",inventor:"Pluvio Data Sense",projek:"Pluvio Data Sense (Pds)",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik"},
+        {bil:12,wilayah:"Johor Bahru",rancangan:"Fpmsb Johor Bahru",inventor:"Tunggal Piezometer",projek:"Tunggal Piezometer",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan Memantau Paras Air Dalam Tanah"},
+        {bil:13,wilayah:"Johor Bahru",rancangan:"Gugusan Air Tawar",inventor:"Wira Soil Lestari",projek:"Wira Soil Lestari",kategori:"Digital & Data",obj:"Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah"},
+        {bil:14,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Finger-kit Note",projek:"Finger-kit Note",kategori:"ESG & Kesejahteraan",obj:"Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat."},
+        {bil:15,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Jumbo Informer",projek:"Jumbo Informer",kategori:"ESG & Kesejahteraan",obj:"A. Mengesan Kehadiran Gajah Liar Lebih Awal Dikawasan Sempadan Ladang, B. Menghantar Amaran Segera Kepada Pengurusan Ladang, C. Mengurangkan Kerosakan Pokok Sawit Akibat Serangan Gajah, 50-80% Kerosakan Tanaman Dalam Tempoh 1 Tahun, D. Meningkatkan Keselamatan Pekerja, Peneroka Dan Orang Ramai Di Ladang Dan Kawasan Kampung, E. Menyokong Usaha Mitigasi Konflik Manusia Hidupan Liar Selaras Dengan Garis Panduan Jabatan Perlindungan Hidupan Liar Dan Taman Negara."},
+        {bil:16,wilayah:"Kuantan",rancangan:"Bukit Kuantan/Sg. Panching Timur",inventor:"Agromeasure Pro",projek:"Agromeasure Pro",kategori:"Inovasi Operasi Ladang",obj:"A. Membangunkan Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang. B. Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang. C. Mengurangkan Ralat Ukuran Manual Dan Pergantungan Kepada Anggaran Visual"},
+        {bil:17,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Bailey Bridge",projek:"Bailey Bridge",kategori:"Kejuruteraan & Infrastruktur",obj:"Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang"},
+        {bil:18,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Mud Grip",projek:"Mud Grip",kategori:"Inovasi Operasi Ladang",obj:"Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan"},
+        {bil:19,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Spy Cam Bbc",projek:"Spy Cam Bbc",kategori:"Digital & Data",obj:"Bertujuan Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit Melalui Penggunaan Kamera Endoscope Dan Kecerdasan Buatan (AI)"},
+        {bil:20,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Ryg Platform Counting",projek:"Ryg Platform Counting",kategori:"Inovasi Operasi Ladang",obj:"Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit."},
+        {bil:21,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Agro Bait Box Cencus",projek:"Agro Bait Box Cencus (Abc)",kategori:"ESG & Kesejahteraan",obj:"Ia Dapat Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang"},
+        {bil:22,wilayah:"Kuantan",rancangan:"Fpmsb Agropolitan Tg. Batu",inventor:"Agro Water Level",projek:"Agro Water Level",kategori:"Inovasi Operasi Ladang",obj:"Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang"},
+        {bil:23,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Smart Water System Mini",projek:"Smart Water System Mini (Swsm)",kategori:"Inovasi Operasi Ladang",obj:"Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon"},
+        {bil:24,wilayah:"Segamat",rancangan:"Fpmsb Maokil 1",inventor:"Rootex",projek:"Rootex (Root Extraction Tool)",kategori:"Inovasi Operasi Ladang",obj:"Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai - Pertanian Hijau Lestari"},
+        {bil:25,wilayah:"Segamat",rancangan:"Fpmsb Medoi",inventor:"Eogs",projek:"Eogs (Eco Owl Guard System)",kategori:"ESG & Kesejahteraan",obj:"Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang."},
+        {bil:26,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"2-stroke",projek:"2-stroke",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Ablation Dijalankan - Mengelakkan Pokok Daripada Cedera"},
+        {bil:27,wilayah:"Alor Setar",rancangan:"Fpmsb Teloi Kanan",inventor:"Smart Terrace Tool",projek:"Smart Terrace Tool",kategori:"Inovasi Operasi Ladang",obj:"Menentukan Jarak Kecuraman Teres Dengan Lebih Tepat - Dapat Menentukan Lebar Teres Mengikut Ukuran Yang Ditetapkan"},
+        {bil:28,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"Sharp Shooter Seed",projek:"Sharp Shooter Seed (3s)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Proses Penanaman Kpb. - Dapat Mengurangkan Kuantiti Pekerja Penanaman Kpb"},
+        {bil:29,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-perolehan",projek:"E-perolehan",kategori:"Digital & Data",obj:"Memastikan Proses Pengurusan Dokumen Berjalan Lancar"},
+        {bil:30,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-quit",projek:"E-quit",kategori:"Digital & Data",obj:"Memastikan Kualiti Btb Dihantar Ke Kilang 100% Baik - Memastikan Tiada Masalah Backlog Di Ladang"},
+        {bil:31,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-mandor",projek:"E-mandor",kategori:"Digital & Data",obj:"Data Yang Tepat Dan Cepat Diterima Dari Mandor Ladang Kepada Pengurusan"},
+        {bil:32,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"Fertilizer Box",projek:"Fertilizer Box",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual"},
+        {bil:33,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"ELFC",projek:"Escalator Loose Friut Collector (ELFC)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori"},
+        {bil:34,wilayah:"Trolak",rancangan:"Zon Trolak / Zon Hulu Perak",inventor:"1dct",projek:"1 Document Centre Wilayah Trolak (1dct)",kategori:"Digital & Data",obj:"Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan"},
+        {bil:35,wilayah:"Terengganu",rancangan:"Fpmsb Bukit Bading",inventor:"E-trespasser Alert V2",projek:"E-trespasser Alert V2",kategori:"Digital & Data",obj:"Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda"},
+        {bil:36,wilayah:"Terengganu",rancangan:"Fpmsb Kerteh 5",inventor:"Tank Fertilizer (Ft)",projek:"Tank Fertilizer (Ft)",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Pembaziran Baja - Mempercepat Proses Pengagihan Baja - Mengurangkan Risiko Tumpahan Baja - Meningkatkan Produktiviti Pembajaan"}
+    ];
+
+    // KATEGORI STATS
+    const kategoriCount = {
+        "Digital & Data": 0,
+        "Inovasi Operasi Ladang": 0,
+        "ESG & Kesejahteraan": 0,
+        "Kejuruteraan & Infrastruktur": 0
+    };
+
+    window.inovasiData.forEach(item => {
+        if (kategoriCount.hasOwnProperty(item.kategori)) {
+            kategoriCount[item.kategori]++;
+        }
+    });
+
+    const kategoriContainer = document.getElementById('kategoriContainer');
+    if (kategoriContainer) {
+        let html = '';
+        for (const [kategori, count] of Object.entries(kategoriCount)) {
+            html += `
+                <div class="kategori-item">
+                    <span class="kategori-name">${kategori}</span>
+                    <span class="kategori-count">${count}</span>
+                </div>
+            `;
+        }
+        kategoriContainer.innerHTML = html;
+        document.getElementById('totalProduk').innerText = window.inovasiData.length;
+    }
+
+    // GRAF WILAYAH
+    const wilayahCount = {
+        "Gua Musang":5, "Mempaga":5, "Johor Bahru":3, "Kuantan":10, "Segamat":2,
+        "Alor Setar":6, "Raja Alias":2, "Trolak":1, "Terengganu":2, "Jengka":0
+    };
+
+    const ctx = document.getElementById('wilayahChart')?.getContext('2d');
+    if(ctx) {
+        new Chart(ctx, {
+            type:'bar',
+            data: {
+                labels: Object.keys(wilayahCount),
+                datasets: [{
+                    data: Object.values(wilayahCount),
+                    backgroundColor:'#00bcd4',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color:'#1f4a5c' }, ticks: { color:'#b0d4e0' } },
+                    x: { ticks: { color:'#c4dde8', maxRotation: 45 } }
+                }
+            }
+        });
+    }
+
+    // SLIDER AUTO
+    const sliderImg = document.getElementById('sliderImage');
+    const posters = [
+        "https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Inovasi+1",
+        "https://via.placeholder.com/600x400/103f4c/4dd0e1?text=Poster+Inovasi+2",
+        "https://via.placeholder.com/600x400/1a4b5e/80deea?text=Poster+Inovasi+3",
+        "https://via.placeholder.com/600x400/0b4555/00bcd4?text=Poster+Inovasi+4",
+        "https://via.placeholder.com/600x400/134f60/4dd0e1?text=Poster+Inovasi+5"
+    ];
+    let idx = 0;
+    setInterval(() => {
+        idx = (idx+1) % posters.length;
+        if(sliderImg) sliderImg.src = posters[idx];
+    }, 2000);
+
+    // POPUP FUNCTIONS
+    function closePopup() {
+        document.getElementById('reminderPopup').style.display = 'none';
+    }
+
+    window.showDetailPopup = function(bil) {
+        const item = window.inovasiData.find(i => i.bil === bil);
+        if (!item) return;
+
+        const popup = document.getElementById('detailPopupContent');
+        popup.innerHTML = `
+            <button class="popup-close" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i></button>
+            <h3><i class="fas fa-flask" style="color: var(--cyan);"></i> ${item.projek}</h3>
+
+            <div class="detail-row">
+                <div class="detail-label">Wilayah</div>
+                <div class="detail-value">${item.wilayah}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Bil</div>
+                <div class="detail-value">${item.bil}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Kategori</div>
+                <div class="detail-value">${item.kategori}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Inventor</div>
+                <div class="detail-value">${item.inventor}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Rancangan</div>
+                <div class="detail-value">${item.rancangan}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Objektif & Matlamat</div>
+                <div class="detail-value">${item.obj}</div>
+            </div>
+
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <button class="btn-primary" onclick="closeDetailPopup()">Tutup</button>
+            </div>
+        `;
+
+        document.getElementById('detailPopup').style.display = 'flex';
+    };
+
+    window.closeDetailPopup = function() {
+        document.getElementById('detailPopup').style.display = 'none';
+    };
+
+    window.closePopup = closePopup;
+</script>
+</body>
+</html>
