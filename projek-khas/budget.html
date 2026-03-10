@@ -59,22 +59,10 @@
             gap: 0.5rem;
         }
         
-        .status-lulus {
-            background: rgba(0, 200, 100, 0.2);
-            color: #00c864;
-            border: 1px solid #00c864;
-        }
-        
         .status-proses {
             background: rgba(255, 165, 0, 0.2);
             color: #ffa500;
             border: 1px solid #ffa500;
-        }
-        
-        .status-ditolak {
-            background: rgba(255, 68, 68, 0.2);
-            color: #ff4444;
-            border: 1px solid #ff4444;
         }
         
         .amount {
@@ -87,6 +75,64 @@
             gap: 1rem;
             flex-wrap: wrap;
             margin-bottom: 1.5rem;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            background: #102531;
+            border-radius: 24px;
+            padding: 0.2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 800px;
+        }
+        
+        th {
+            background: #06313f;
+            color: var(--cyan);
+            padding: 1rem 0.8rem;
+            border-bottom: 3px solid var(--cyan);
+        }
+        
+        td {
+            padding: 1rem 0.8rem;
+            border-bottom: 1px solid #1d4b5e;
+        }
+        
+        tr:hover td {
+            background: #1b4050;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .pagination-btn {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .pagination-info {
+            color: white;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -111,36 +157,29 @@
     <!-- MAIN CONTENT -->
     <div class="main-container">
         <div class="card">
-            <div class="card-title"><i class="fas fa-coins"></i> BUDGET TRACKER INOVASI 2024-2026</div>
+            <div class="card-title"><i class="fas fa-coins"></i> BUDGET TRACKER INOVASI 2026</div>
             
             <!-- Stats Overview -->
             <div class="stats-badge">
                 <div class="stat-item">
                     <i class="fas fa-wallet" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
-                        <div class="stat-label">Total Bajet</div>
-                        <div class="stat-value" id="totalBudget">RM 0</div>
+                        <div class="stat-label">Total Permohonan</div>
+                        <div class="stat-value" id="totalPermohonan">0</div>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <i class="fas fa-check-circle" style="color: #00c864; font-size: 1.5rem;"></i>
+                    <i class="fas fa-coins" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
-                        <div class="stat-label">Lulus</div>
-                        <div class="stat-value" id="totalLulus">0</div>
+                        <div class="stat-label">Jumlah Bajet</div>
+                        <div class="stat-value" id="totalBudget">RM 0</div>
                     </div>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-clock" style="color: #ffa500; font-size: 1.5rem;"></i>
                     <div>
-                        <div class="stat-label">Diproses</div>
+                        <div class="stat-label">Dalam Proses</div>
                         <div class="stat-value" id="totalProses">0</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-times-circle" style="color: #ff4444; font-size: 1.5rem;"></i>
-                    <div>
-                        <div class="stat-label">Ditolak</div>
-                        <div class="stat-value" id="totalDitolak">0</div>
                     </div>
                 </div>
             </div>
@@ -149,13 +188,6 @@
             <div class="filter-row">
                 <select id="wilayahFilter" class="filter-select" style="flex: 1;">
                     <option value="SEMUA">Semua Wilayah</option>
-                </select>
-                
-                <select id="statusFilter" class="filter-select" style="flex: 1;">
-                    <option value="SEMUA">Semua Status</option>
-                    <option value="Lulus">✅ Lulus</option>
-                    <option value="Dalam Proses">⏳ Dalam Proses</option>
-                    <option value="Tidak Berjaya">❌ Tidak Berjaya</option>
                 </select>
                 
                 <button class="filter-reset" onclick="resetFilters()"><i class="fas fa-undo-alt"></i> Reset</button>
@@ -182,9 +214,13 @@
             <!-- Pagination -->
             <div class="pagination">
                 <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
-                <span class="pagination-info" id="pageInfo">Halaman 1 / 3</span>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 1</span>
                 <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
             </div>
+            
+            <p style="text-align: center; margin-top: 1rem; color: var(--cyan); font-size: 0.8rem;">
+                * Semua permohonan sedang dalam proses penilaian
+            </p>
         </div>
     </div>
     
@@ -195,77 +231,51 @@
 </div>
 
 <script>
-    // Data inovasi dari sistem lama (36 projek)
-    const inovasiData = [
-        {wilayah:"Gua Musang", projek:"Manpower Rekod (Mpr)"},
-        {wilayah:"Gua Musang", projek:"Mecharattus"},
-        {wilayah:"Gua Musang", projek:"Intergrated Bunch Monitoring Sistem (IBMS)"},
-        {wilayah:"Gua Musang", projek:"Efuel Tracer"},
-        {wilayah:"Gua Musang", projek:"Elaeis Root"},
-        {wilayah:"Mempaga", projek:"Magnetobucket"},
-        {wilayah:"Mempaga", projek:"Klau Cross Water"},
-        {wilayah:"Mempaga", projek:"Predanest-klau"},
-        {wilayah:"Mempaga", projek:"Rodentxklau (Smart Rat Trap Box)"},
-        {wilayah:"Mempaga", projek:"E-checkroll"},
-        {wilayah:"Johor Bahru", projek:"Pluvio Data Sense (Pds)"},
-        {wilayah:"Johor Bahru", projek:"Tunggal Piezometer"},
-        {wilayah:"Johor Bahru", projek:"Wira Soil Lestari"},
-        {wilayah:"Kuantan", projek:"Finger-kit Note"},
-        {wilayah:"Kuantan", projek:"Jumbo Informer"},
-        {wilayah:"Kuantan", projek:"Agromeasure Pro"},
-        {wilayah:"Kuantan", projek:"Bailey Bridge"},
-        {wilayah:"Kuantan", projek:"Mud Grip"},
-        {wilayah:"Kuantan", projek:"Spy Cam Bbc"},
-        {wilayah:"Kuantan", projek:"Ryg Platform Counting"},
-        {wilayah:"Kuantan", projek:"Agro Bait Box Cencus (Abc)"},
-        {wilayah:"Kuantan", projek:"Agro Water Level"},
-        {wilayah:"Kuantan", projek:"Smart Water System Mini (Swsm)"},
-        {wilayah:"Segamat", projek:"Rootex (Root Extraction Tool)"},
-        {wilayah:"Segamat", projek:"Eogs (Eco Owl Guard System)"},
-        {wilayah:"Alor Setar", projek:"2-stroke"},
-        {wilayah:"Alor Setar", projek:"Smart Terrace Tool"},
-        {wilayah:"Alor Setar", projek:"Sharp Shooter Seed (3s)"},
-        {wilayah:"Alor Setar", projek:"E-perolehan"},
-        {wilayah:"Alor Setar", projek:"E-quit"},
-        {wilayah:"Alor Setar", projek:"E-mandor"},
-        {wilayah:"Raja Alias", projek:"Fertilizer Box"},
-        {wilayah:"Raja Alias", projek:"Escalator Loose Friut Collector (ELFC)"},
-        {wilayah:"Trolak", projek:"1 Document Centre Wilayah Trolak (1dct)"},
-        {wilayah:"Terengganu", projek:"E-trespasser Alert V2"},
-        {wilayah:"Terengganu", projek:"Tank Fertilizer (Ft)"}
+    // ========== DATA PERMOHONAN (YANG ADA PERMOHONAN SAHAJA) ==========
+    const budgetData = [
+        { bil: 10, wilayah: "Mempaga", projek: "E-checkroll", amount: 1260 },
+        { bil: 11, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", amount: 7600 },
+        { bil: 12, wilayah: "Johor Bahru", projek: "Tunggal Piezometer", amount: 8200 },
+        { bil: 13, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", amount: 10400 },
+        { bil: 14, wilayah: "Kuantan", projek: "Finger-kit Note", amount: 1400 },
+        { bil: 15, wilayah: "Kuantan", projek: "Jumbo Informer", amount: 4000 },
+        { bil: 16, wilayah: "Kuantan", projek: "Agromeasure Pro", amount: 2200 },
+        { bil: 17, wilayah: "Kuantan", projek: "Bailey Bridge", amount: 5000 },
+        { bil: 18, wilayah: "Kuantan", projek: "Mud Grip", amount: 1000 },
+        { bil: 19, wilayah: "Kuantan", projek: "Spy Cam Bbc", amount: 4000 },
+        { bil: 20, wilayah: "Kuantan", projek: "Ryg Platform Counting", amount: 5000 },
+        { bil: 21, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", amount: 500 },
+        { bil: 22, wilayah: "Kuantan", projek: "Agro Water Level", amount: 2500 },
+        { bil: 23, wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", amount: 1500 },
+        { bil: 24, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", amount: 850 },
+        { bil: 25, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", amount: 96.16 },
+        { bil: 26, wilayah: "Segamat", projek: "ANIMO", amount: 15000 },
+        { bil: 27, wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", amount: 1200 },
+        { bil: 28, wilayah: "Segamat", projek: "E-HASIL", amount: 0 },
+        { bil: 29, wilayah: "Segamat", projek: "Roller Biji Relai", amount: 150 },
+        { bil: 30, wilayah: "Segamat", projek: "E-ATTENDANCE", amount: 110 },
+        { bil: 31, wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", amount: 2000 },
+        { bil: 32, wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", amount: 2500 },
+        { bil: 33, wilayah: "Segamat", projek: "CHECKING CHIPPING", amount: 10 },
+        { bil: 40, wilayah: "Raja Alias", projek: "Fertilizer Box", amount: 2000 },
+        { bil: 41, wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", amount: 4350 },
+        { bil: 44, wilayah: "Terengganu", projek: "E-trespasser Alert V2", amount: 3960 }
     ];
 
-    // Generate budget data with random amounts and status
-    function generateBudgetData() {
-        return inovasiData.map((item, index) => {
-            // Random amount between 5,000 and 65,000
-            const amount = Math.floor(Math.random() * (65000 - 5000 + 1)) + 5000;
-            
-            // Random status with weighted distribution
-            const rand = Math.random();
-            let status;
-            if (rand < 0.4) status = "Lulus";
-            else if (rand < 0.75) status = "Dalam Proses";
-            else status = "Tidak Berjaya";
-            
-            return {
-                bil: index + 1,
-                wilayah: item.wilayah,
-                projek: item.projek,
-                amount: amount,
-                status: status
-            };
-        });
-    }
+    // ========== TAMBAH STATUS "DALAM PROSES" ==========
+    const completeData = budgetData.map(item => ({
+        ...item,
+        status: "Dalam Proses"
+    }));
 
-    let budgetData = generateBudgetData();
+    // ========== PAGINATION VARIABLES ==========
     let currentPage = 1;
     const rowsPerPage = 15;
-    let filteredData = [...budgetData];
+    let filteredData = [...completeData];
 
-    // Populate wilayah filter
+    // ========== POPULATE WILAYAH FILTER ==========
     function populateWilayahFilter() {
-        const wilayahSet = new Set(budgetData.map(item => item.wilayah));
+        const wilayahSet = new Set(completeData.map(item => item.wilayah));
         const sortedWilayah = Array.from(wilayahSet).sort();
         const filterSelect = document.getElementById('wilayahFilter');
         
@@ -277,20 +287,18 @@
         });
     }
 
-    // Update stats
+    // ========== UPDATE STATS ==========
     function updateStats(data) {
-        const total = data.reduce((sum, item) => sum + item.amount, 0);
-        const lulus = data.filter(item => item.status === "Lulus").length;
-        const proses = data.filter(item => item.status === "Dalam Proses").length;
-        const ditolak = data.filter(item => item.status === "Tidak Berjaya").length;
+        const totalPermohonan = data.length;
+        const totalBudget = data.reduce((sum, item) => sum + item.amount, 0);
+        const totalProses = data.filter(item => item.status === "Dalam Proses").length;
         
-        document.getElementById('totalBudget').textContent = 'RM ' + total.toLocaleString('ms-MY');
-        document.getElementById('totalLulus').textContent = lulus;
-        document.getElementById('totalProses').textContent = proses;
-        document.getElementById('totalDitolak').textContent = ditolak;
+        document.getElementById('totalPermohonan').textContent = totalPermohonan;
+        document.getElementById('totalBudget').textContent = 'RM ' + totalBudget.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('totalProses').textContent = totalProses;
     }
 
-    // Render table
+    // ========== RENDER TABLE ==========
     function renderTable() {
         const start = (currentPage - 1) * rowsPerPage;
         const end = start + rowsPerPage;
@@ -298,29 +306,13 @@
         
         const tbody = document.getElementById('budgetTableBody');
         tbody.innerHTML = pageData.map(item => {
-            let statusClass, statusIcon, statusText;
-            
-            if (item.status === "Lulus") {
-                statusClass = "status-lulus";
-                statusIcon = "✅";
-                statusText = "Lulus";
-            } else if (item.status === "Dalam Proses") {
-                statusClass = "status-proses";
-                statusIcon = "⏳";
-                statusText = "Diproses";
-            } else {
-                statusClass = "status-ditolak";
-                statusIcon = "❌";
-                statusText = "Ditolak";
-            }
-            
             return `
                 <tr>
                     <td>${item.bil}</td>
                     <td>${item.wilayah}</td>
                     <td>${item.projek}</td>
-                    <td class="amount">RM ${item.amount.toLocaleString('ms-MY')}</td>
-                    <td><span class="status-badge ${statusClass}">${statusIcon} ${statusText}</span></td>
+                    <td class="amount">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td><span class="status-badge status-proses">⏳ Dalam Proses</span></td>
                 </tr>
             `;
         }).join('');
@@ -335,7 +327,7 @@
         updateStats(filteredData);
     }
 
-    // Change page
+    // ========== CHANGE PAGE ==========
     window.changePage = function(direction) {
         const totalPages = Math.ceil(filteredData.length / rowsPerPage);
         currentPage += direction;
@@ -344,35 +336,30 @@
         renderTable();
     };
 
-    // Apply filters
+    // ========== APPLY FILTERS ==========
     function applyFilters() {
         const wilayah = document.getElementById('wilayahFilter').value;
-        const status = document.getElementById('statusFilter').value;
         
-        filteredData = budgetData.filter(item => {
-            const matchWilayah = wilayah === "SEMUA" || item.wilayah === wilayah;
-            const matchStatus = status === "SEMUA" || item.status === status;
-            return matchWilayah && matchStatus;
-        });
+        filteredData = wilayah === "SEMUA" 
+            ? [...completeData] 
+            : completeData.filter(item => item.wilayah === wilayah);
         
         currentPage = 1;
         renderTable();
     }
 
-    // Reset filters
+    // ========== RESET FILTERS ==========
     window.resetFilters = function() {
         document.getElementById('wilayahFilter').value = "SEMUA";
-        document.getElementById('statusFilter').value = "SEMUA";
-        filteredData = [...budgetData];
+        filteredData = [...completeData];
         currentPage = 1;
         renderTable();
     };
 
-    // Event listeners
+    // ========== EVENT LISTENERS ==========
     document.getElementById('wilayahFilter').addEventListener('change', applyFilters);
-    document.getElementById('statusFilter').addEventListener('change', applyFilters);
 
-    // Initialize
+    // ========== INITIALIZE ==========
     populateWilayahFilter();
     renderTable();
 </script>
