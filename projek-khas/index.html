@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Favicon dalam folder image/ -->
+    <!-- Favicon dalam folder image/ -->
     <link rel="icon" type="image/x-icon" href="image/favicon.ico">
     <link rel="shortcut icon" href="image/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
@@ -103,16 +103,16 @@
                     </div>
                     <div class="kategori-grid" id="kategoriContainer"></div>
                     <div class="kategori-total" style="text-align: right; margin-top: 1rem; color: var(--cyan);">
-                        Jumlah: <span id="totalProduk">36</span> produk
+                        Jumlah: <span id="totalProduk">45</span> produk
                     </div>
                 </div>
             </div>
-            <!-- SLIDER GALERI -->
+            <!-- SLIDER GALERI dengan poster dari folder -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-images"></i> GALERI POSTER</div>
                 <div class="slider-container" id="posterSlider">
-                    <img id="sliderImage" class="slider-img" src="https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Inovasi" alt="poster">
-                    <div class="slider-overlay" id="sliderCaption">Galeri Inovasi</div>
+                    <img id="sliderImage" class="slider-img" src="image/poster/ADJUSTABLE HOOK_001.png" alt="poster" onerror="this.src='https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Tidak+Jumpa';">
+                    <div class="slider-overlay" id="sliderCaption">Adjustable Hook</div>
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
 
 <!-- JAVASCRIPT -->
 <script>
-    // ========== DATA INOVASI (LENGKAP) ==========
+    // ========== DATA INOVASI 2026 (45 produk dari inovasi.html) ==========
     const inovasiData = [
         {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
         {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 2",inventor:"Mecharattus",projek:"Mecharattus",kategori:"Inovasi Operasi Ladang",obj:"Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran"},
@@ -214,7 +214,16 @@
         {bil:33,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"ELFC",projek:"Escalator Loose Friut Collector (ELFC)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori"},
         {bil:34,wilayah:"Trolak",rancangan:"Zon Trolak / Zon Hulu Perak",inventor:"1dct",projek:"1 Document Centre Wilayah Trolak (1dct)",kategori:"Digital & Data",obj:"Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan"},
         {bil:35,wilayah:"Terengganu",rancangan:"Fpmsb Bukit Bading",inventor:"E-trespasser Alert V2",projek:"E-trespasser Alert V2",kategori:"Digital & Data",obj:"Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda"},
-        {bil:36,wilayah:"Terengganu",rancangan:"Fpmsb Kerteh 5",inventor:"Tank Fertilizer (Ft)",projek:"Tank Fertilizer (Ft)",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Pembaziran Baja - Mempercepat Proses Pengagihan Baja - Mengurangkan Risiko Tumpahan Baja - Meningkatkan Produktiviti Pembajaan"}
+        {bil:36,wilayah:"Terengganu",rancangan:"Fpmsb Kerteh 5",inventor:"Tank Fertilizer (Ft)",projek:"Tank Fertilizer (Ft)",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Pembaziran Baja - Mempercepat Proses Pengagihan Baja - Mengurangkan Risiko Tumpahan Baja - Meningkatkan Produktiviti Pembajaan"},
+        {bil:37,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"ANIMO",projek:"ANIMO",kategori:"Inovasi Operasi Ladang",obj:"Memberi Maklumat Awal Kemasukan Haiwan Liar"},
+        {bil:38,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"Sarang Burung Boleh Laras",projek:"Sarang Burung Boleh Laras",kategori:"ESG & Kesejahteraan",obj:"Memudahkan Kerja Bancian Dan Penjagaan"},
+        {bil:39,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"E-HASIL",projek:"E-HASIL",kategori:"Digital & Data",obj:"Pantas dan mudah untuk lihat hasil"},
+        {bil:40,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"Roller Biji Relai",projek:"Roller Biji Relai",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan kecekapan mengutip biji relai"},
+        {bil:41,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"E-ATTENDANCE",projek:"E-ATTENDANCE",kategori:"Digital & Data",obj:"Pengambilan Rekod Kehadiran Pekerja"},
+        {bil:42,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"PROTECTING HAVEST RUBBER TAPPING RAIN GUARD",projek:"PROTECTING HAVEST RUBBER TAPPING RAIN GUARD",kategori:"Inovasi Operasi Ladang",obj:"Rain Guard Untuk Perlindungan"},
+        {bil:43,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"SEREN PENGHALAU GAJAH",projek:"SEREN PENGHALAU GAJAH",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Kemasukan Gajah Ke Dalam Ladang"},
+        {bil:44,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"CHECKING CHIPPING",projek:"CHECKING CHIPPING",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Penyemakan Standard Chipping"},
+        {bil:45,wilayah:"Trolak",rancangan:"Fpmsb",inventor:"satu chamber",projek:"satu chamber",kategori:"Kejuruteraan & Infrastruktur",obj:"Alat pengukur sudut kecembungan jalan"}
     ];
 
     // ========== FUNGSI POPUP KATEGORI ==========
@@ -285,19 +294,26 @@
 
     // ========== GRAF WILAYAH ==========
     function renderWilayahChart() {
-        const wilayahCount = {
-            "Gua Musang":5, "Mempaga":5, "Johor Bahru":3, "Kuantan":10, "Segamat":2, 
-            "Alor Setar":6, "Raja Alias":2, "Trolak":1, "Terengganu":2, "Jengka":0
-        };
+        // Kira bilangan produk setiap wilayah dari data 2026
+        const wilayahCount = {};
+        inovasiData.forEach(item => {
+            wilayahCount[item.wilayah] = (wilayahCount[item.wilayah] || 0) + 1;
+        });
+        
+        // Pastikan semua 10 wilayah ada (guna 0 kalau tiada)
+        const semuaWilayah = ["Gua Musang", "Mempaga", "Johor Bahru", "Kuantan", "Segamat", 
+                             "Alor Setar", "Raja Alias", "Trolak", "Terengganu", "Jengka"];
+        
+        const counts = semuaWilayah.map(w => wilayahCount[w] || 0);
         
         const ctx = document.getElementById('wilayahChart')?.getContext('2d');
         if(ctx) {
             new Chart(ctx, {
                 type:'bar',
                 data: {
-                    labels: Object.keys(wilayahCount),
+                    labels: semuaWilayah,
                     datasets: [{
-                        data: Object.values(wilayahCount),
+                        data: counts,
                         backgroundColor:'#00bcd4',
                         borderRadius: 8
                     }]
@@ -315,21 +331,44 @@
         }
     }
 
-    // ========== SLIDER AUTO ==========
+    // ========== SLIDER AUTO dengan poster dari folder ==========
     function initSlider() {
         const sliderImg = document.getElementById('sliderImage');
+        const sliderCap = document.getElementById('sliderCaption');
+        
+        // Senarai poster dari folder image/poster/
         const posters = [
-            "https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Inovasi+1",
-            "https://via.placeholder.com/600x400/103f4c/4dd0e1?text=Poster+Inovasi+2",
-            "https://via.placeholder.com/600x400/1a4b5e/80deea?text=Poster+Inovasi+3",
-            "https://via.placeholder.com/600x400/0b4555/00bcd4?text=Poster+Inovasi+4",
-            "https://via.placeholder.com/600x400/134f60/4dd0e1?text=Poster+Inovasi+5"
+            { src: "image/poster/ADJUSTABLE HOOK_001.png", caption: "Adjustable Hook" },
+            { src: "image/poster/CATCH & CARRY_001.png", caption: "Catch & Carry" },
+            { src: "image/poster/GELONGSOR BTS_001.png", caption: "Gelongsor BTS" },
+            { src: "image/poster/JANTAN SPIKE_001.png", caption: "Jantan Spike" },
+            { src: "image/poster/KALKULATOR AR ASFRI_001.png", caption: "Kalkulator AR Asfri" },
+            { src: "image/poster/LAH_001.png", caption: "LAH Spreader" }
         ];
+        
         let idx = 0;
+        
+        // Set first image
+        if (sliderImg) {
+            sliderImg.src = posters[0].src;
+            sliderCap.innerText = posters[0].caption;
+        }
+        
+        // Rotate every 2 seconds
         setInterval(() => {
-            idx = (idx+1) % posters.length;
-            if(sliderImg) sliderImg.src = posters[idx];
+            idx = (idx + 1) % posters.length;
+            if (sliderImg) {
+                sliderImg.src = posters[idx].src;
+                sliderCap.innerText = posters[idx].caption;
+            }
         }, 2000);
+    }
+
+    // ========== POPUP REMINDER CONTROL ==========
+    // Muncul sekali setiap session
+    if (!sessionStorage.getItem('popupReminderShown')) {
+        document.getElementById('reminderPopup').style.display = 'flex';
+        sessionStorage.setItem('popupReminderShown', 'true');
     }
 
     // ========== INITIALIZE SEMUA ==========
@@ -346,4 +385,3 @@
 </script>
 </body>
 </html>
-
