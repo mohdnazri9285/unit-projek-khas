@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Favicon dalam folder image/ -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="image/favicon.ico">
     <link rel="shortcut icon" href="image/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-16x16.png">
-    <link rel="manifest" href="image/site.webmanifest">
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Produk Inovasi · Unit Projek Khas</title>
-    <!-- Font Awesome -->
+    
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+        .tahun-badge {
+            background: var(--cyan);
+            color: #0b141c;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
 <div class="app-wrapper">
@@ -39,39 +55,33 @@
 
     <!-- POPUP DETAIL PRODUK -->
     <div id="detailPopup" class="popup-overlay" style="display: none;">
-        <div class="popup-card popup-detail" id="detailPopupContent">
-            <!-- Akan diisi JavaScript -->
-        </div>
+        <div class="popup-card popup-detail" id="detailPopupContent"></div>
     </div>
 
     <!-- MAIN CONTENT -->
     <div class="main-container">
         <div class="card">
-            <div class="card-title"><i class="fas fa-flask"></i> SENARAI PRODUK INOVASI 2024-2026</div>
-
-            <!-- FILTER -->
-            <div class="filter-section">
-                <div class="filter-label"><i class="fas fa-filter"></i> Filter:</div>
-                <select id="wilayahFilter" class="filter-select" onchange="applyFilter()">
-                    <option value="SEMUA">SEMUA WILAYAH</option>
-                    <option value="Gua Musang">Gua Musang</option>
-                    <option value="Mempaga">Mempaga</option>
-                    <option value="Johor Bahru">Johor Bahru</option>
-                    <option value="Kuantan">Kuantan</option>
-                    <option value="Segamat">Segamat</option>
-                    <option value="Alor Setar">Alor Setar</option>
-                    <option value="Raja Alias">Raja Alias</option>
-                    <option value="Trolak">Trolak</option>
-                    <option value="Terengganu">Terengganu</option>
-                    <option value="Jengka">Jengka</option>
+            <div class="card-title"><i class="fas fa-flask"></i> SENARAI PRODUK INOVASI</div>
+            
+            <!-- FILTER TAHUN & WILAYAH -->
+            <div class="filter-row">
+                <select id="tahunFilter" class="filter-select" onchange="filterByTahun()">
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
                 </select>
-                <div class="filter-badge" id="filterCount">36 / 36</div>
+                
+                <select id="wilayahFilter" class="filter-select" onchange="applyFilter()">
+                    <option value="SEMUA">Semua Wilayah</option>
+                </select>
+                
+                <div class="filter-badge" id="filterCount">0 / 0</div>
                 <button class="filter-reset" onclick="resetFilter()"><i class="fas fa-undo-alt"></i> Reset</button>
             </div>
-
+            
             <!-- JADUAL -->
             <div class="table-responsive">
-                <table id="produkTable">
+                <table>
                     <thead>
                         <tr>
                             <th>Bil</th>
@@ -80,134 +90,174 @@
                             <th>Kategori</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody">
-                        <!-- JS akan isi -->
-                    </tbody>
+                    <tbody id="tableBody"></tbody>
                 </table>
             </div>
-
+            
             <!-- PAGINATION -->
             <div class="pagination">
                 <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
-                <span class="pagination-info" id="pageInfo">Halaman 1 / 3</span>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 1</span>
                 <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
             </div>
-
+            
             <p style="text-align: center; margin-top: 1rem; color: var(--cyan);">
                 <i class="fas fa-hand-pointer"></i> Klik pada baris untuk lihat detail
             </p>
         </div>
     </div>
-
+    
     <!-- FOOTER -->
     <footer>
         <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
     </footer>
 </div>
 
-<!-- JAVASCRIPT -->
 <script>
-    // Data inovasi (sama macam index.html)
-    window.inovasiData = [
-        {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
-        {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 2",inventor:"Mecharattus",projek:"Mecharattus",kategori:"Inovasi Operasi Ladang",obj:"Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran"},
-        {bil:3,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 1",inventor:"Ibms",projek:"Intergrated Bunch Monitoring Sistem (IBMS)",kategori:"Digital & Data",obj:"Mempercepatkan Proses Membuat Rumusan Bbc"},
-        {bil:4,wilayah:"Gua Musang",rancangan:"Fpmsb Chiku 5",inventor:"Efuel Tracer",projek:"Efuel Tracer",kategori:"Digital & Data",obj:"Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko"},
-        {bil:5,wilayah:"Gua Musang",rancangan:"Fpmsb Chiku 6",inventor:"Elaeis Root",projek:"Elaeis Root",kategori:"ESG & Kesejahteraan",obj:"Penggunaan Sisa Industri (Fiber Sawit) - Mengawal Kelembapan Tanah. - Penjagaan Rumpai. - Penghasilan Produk Biodegradasi / Lestari - Penjimatan Kos Kawalan Rumpai."},
-        {bil:6,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Magnetobucket",projek:"Magnetobucket",kategori:"Inovasi Operasi Ladang",obj:"Membantu Memudahkan Kerja - Kerja Mengutip Dan Mengasingkan Biji Relai Di Lorong Tuai & Di Platform - Meminimumkan Kotoran/5ampah Daripada Turut Dikutip Ber5ama Biji Relai Melalui Sistem Penapisan - Dapat Membantu Mengurangkan Vops Di Setiap Bulatan Pokok"},
-        {bil:7,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Klau Cross Water",projek:"Klau Cross Water",kategori:"Inovasi Operasi Ladang",obj:"Merupakan 1 Sistem Penghadang Air (Water Barrier) - Menangani Masalah Tebing Kolam Pecah Secara Pantas - Mencegah Hakisan Tanah Yang Lebih Serius - Meminimumkan Pembaziran Sumber Air - Menyediakan Penyelesaian 'Fast Response'"},
-        {bil:8,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Predanest-klau",projek:"Predanest-klau",kategori:"ESG & Kesejahteraan",obj:"Menyediakan Rumah Selamat Dan Mudah Penyelenggaraan Untuk Burung Pungguk Di Kawasan Ladang - Menggalakan Burung Pungguk Menjadi Predator Semula Jadi Bagi Mengawal Populasi Tikus - Meningkatkan Ekosistem Ladang Yang Seimbang Dan Mesra Alam"},
-        {bil:9,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Rodentxklau",projek:"Rodentxklau (Smart Rat Trap Box)",kategori:"Inovasi Operasi Ladang",obj:"Mengoptimumkan Kos Kawalan Perosak Jangka Masa Panjang - Mengurangkan Populasi Tikus Di Kawasan Ladang Secara Sistematik & Berkesan - Reka Bentuk Yang Tidak Memerlukan Kekerapan Dalam Pengunaan Kos Penyelenggaraan - Reka Bentuk Dilengkapi Septik Tank Bagi Memudahkan Proses Penguraian Semula Bangkai Tikus"},
-        {bil:10,wilayah:"Mempaga",rancangan:"Fpmsb Lurah Bilut",inventor:"E-checkroll",projek:"E-checkroll",kategori:"Digital & Data",obj:"Alternatif Kepada Buku Pocket Checroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll"},
-        {bil:11,wilayah:"Johor Bahru",rancangan:"Fpmsb Gugusan Tenggaroh",inventor:"Pluvio Data Sense",projek:"Pluvio Data Sense (Pds)",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik"},
-        {bil:12,wilayah:"Johor Bahru",rancangan:"Fpmsb Johor Bahru",inventor:"Tunggal Piezometer",projek:"Tunggal Piezometer",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan Memantau Paras Air Dalam Tanah"},
-        {bil:13,wilayah:"Johor Bahru",rancangan:"Gugusan Air Tawar",inventor:"Wira Soil Lestari",projek:"Wira Soil Lestari",kategori:"Digital & Data",obj:"Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah"},
-        {bil:14,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Finger-kit Note",projek:"Finger-kit Note",kategori:"ESG & Kesejahteraan",obj:"Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat."},
-        {bil:15,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Jumbo Informer",projek:"Jumbo Informer",kategori:"ESG & Kesejahteraan",obj:"A. Mengesan Kehadiran Gajah Liar Lebih Awal Dikawasan Sempadan Ladang, B. Menghantar Amaran Segera Kepada Pengurusan Ladang, C. Mengurangkan Kerosakan Pokok Sawit Akibat Serangan Gajah, 50-80% Kerosakan Tanaman Dalam Tempoh 1 Tahun, D. Meningkatkan Keselamatan Pekerja, Peneroka Dan Orang Ramai Di Ladang Dan Kawasan Kampung, E. Menyokong Usaha Mitigasi Konflik Manusia Hidupan Liar Selaras Dengan Garis Panduan Jabatan Perlindungan Hidupan Liar Dan Taman Negara."},
-        {bil:16,wilayah:"Kuantan",rancangan:"Bukit Kuantan/Sg. Panching Timur",inventor:"Agromeasure Pro",projek:"Agromeasure Pro",kategori:"Inovasi Operasi Ladang",obj:"A. Membangunkan Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang. B. Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang. C. Mengurangkan Ralat Ukuran Manual Dan Pergantungan Kepada Anggaran Visual"},
-        {bil:17,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Bailey Bridge",projek:"Bailey Bridge",kategori:"Kejuruteraan & Infrastruktur",obj:"Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang"},
-        {bil:18,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Mud Grip",projek:"Mud Grip",kategori:"Inovasi Operasi Ladang",obj:"Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan"},
-        {bil:19,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Spy Cam Bbc",projek:"Spy Cam Bbc",kategori:"Digital & Data",obj:"Bertujuan Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit Melalui Penggunaan Kamera Endoscope Dan Kecerdasan Buatan (AI)"},
-        {bil:20,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Ryg Platform Counting",projek:"Ryg Platform Counting",kategori:"Inovasi Operasi Ladang",obj:"Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit."},
-        {bil:21,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Agro Bait Box Cencus",projek:"Agro Bait Box Cencus (Abc)",kategori:"ESG & Kesejahteraan",obj:"Ia Dapat Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang"},
-        {bil:22,wilayah:"Kuantan",rancangan:"Fpmsb Agropolitan Tg. Batu",inventor:"Agro Water Level",projek:"Agro Water Level",kategori:"Inovasi Operasi Ladang",obj:"Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang"},
-        {bil:23,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Smart Water System Mini",projek:"Smart Water System Mini (Swsm)",kategori:"Inovasi Operasi Ladang",obj:"Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon"},
-        {bil:24,wilayah:"Segamat",rancangan:"Fpmsb Maokil 1",inventor:"Rootex",projek:"Rootex (Root Extraction Tool)",kategori:"Inovasi Operasi Ladang",obj:"Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai - Pertanian Hijau Lestari"},
-        {bil:25,wilayah:"Segamat",rancangan:"Fpmsb Medoi",inventor:"Eogs",projek:"Eogs (Eco Owl Guard System)",kategori:"ESG & Kesejahteraan",obj:"Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang."},
-        {bil:26,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"2-stroke",projek:"2-stroke",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Ablation Dijalankan - Mengelakkan Pokok Daripada Cedera"},
-        {bil:27,wilayah:"Alor Setar",rancangan:"Fpmsb Teloi Kanan",inventor:"Smart Terrace Tool",projek:"Smart Terrace Tool",kategori:"Inovasi Operasi Ladang",obj:"Menentukan Jarak Kecuraman Teres Dengan Lebih Tepat - Dapat Menentukan Lebar Teres Mengikut Ukuran Yang Ditetapkan"},
-        {bil:28,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"Sharp Shooter Seed",projek:"Sharp Shooter Seed (3s)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Proses Penanaman Kpb. - Dapat Mengurangkan Kuantiti Pekerja Penanaman Kpb"},
-        {bil:29,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-perolehan",projek:"E-perolehan",kategori:"Digital & Data",obj:"Memastikan Proses Pengurusan Dokumen Berjalan Lancar"},
-        {bil:30,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-quit",projek:"E-quit",kategori:"Digital & Data",obj:"Memastikan Kualiti Btb Dihantar Ke Kilang 100% Baik - Memastikan Tiada Masalah Backlog Di Ladang"},
-        {bil:31,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-mandor",projek:"E-mandor",kategori:"Digital & Data",obj:"Data Yang Tepat Dan Cepat Diterima Dari Mandor Ladang Kepada Pengurusan"},
-        {bil:32,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"Fertilizer Box",projek:"Fertilizer Box",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual"},
-        {bil:33,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"ELFC",projek:"Escalator Loose Friut Collector (ELFC)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori"},
-        {bil:34,wilayah:"Trolak",rancangan:"Zon Trolak / Zon Hulu Perak",inventor:"1dct",projek:"1 Document Centre Wilayah Trolak (1dct)",kategori:"Digital & Data",obj:"Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan"},
-        {bil:35,wilayah:"Terengganu",rancangan:"Fpmsb Bukit Bading",inventor:"E-trespasser Alert V2",projek:"E-trespasser Alert V2",kategori:"Digital & Data",obj:"Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda"},
-        {bil:36,wilayah:"Terengganu",rancangan:"Fpmsb Kerteh 5",inventor:"Tank Fertilizer (Ft)",projek:"Tank Fertilizer (Ft)",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Pembaziran Baja - Mempercepat Proses Pengagihan Baja - Mengurangkan Risiko Tumpahan Baja - Meningkatkan Produktiviti Pembajaan"}
-    ];
+    // ========== DATA 2024 (43 produk) ==========
+    const inovasi2024 = [
+        { wilayah: "Mempaga", projek: "Ek Releaer 2000", kategori: "Inovasi Operasi Ladang", obj: "Mempercepatkan Proses Penyebaran Kumbang E.k" },
+        { wilayah: "Mempaga", projek: "Pests Alarm Solar", kategori: "ESG & Kesejahteraan", obj: "Mengurangkan Gangguan Oleh Haiwan Perosak Di Kawasan Ladang" },
+        { wilayah: "Mempaga", projek: "Ram Pump", kategori: "Inovasi Operasi Ladang", obj: "Mengalirkan Alir Daripada Kawasan Rendah Ke Kawasan Tinggi" },
+        { wilayah: "Mempaga", projek: "Pest Alarm Solar", kategori: "ESG & Kesejahteraan", obj: "Kawalan Musuh" },
+        { wilayah: "Mempaga", projek: "Hatch And Carry", kategori: "Inovasi Operasi Ladang", obj: "Pembiakan Kumbang Ek" },
+        { wilayah: "Mempaga", projek: "Catch And Carry", kategori: "Inovasi Operasi Ladang", obj: "Pembiakan Kumbang Ek" },
+        { wilayah: "Mempaga", projek: "Water Vision", kategori: "Inovasi Operasi Ladang", obj: "Mengalirkan Alir Daripada Kawasan Rendah Ke Kawasan Tinggi" },
+        { wilayah: "Mempaga", projek: "Gelongsor Bts", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Pengeluaran Hasil Di Kawasan Bukit" },
+        { wilayah: "Mempaga", projek: "Pam Baja Nursery", kategori: "Inovasi Operasi Ladang", obj: "" },
+        { wilayah: "Jengka", projek: "Spreader Mudah Alih", kategori: "Inovasi Operasi Ladang", obj: "" },
+        { wilayah: "Jengka", projek: "Pecungkil Anak Sawit", kategori: "Inovasi Operasi Ladang", obj: "" },
+        { wilayah: "Jengka", projek: "Jantan Spike", kategori: "Inovasi Operasi Ladang", obj: "" },
+        { wilayah: "Jengka", projek: "Cattle Trap Murah", kategori: "Kejuruteraan & Infrastruktur", obj: "" },
+        { wilayah: "Jengka", projek: "Jambatan Mudah Alih", kategori: "Kejuruteraan & Infrastruktur", obj: "" },
+        { wilayah: "Jengka", projek: "Rumah Kerengge", kategori: "ESG & Kesejahteraan", obj: "" },
+        { wilayah: "Jengka", projek: "Ek Atap Nipah", kategori: "Inovasi Operasi Ladang", obj: "" },
+        { wilayah: "Jengka", projek: "Nerek Auto Gate", kategori: "Kejuruteraan & Infrastruktur", obj: "Mengurangkan Kos Pembinaan Cattle Trap Dan Mengelakkan Kemasukan Haiwan Perosak Ke Kawasan Pembangunan" },
+        { wilayah: "Jengka", projek: "Nerek Solar Water Supply", kategori: "Inovasi Operasi Ladang", obj: "Membekalakan Air Yang Mengcukupi Bagi Setiap Pokok Sawit Di Kawasan Berbukit" },
+        { wilayah: "Kuantan", projek: "Altimeter", kategori: "Digital & Data", obj: "" },
+        { wilayah: "Kuantan", projek: "Ir Asfri", kategori: "Digital & Data", obj: "" },
+        { wilayah: "Kuantan", projek: "Lcc+ Drone", kategori: "Digital & Data", obj: "" },
+        { wilayah: "Kuantan", projek: "Traffic Light", kategori: "Kejuruteraan & Infrastruktur", obj: "" },
+        { wilayah: "Kuantan", projek: "Bukit Kuantan Sabit Ablation 'Sentak'", kategori: "Inovasi Operasi Ladang", obj: "Mempercepatkan Pertumbuhan Pokok" },
+        { wilayah: "Kuantan", projek: "Cik - Ct 01 Keratong 6", kategori: "ESG & Kesejahteraan", obj: "Toll Untuk Bancian Sebelum Dan Selepas Taburan Butik" },
+        { wilayah: "Kuantan", projek: "Rat C Selancar 4/5", kategori: "ESG & Kesejahteraan", obj: "Sebagai Alatan Bancian Sebelum Dan Selepas Program Penaburan Butik" },
+        { wilayah: "Kuantan", projek: "Ant - T Selancar 4/5", kategori: "ESG & Kesejahteraan", obj: "Untuk Mencegah Ulat Pemakan Daun" },
+        { wilayah: "Terengganu", projek: "Adjustable Pole", kategori: "Inovasi Operasi Ladang", obj: "Untuk Melancarkan Dan Memudahkan Operasi Kerja Penuaian Dan Prunning Di Ladang" },
+        { wilayah: "Terengganu", projek: "Qr My Blok", kategori: "Digital & Data", obj: "Memberi Dan Memudahkan Maklumat Asas Blok Ladang Secara Digital" },
+        { wilayah: "Terengganu", projek: "Gps Tracker Spreader", kategori: "Digital & Data", obj: "Merekod Dan Memantau Operasi Pembajaan Di Ladang Dengan Effisen" },
+        { wilayah: "Gua Musang", projek: "Pam Air Solar - Chiku 5", kategori: "Inovasi Operasi Ladang", obj: "Membekalkan Air Ke Pokok Sawit Di Ladang" },
+        { wilayah: "Gua Musang", projek: "Penckar Pelepah - Kemahang 3", kategori: "Inovasi Operasi Ladang", obj: "Menarik Pelepah Kering Yang Berselerak Di Ladang" },
+        { wilayah: "Johor Bahru", projek: "App Sheet Bunch Counter", kategori: "Digital & Data", obj: "Merekod Dan Memantau Operasi Penuaian Di Ladang Dengan Effisen" },
+        { wilayah: "Johor Bahru", projek: "Land Irrigation", kategori: "Inovasi Operasi Ladang", obj: "Sumber Nutrien Tambahan Dan Gap Dalam Penambahan Kelembapat Untuk Pokok Sawit" },
+        { wilayah: "Segamat", projek: "Mesin Pengisi Anah Polibag Tapak Semaian", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Produktiviti Isian Polibag" },
+        { wilayah: "Trolak", projek: "Gelongsor Bts", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Pengumpulan Bts Yang Dituai" },
+        { wilayah: "Trolak", projek: "Jalan Pintar (Jalan Pasir Dan Tayar)", kategori: "Kejuruteraan & Infrastruktur", obj: "Minimakan Kos Pembaikan Jalan Yang Rosak" },
+        { wilayah: "Trolak", projek: "Adjustable Hook - Fpmsb Soeharto", kategori: "Inovasi Operasi Ladang", obj: "Memastikan Bilangan Pelepah Yang Optimum" },
+        { wilayah: "Trolak", projek: "Besout Digital Census", kategori: "Digital & Data", obj: "Meningkatkan Keberkesanan Bancian Upd" },
+        { wilayah: "Alor Setar", projek: "Penggera Pir Suria - Teloi Timur", kategori: "ESG & Kesejahteraan", obj: "Kawalan Serangan Musuh Tanaman" },
+        { wilayah: "Alor Setar", projek: "Irrigation Solar - Teloi Timur/chuping 2", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Tahap Kelembapan Tanah" },
+        { wilayah: "Raja Alias", projek: "Elevating Belt Converyor (Fldr4 Lift Loader)", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Produktiviti & Mengurangkan Keperluan Pekerja Membaja" },
+        { wilayah: "Raja Alias", projek: "Rain Water Catcment System", kategori: "Inovasi Operasi Ladang", obj: "Mengumpul Lebihan Air Dari Jalan Dan Mengalirkan Ke Teres Pit & Pokok" },
+        { wilayah: "Raja Alias", projek: "Lightweight Applicator Handheld (Lah) Spreader", kategori: "Inovasi Operasi Ladang", obj: "Spreader Pembajaan Bersaiz Mini" }
+    ].map((item, index) => ({ bil: index + 1, ...item }));
 
-    // PAGINATION
+    // ========== DATA 2025 (20 produk) ==========
+    const inovasi2025 = [
+        { wilayah: "Mempaga", projek: "Catch & Carry V2", kategori: "Inovasi Operasi Ladang", obj: "Mengembangkan Populasi Kumbang Pendebungaan" },
+        { wilayah: "Mempaga", projek: "Smart Legume Operation (Slop)", kategori: "Inovasi Operasi Ladang", obj: "Alat Tanaman Kacang" },
+        { wilayah: "Mempaga", projek: "Solar Automatic Gate", kategori: "Kejuruteraan & Infrastruktur", obj: "Menggantikan Pintu Pagar Manual" },
+        { wilayah: "Kuantan", projek: "Kotak Sarang Burung Hantu Bergerak", kategori: "ESG & Kesejahteraan", obj: "Merekabentuk Sarang Burung Hantu Yang Boleh Dipindahkan" },
+        { wilayah: "Kuantan", projek: "X-trans", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Pindahan Benih Atau Pokok" },
+        { wilayah: "Terengganu", projek: "Loose Fruit Collector", kategori: "Inovasi Operasi Ladang", obj: "Kutipan Biji Lerai Yang Lebih Efisin" },
+        { wilayah: "Terengganu", projek: "Fertiliser Tank", kategori: "Inovasi Operasi Ladang", obj: "Elakan Pembaziran Baja Semasa Beg Baja Dibuka" },
+        { wilayah: "Gua Musang", projek: "Smart Bunch Marker", kategori: "Digital & Data", obj: "Kawalan Dan Pemantauan Hasil" },
+        { wilayah: "Gua Musang", projek: "E-bbc", kategori: "Digital & Data", obj: "Memudahkan Dan Maklumat Dapat Di Perolehi Dengan Cepat" },
+        { wilayah: "Segamat", projek: "Driller Machine", kategori: "Inovasi Operasi Ladang", obj: "Pasang Dan Guna, Boleh Digunakan 2 Dalam 1" },
+        { wilayah: "Segamat", projek: "Perangkap @ Tadahan Kabus (Fog's Catcher)", kategori: "Inovasi Operasi Ladang", obj: "Mengatasi Masalah Defisit Air" },
+        { wilayah: "Segamat", projek: "Lenga Smartcode", kategori: "Digital & Data", obj: "Pemantauan Secara Cross Check Dikawasan Tuai Yang Bermasalah" },
+        { wilayah: "Segamat", projek: "Maokil Bunch Marker", kategori: "Digital & Data", obj: "Menggantikan Penggunaan Cop Tandan" },
+        { wilayah: "Segamat", projek: "Siren Gajah", kategori: "ESG & Kesejahteraan", obj: "Sebagai Alternatif Bagi Mengalau Gajah" },
+        { wilayah: "Segamat", projek: "Up Smartcode Attendence", kategori: "Digital & Data", obj: "Rekod Kehadiran Pekerja Secara Digital" },
+        { wilayah: "Alor Setar", projek: "Sharp Shooter Seed (3s)", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Proses Penanaman Kpb" },
+        { wilayah: "Alor Setar", projek: "Adjustable Rail", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Produktivi Serta Menjaga Keselamatan Pekerja" },
+        { wilayah: "Alor Setar", projek: "Troli Portable", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Mengutip Scrub" },
+        { wilayah: "Alor Setar", projek: "Smart Terrace Tools", kategori: "Inovasi Operasi Ladang", obj: "Menentukan Jarak Kecuraman Teres Dengan Lebih Tepat" },
+        { wilayah: "Alor Setar", projek: "Hidroelektrik", kategori: "Kejuruteraan & Infrastruktur", obj: "Menjana Tenaga Elektrik Dari Sumber Air" }
+    ].map((item, index) => ({ bil: index + 1, ...item }));
+
+    // ========== DATA 2026 (45 produk) ==========
+    const inovasi2026 = [
+        { wilayah: "Gua Musang", projek: "Manpower Rekod (Mpr)", kategori: "Digital & Data", obj: "Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional Kepada Ekosistem Digital" },
+        { wilayah: "Gua Musang", projek: "Mecharattus", kategori: "Inovasi Operasi Ladang", obj: "Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran" },
+        { wilayah: "Gua Musang", projek: "Intergrated Bunch Monitoring Sistem (Ibms)", kategori: "Digital & Data", obj: "Mempercepatkan Proses Membuat Rumusan Bbc" },
+        { wilayah: "Gua Musang", projek: "Efuel Tracer", kategori: "Digital & Data", obj: "Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko" },
+        { wilayah: "Gua Musang", projek: "Elaeis Root", kategori: "ESG & Kesejahteraan", obj: "Penggunaan Sisa Industri (Fiber Sawit) Untuk Kawalan Rumpai" },
+        { wilayah: "Mempaga", projek: "Magnetobucket", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Mengutip Dan Mengasingkan Biji Relai" },
+        { wilayah: "Mempaga", projek: "Klau Cross Water", kategori: "Inovasi Operasi Ladang", obj: "Sistem Penghadang Air (Water Barrier) Untuk Tebing Kolam Pecah" },
+        { wilayah: "Mempaga", projek: "Predanest-klau", kategori: "ESG & Kesejahteraan", obj: "Rumah Selamat Untuk Burung Pungguk Kawal Tikus" },
+        { wilayah: "Mempaga", projek: "Rodentxklau", kategori: "Inovasi Operasi Ladang", obj: "Smart Rat Trap Box Untuk Kawalan Tikus" },
+        { wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", obj: "Alternatif Digital Kepada Buku Pocket Checkroll" },
+        { wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Hujan Secara Automatik" },
+        { wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Dalam Tanah" },
+        { wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Digital & Data", obj: "Menentukan Siri Tanah, Ph Tanah, Elemen Kandungan Tanah" },
+        { wilayah: "Kuantan", projek: "Finger-kit Note", kategori: "ESG & Kesejahteraan", obj: "Menambah Nilai Penyelia Ladang" },
+        { wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "ESG & Kesejahteraan", obj: "Mengesan Kehadiran Gajah Liar" },
+        { wilayah: "Kuantan", projek: "Agromeasure Pro", kategori: "Inovasi Operasi Ladang", obj: "Alat Pengukuran Pelbagai Fungsi" },
+        { wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Kejuruteraan & Infrastruktur", obj: "Meningkatkan Kelancaran Operasi" },
+        { wilayah: "Kuantan", projek: "Mud Grip", kategori: "Inovasi Operasi Ladang", obj: "Penyelesaian Praktikal Untuk Operasi Pengangkutan" },
+        { wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Digital & Data", obj: "Bancian Tandan Hitam Buah Sawit" },
+        { wilayah: "Kuantan", projek: "Ryg Platform Counting", kategori: "Inovasi Operasi Ladang", obj: "Transformasi Digital Pengurusan Hasil Tuaian" },
+        { wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "ESG & Kesejahteraan", obj: "Mengenalpasti Jenis, Saiz, Populasi Tikus" },
+        { wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Inovasi Operasi Ladang", obj: "Memantau Dan Mengawal Paras Air Serta Ph Air" },
+        { wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", kategori: "Inovasi Operasi Ladang", obj: "Pemantauan Cuaca Di Ladang Secara Sistematik" },
+        { wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Inovasi Operasi Ladang", obj: "Alat Mesra Pengguna Untuk Cabut Akar" },
+        { wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "ESG & Kesejahteraan", obj: "Memikat Burung Pungguk Menginap Di Sarang" },
+        { wilayah: "Segamat", projek: "ANIMO", kategori: "Inovasi Operasi Ladang", obj: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
+        { wilayah: "Segamat", projek: "Sarang Burung Boleh Laras", kategori: "ESG & Kesejahteraan", obj: "Memudahkan Kerja Bancian Dan Penjagaan" },
+        { wilayah: "Segamat", projek: "E-HASIL", kategori: "Digital & Data", obj: "Pantas dan mudah untuk lihat hasil" },
+        { wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan kecekapan mengutip biji relai" },
+        { wilayah: "Segamat", projek: "E-ATTENDANCE", kategori: "Digital & Data", obj: "Pengambilan Rekod Kehadiran Pekerja" },
+        { wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", kategori: "Inovasi Operasi Ladang", obj: "Rain Guard Untuk Perlindungan" },
+        { wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
+        { wilayah: "Segamat", projek: "CHECKING CHIPPING", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Penyemakan Standard Chipping" },
+        { wilayah: "Alor Setar", projek: "2-stroke", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Ablation" },
+        { wilayah: "Alor Setar", projek: "Smart Terrace Tool", kategori: "Inovasi Operasi Ladang", obj: "Menentukan Jarak Kecuraman Teres" },
+        { wilayah: "Alor Setar", projek: "Sharp Shooter Seed (3s)", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Proses Penanaman Kpb" },
+        { wilayah: "Alor Setar", projek: "E-perolehan", kategori: "Digital & Data", obj: "Pengurusan Dokumen" },
+        { wilayah: "Alor Setar", projek: "E-quit", kategori: "Digital & Data", obj: "Kualiti Btb Dihantar Ke Kilang" },
+        { wilayah: "Alor Setar", projek: "E-mandor", kategori: "Digital & Data", obj: "Data Tepat Dari Mandor Ladang" },
+        { wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Membaja" },
+        { wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", kategori: "Inovasi Operasi Ladang", obj: "Mengangkut Biji Relai Dari Pentas Tuai" },
+        { wilayah: "Trolak", projek: "1 Document Centre Wilayah Trolak (1dct)", kategori: "Digital & Data", obj: "Pendigitalan Rekod Kerja Harian" },
+        { wilayah: "Trolak", projek: "satu chamber", kategori: "Kejuruteraan & Infrastruktur", obj: "Alat pengukur sudut kecembungan jalan" },
+        { wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", obj: "Keselamatan Dan Kurangkan Risiko Kehilangan Hasil" },
+        { wilayah: "Terengganu", projek: "Tank Fertilizer (Ft)", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Pembaziran Baja" }
+    ].map((item, index) => ({ bil: index + 1, ...item }));
+
+    // ========== GABUNGKAN SEMUA DATA ==========
+    const semuaData = {
+        2024: inovasi2024,
+        2025: inovasi2025,
+        2026: inovasi2026
+    };
+
+    // ========== VARIABEL GLOBAL ==========
+    let currentTahun = "2026";
+    let currentData = [...inovasi2026];
+    let filteredData = [...currentData];
     let currentPage = 1;
     const rowsPerPage = 15;
-    let filteredData = [...window.inovasiData];
 
-    function renderTable() {
-        const start = (currentPage - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
-        const pageData = filteredData.slice(start, end);
-
-        const tbody = document.getElementById('tableBody');
-        if (!tbody) return;
-
-        tbody.innerHTML = pageData.map(item => `
-            <tr onclick="showDetailPopup(${item.bil})">
-                <td>${item.bil}</td>
-                <td>${item.wilayah}</td>
-                <td>${item.projek.substring(0,40)}${item.projek.length>40?'…':''}</td>
-                <td>${item.kategori}</td>
-            </tr>
-        `).join('');
-
-        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-        document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
-        document.getElementById('prevPage').disabled = currentPage === 1;
-        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
-
-        document.getElementById('filterCount').innerText = `${filteredData.length} / ${window.inovasiData.length}`;
-    }
-
-    window.changePage = function(direction) {
-        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-        currentPage += direction;
-        if (currentPage < 1) currentPage = 1;
-        if (currentPage > totalPages) currentPage = totalPages;
-        renderTable();
-    };
-
-    window.applyFilter = function() {
-        const wilayah = document.getElementById('wilayahFilter').value;
-        filteredData = wilayah === "SEMUA" ? [...window.inovasiData] : window.inovasiData.filter(i => i.wilayah === wilayah);
-        currentPage = 1;
-        renderTable();
-    };
-
-    window.resetFilter = function() {
-        document.getElementById('wilayahFilter').value = "SEMUA";
-        filteredData = [...window.inovasiData];
-        currentPage = 1;
-        renderTable();
-    };
-
-    window.showDetailPopup = function(bil) {
-        const item = window.inovasiData.find(i => i.bil === bil);
+    // ========== FUNGSI POPUP DETAIL ==========
+    function showDetailPopup(bil) {
+        const item = currentData.find(i => i.bil === bil);
         if (!item) return;
-
+        
         const popup = document.getElementById('detailPopupContent');
         popup.innerHTML = `
             <button class="popup-close" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i></button>
             <h3><i class="fas fa-flask" style="color: var(--cyan);"></i> ${item.projek}</h3>
-
+            
             <div class="detail-row">
                 <div class="detail-label">Wilayah</div>
                 <div class="detail-value">${item.wilayah}</div>
@@ -221,36 +271,111 @@
                 <div class="detail-value">${item.kategori}</div>
             </div>
             <div class="detail-row">
-                <div class="detail-label">Inventor</div>
-                <div class="detail-value">${item.inventor}</div>
+                <div class="detail-label">Objektif</div>
+                <div class="detail-value">${item.obj || "Tiada keterangan"}</div>
             </div>
-            <div class="detail-row">
-                <div class="detail-label">Rancangan</div>
-                <div class="detail-value">${item.rancangan}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Objektif & Matlamat</div>
-                <div class="detail-value">${item.obj}</div>
-            </div>
-
+            
             <div style="text-align: center; margin-top: 1.5rem;">
                 <button class="btn-primary" onclick="closeDetailPopup()">Tutup</button>
             </div>
         `;
-
+        
         document.getElementById('detailPopup').style.display = 'flex';
-    };
+    }
 
-    window.closeDetailPopup = function() {
+    function closeDetailPopup() {
         document.getElementById('detailPopup').style.display = 'none';
-    };
+    }
 
-    // Initial render
-    renderTable();
+    // ========== FILTER FUNCTIONS ==========
+    function populateWilayahFilter() {
+        const wilayahSet = new Set(currentData.map(item => item.wilayah));
+        const sortedWilayah = Array.from(wilayahSet).sort();
+        const filterSelect = document.getElementById('wilayahFilter');
+        
+        filterSelect.innerHTML = '<option value="SEMUA">Semua Wilayah</option>';
+        sortedWilayah.forEach(wilayah => {
+            const option = document.createElement('option');
+            option.value = wilayah;
+            option.textContent = wilayah;
+            filterSelect.appendChild(option);
+        });
+    }
+
+    function filterByTahun() {
+        currentTahun = document.getElementById('tahunFilter').value;
+        currentData = [...semuaData[currentTahun]];
+        filteredData = [...currentData];
+        currentPage = 1;
+        
+        populateWilayahFilter();
+        renderTable();
+    }
+
+    function applyFilter() {
+        const wilayah = document.getElementById('wilayahFilter').value;
+        
+        filteredData = wilayah === "SEMUA" 
+            ? [...currentData] 
+            : currentData.filter(item => item.wilayah === wilayah);
+        
+        currentPage = 1;
+        renderTable();
+    }
+
+    function resetFilter() {
+        document.getElementById('wilayahFilter').value = "SEMUA";
+        filteredData = [...currentData];
+        currentPage = 1;
+        renderTable();
+    }
+
+    // ========== TABLE RENDER ==========
+    function renderTable() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const pageData = filteredData.slice(start, end);
+        
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = pageData.map(item => `
+            <tr onclick="showDetailPopup(${item.bil})">
+                <td>${item.bil}</td>
+                <td>${item.wilayah}</td>
+                <td>${item.projek}</td>
+                <td>${item.kategori}</td>
+            </tr>
+        `).join('');
+        
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+        
+        document.getElementById('filterCount').innerText = `${filteredData.length} / ${currentData.length}`;
+    }
+
+    // ========== PAGINATION ==========
+    function changePage(direction) {
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        currentPage += direction;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderTable();
+    }
+
+    // ========== INITIALIZE ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        populateWilayahFilter();
+        renderTable();
+    });
+
+    // ========== EXPOSE FUNCTIONS ==========
+    window.showDetailPopup = showDetailPopup;
+    window.closeDetailPopup = closeDetailPopup;
+    window.filterByTahun = filterByTahun;
+    window.applyFilter = applyFilter;
+    window.resetFilter = resetFilter;
+    window.changePage = changePage;
 </script>
 </body>
-
 </html>
-
-
-
