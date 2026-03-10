@@ -19,10 +19,215 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <!-- Chart.js 3 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    
     <style>
-        /* Additional styles for kategori popup */
+        /* ========== RESET & VARIABLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1219;
+            color: #e6edf3;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        :root {
+            --cyan: #00bcd4;
+            --cyan-light: #4dd0e1;
+            --carbon: #0f1a24;
+            --carbon-light: #1e2b36;
+            --white: #ffffff;
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #1a2833; }
+        ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+
+        /* ========== HEADER (STICKY) ========== */
+        .navbar {
+            background: #0b141c;
+            padding: 0.8rem 2rem;
+            border-bottom: 2px solid var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            background-color: rgba(11, 20, 28, 0.95);
+            gap: 20px;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 48px;
+            width: auto;
+            filter: drop-shadow(0 0 6px var(--cyan));
+            border-radius: 8px;
+            background: white;
+            padding: 4px;
+            object-fit: contain;
+        }
+        .title-unit {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #fff 0%, var(--cyan) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        /* ========== NAVIGATION TABS ========== */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background: #10222e;
+            padding: 0.5rem 1rem;
+            border-radius: 48px;
+            border: 1px solid #1e3b4a;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: #a0b8c5;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .nav-btn i {
+            color: var(--cyan);
+        }
+        .nav-btn.active {
+            background: var(--cyan);
+            color: #0b141c;
+            box-shadow: 0 0 12px #00bcd4;
+        }
+        .nav-btn.active i {
+            color: #0b141c;
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .main-container {
+            flex: 1;
+            padding: 2rem 2rem 1.5rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ========== POPUP REMINDER ========== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .popup-card {
+            background: linear-gradient(145deg, #0b2635, #123645);
+            border: 2px solid var(--cyan);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 30px 50px rgba(0,188,212,0.3);
+            position: relative;
+            text-align: center;
+        }
+        .popup-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+        .popup-close:hover { color: var(--cyan); }
+        .popup-message {
+            background: #0c2c3a;
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid #1c6c80;
+            margin: 1.5rem 0;
+        }
+        .deadline {
+            font-size: 2.5rem;
+            color: var(--cyan);
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+        .btn-primary {
+            background: var(--cyan);
+            color: #0b141c;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* ========== POPUP DETAIL PRODUK ========== */
+        .popup-detail {
+            max-width: 500px;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        .popup-detail h3 {
+            color: var(--cyan);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-right: 30px;
+        }
+        .detail-row {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #1c5568;
+        }
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+        }
+        .detail-value {
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-top: 0.2rem;
+        }
         #detailPopupContent ul::-webkit-scrollbar {
             width: 4px;
         }
@@ -33,13 +238,244 @@
             background: var(--cyan);
             border-radius: 10px;
         }
+
+        /* ========== PAGES ========== */
+        .page {
+            display: none;
+        }
+        .page.active-page {
+            display: block;
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--carbon-light);
+            border-radius: 28px;
+            padding: 1.5rem;
+            border: 1px solid #264653;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
+            margin-bottom: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 6px solid var(--cyan);
+            padding-left: 1rem;
+        }
+        .card-title i { color: var(--cyan); }
+
+        /* ========== GRIDS ========== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+
+        /* ========== CHART ========== */
+        .chart-container {
+            background: #102531;
+            border-radius: 24px;
+            padding: 1rem;
+            height: 280px;
+            border: 1px solid #1b4b5e;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ========== KATEGORI STATS ========== */
+        .kategori-stats {
+            background: #0c2635;
+            border-radius: 24px;
+            padding: 1.2rem;
+            border: 1px solid #1b5e7a;
+        }
+        .kategori-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
         .kategori-item {
+            background: #1a3d4a;
+            border-radius: 40px;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--cyan);
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .kategori-item:hover {
             transform: translateX(5px);
             background: #1f4a5a;
+        }
+        .kategori-count {
+            background: var(--cyan);
+            color: #0b141c;
+            font-weight: 700;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+        }
+        .kategori-total {
+            text-align: right;
+            margin-top: 1rem;
+            color: var(--cyan);
+        }
+
+        /* ========== SLIDER - OPTION C (AUTO HEIGHT) ========== */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+            max-height: 500px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 25px rgba(0,188,212,0.3);
+            background: #0f1f2b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .slider-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, #000000e0);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        /* ========== INFO LIST ========== */
+        .info-list {
+            list-style: none;
+        }
+        .info-item {
+            background: #1c3140;
+            margin-bottom: 12px;
+            padding: 1rem 1.3rem;
+            border-radius: 40px;
+            border-left: 5px solid var(--cyan);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ========== CARTA ORGANISASI ========== */
+        .org-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .org-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+        }
+        .org-card {
+            background: #0e2632;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #1b5e7a;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1 1 auto;
+            min-width: 280px;
+        }
+        .org-card i {
+            color: var(--cyan);
+            font-size: 1.3rem;
+            margin-top: 3px;
+        }
+        .org-details {
+            flex: 1;
+        }
+        .org-name {
+            font-weight: 700;
+            color: white;
+            font-size: 0.95rem;
+        }
+        .org-wilayah {
+            font-size: 0.8rem;
+            color: var(--cyan);
+            margin: 2px 0;
+        }
+        .org-email {
+            font-size: 0.7rem;
+            color: #9bb7c9;
+            word-break: break-all;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center;
+            padding: 1.2rem;
+            border-top: 1px solid #1a3645;
+        }
+
+        /* ========== MEDIA QUERIES (MOBILE) ========== */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 0.6rem 1rem;
+            }
+            .logo-img {
+                height: 36px;
+            }
+            .title-unit {
+                font-size: 1rem;
+            }
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .nav-btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+            }
+            .main-container {
+                padding: 1rem 0.8rem;
+            }
+            .grid-2 {
+                display: block;
+            }
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            .chart-container {
+                height: 200px;
+            }
+            .kategori-grid {
+                grid-template-columns: 1fr;
+            }
+            .slider-container {
+                min-height: 200px;
+                max-height: 350px;
+            }
+            .slider-overlay {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            .org-card {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -62,7 +498,7 @@
     </div>
 
     <!-- POPUP REMINDER -->
-    <div id="reminderPopup" class="popup-overlay" style="display: flex;">
+    <div id="reminderPopup" class="popup-overlay">
         <div class="popup-card">
             <button class="popup-close" onclick="closePopup()"><i class="fas fa-times-circle"></i></button>
             <h2 style="color: var(--cyan); margin-bottom: 1rem;"><i class="fas fa-exclamation-triangle"></i> PERINGATAN!</h2>
@@ -79,7 +515,7 @@
         </div>
     </div>
 
-    <!-- POPUP DETAIL PRODUK (Digunakan untuk popup kategori) -->
+    <!-- POPUP DETAIL KATEGORI -->
     <div id="detailPopup" class="popup-overlay" style="display: none;">
         <div class="popup-card popup-detail" id="detailPopupContent">
             <!-- Akan diisi JavaScript -->
@@ -102,12 +538,12 @@
                         <span>INOVASI MENGIKUT KATEGORI (klik untuk lihat senarai)</span>
                     </div>
                     <div class="kategori-grid" id="kategoriContainer"></div>
-                    <div class="kategori-total" style="text-align: right; margin-top: 1rem; color: var(--cyan);">
+                    <div class="kategori-total">
                         Jumlah: <span id="totalProduk">45</span> produk
                     </div>
                 </div>
             </div>
-            <!-- SLIDER GALERI dengan poster dari folder -->
+            <!-- SLIDER GALERI - AUTO HEIGHT -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-images"></i> GALERI POSTER</div>
                 <div class="slider-container" id="posterSlider">
@@ -122,8 +558,8 @@
             <div class="card">
                 <div class="card-title"><i class="fas fa-bullhorn"></i> INFORMASI TERKINI</div>
                 <ul class="info-list">
-                    <li class="info-item"><i class="fas fa-check-circle"></i> PERMOHONAN INOVASI TELAH DIBUKA SEHINGGA 31 MAC 2026</li>
-                    <li class="info-item"><i class="fas fa-calendar-alt"></i> SCREENING & PITCHING PRODUK INOVASI: 16 MAC 2026, IBU PEJABAT FPMSB</li>
+                    <li class="info-item"><i class="fas fa-check-circle"></i> PERMOHONAN INOVASI Q1 TELAH DIBUKA SEHINGGA 31 MAC 2026</li>
+                    <li class="info-item"><i class="fas fa-calendar-alt"></i> SCREENING & PITCHING PRODUK INOVASI: 07 APRIL 2026, IBU PEJABAT FPMSB</li>
                 </ul>
             </div>
             
@@ -177,7 +613,8 @@
 
 <!-- JAVASCRIPT -->
 <script>
-    // ========== DATA INOVASI 2026 (45 produk dari inovasi.html) ==========
+    // ========== DATA INOVASI 2026 (45 produk) ==========
+    // "satu chamber" telah ditukar kepada "sato chamber"
     const inovasiData = [
         {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
         {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 2",inventor:"Mecharattus",projek:"Mecharattus",kategori:"Inovasi Operasi Ladang",obj:"Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran"},
@@ -223,7 +660,7 @@
         {bil:42,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"PROTECTING HAVEST RUBBER TAPPING RAIN GUARD",projek:"PROTECTING HAVEST RUBBER TAPPING RAIN GUARD",kategori:"Inovasi Operasi Ladang",obj:"Rain Guard Untuk Perlindungan"},
         {bil:43,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"SEREN PENGHALAU GAJAH",projek:"SEREN PENGHALAU GAJAH",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Kemasukan Gajah Ke Dalam Ladang"},
         {bil:44,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"CHECKING CHIPPING",projek:"CHECKING CHIPPING",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Penyemakan Standard Chipping"},
-        {bil:45,wilayah:"Trolak",rancangan:"Fpmsb",inventor:"satu chamber",projek:"satu chamber",kategori:"Kejuruteraan & Infrastruktur",obj:"Alat pengukur sudut kecembungan jalan"}
+        {bil:45,wilayah:"Trolak",rancangan:"Fpmsb",inventor:"sato chamber",projek:"sato chamber",kategori:"Kejuruteraan & Infrastruktur",obj:"Alat pengukur sudut kecembungan jalan"}
     ];
 
     // ========== FUNGSI POPUP KATEGORI ==========
@@ -300,7 +737,7 @@
             wilayahCount[item.wilayah] = (wilayahCount[item.wilayah] || 0) + 1;
         });
         
-        // Pastikan semua 10 wilayah ada (guna 0 kalau tiada)
+        // Pastikan semua 10 wilayah ada
         const semuaWilayah = ["Gua Musang", "Mempaga", "Johor Bahru", "Kuantan", "Segamat", 
                              "Alor Setar", "Raja Alias", "Trolak", "Terengganu", "Jengka"];
         
