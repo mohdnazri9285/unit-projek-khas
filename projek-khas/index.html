@@ -239,14 +239,6 @@
             border-radius: 10px;
         }
 
-        /* ========== PAGES ========== */
-        .page {
-            display: none;
-        }
-        .page.active-page {
-            display: block;
-        }
-
         /* ========== CARDS ========== */
         .card {
             background: var(--carbon-light);
@@ -325,11 +317,11 @@
             color: var(--cyan);
         }
 
-        /* ========== SLIDER DENGAN INFO PANEL ========== */
+        /* ========== SLIDER (DESIGN ASAL) ========== */
         .slider-section {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1rem;
         }
 
         .slider-main {
@@ -368,55 +360,6 @@
             font-size: 1.3rem;
             text-align: center;
             backdrop-filter: blur(2px);
-        }
-
-        .slider-info {
-            background: #0c2635;
-            border-radius: 24px;
-            padding: 1.5rem;
-            border: 1px solid #1b5e7a;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .info-column h4 {
-            color: var(--cyan);
-            font-size: 1.1rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid #1b5e7a;
-            padding-bottom: 0.6rem;
-        }
-
-        .info-list {
-            list-style: none;
-        }
-
-        .info-list li {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
-            color: #e0edf5;
-            line-height: 1.5;
-        }
-
-        .info-list li i {
-            color: var(--cyan);
-            font-size: 0.9rem;
-            width: 24px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .info-list li strong {
-            color: white;
-            font-weight: 600;
-            min-width: 110px;
         }
 
         /* ========== INFO LIST ========== */
@@ -527,21 +470,9 @@
                 min-height: 250px;
                 max-height: 380px;
             }
-            .slider-info {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1rem;
-            }
             .slider-overlay {
                 padding: 12px;
                 font-size: 1.1rem;
-            }
-            .info-list li {
-                font-size: 0.85rem;
-                gap: 8px;
-            }
-            .info-list li strong {
-                min-width: 90px;
             }
             .org-card {
                 min-width: 100%;
@@ -614,7 +545,7 @@
                 </div>
             </div>
             
-            <!-- SLIDER GALERI DENGAN INFO PANEL -->
+            <!-- SLIDER GALERI (DESIGN ASAL) -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-images"></i> GALERI POSTER</div>
                 
@@ -623,6 +554,9 @@
                         <img id="sliderImage" class="slider-img" src="image/poster/ADJUSTABLE HOOK_001.png" alt="poster" onerror="this.src='https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Tidak+Jumpa';">
                         <div class="slider-overlay" id="sliderCaption">Adjustable Hook</div>
                     </div>
+                </div>
+            </div>
+        </div>
 
         <!-- INFO + CARTA ORGANISASI -->
         <div class="grid-2">
@@ -892,4 +826,3 @@
 </script>
 </body>
 </html>
-
