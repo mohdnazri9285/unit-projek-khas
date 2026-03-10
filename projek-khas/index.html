@@ -325,13 +325,19 @@
             color: var(--cyan);
         }
 
-        /* ========== SLIDER - OPTION C (AUTO HEIGHT) ========== */
-        .slider-container {
+        /* ========== SLIDER DENGAN INFO PANEL ========== */
+        .slider-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .slider-main {
             position: relative;
             width: 100%;
             height: auto;
-            min-height: 300px;
-            max-height: 500px;
+            min-height: 380px;
+            max-height: 550px;
             border-radius: 24px;
             overflow: hidden;
             border: 2px solid var(--cyan);
@@ -341,12 +347,15 @@
             align-items: center;
             justify-content: center;
         }
+
         .slider-img {
             width: 100%;
             height: auto;
+            max-height: 550px;
             object-fit: contain;
             display: block;
         }
+
         .slider-overlay {
             position: absolute;
             bottom: 0;
@@ -355,10 +364,59 @@
             background: linear-gradient(transparent, #000000e0);
             color: white;
             padding: 20px;
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.3rem;
             text-align: center;
             backdrop-filter: blur(2px);
+        }
+
+        .slider-info {
+            background: #0c2635;
+            border-radius: 24px;
+            padding: 1.5rem;
+            border: 1px solid #1b5e7a;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .info-column h4 {
+            color: var(--cyan);
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #1b5e7a;
+            padding-bottom: 0.6rem;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: #e0edf5;
+            line-height: 1.5;
+        }
+
+        .info-list li i {
+            color: var(--cyan);
+            font-size: 0.9rem;
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .info-list li strong {
+            color: white;
+            font-weight: 600;
+            min-width: 110px;
         }
 
         /* ========== INFO LIST ========== */
@@ -465,13 +523,25 @@
             .kategori-grid {
                 grid-template-columns: 1fr;
             }
-            .slider-container {
-                min-height: 200px;
-                max-height: 350px;
+            .slider-main {
+                min-height: 250px;
+                max-height: 380px;
+            }
+            .slider-info {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1rem;
             }
             .slider-overlay {
                 padding: 12px;
-                font-size: 0.9rem;
+                font-size: 1.1rem;
+            }
+            .info-list li {
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+            .info-list li strong {
+                min-width: 90px;
             }
             .org-card {
                 min-width: 100%;
@@ -543,12 +613,44 @@
                     </div>
                 </div>
             </div>
-            <!-- SLIDER GALERI - AUTO HEIGHT -->
+            
+            <!-- SLIDER GALERI DENGAN INFO PANEL -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-images"></i> GALERI POSTER</div>
-                <div class="slider-container" id="posterSlider">
-                    <img id="sliderImage" class="slider-img" src="image/poster/ADJUSTABLE HOOK_001.png" alt="poster" onerror="this.src='https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Tidak+Jumpa';">
-                    <div class="slider-overlay" id="sliderCaption">Adjustable Hook</div>
+                
+                <div class="slider-section">
+                    <div class="slider-main" id="posterSlider">
+                        <img id="sliderImage" class="slider-img" src="image/poster/ADJUSTABLE HOOK_001.png" alt="poster" onerror="this.src='https://via.placeholder.com/600x400/0f2838/00bcd4?text=Poster+Tidak+Jumpa';">
+                        <div class="slider-overlay" id="sliderCaption">Adjustable Hook</div>
+                    </div>
+                    
+                    <!-- Info Objektif & Kaedah -->
+                    <div class="slider-info">
+                        <div class="info-column">
+                            <h4><i class="fas fa-bullseye"></i> OBJEKTIF</h4>
+                            <ul class="info-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>KOS RENDAH</strong> - Menjimatkan kos operasi</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>KURANGKAN KEROSAKAN POKOK</strong> - Melindungi tanaman</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>MENINGKATKAN PRODUKTIVITI</strong> - Hasil lebih tinggi</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>PERALATAN RINGAN</strong> - Mudah dibawa</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>MENDAPATKAN SAIZ & BERAT</strong> - Tepat dan konsisten</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>TANDAN YANG TINGGI</strong> - Capaian lebih baik</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>MEMPERCEPAT PERTUMBUHAN</strong> - Kitaran lebih cepat</li>
+                            </ul>
+                        </div>
+                        <div class="info-column">
+                            <h4><i class="fas fa-tools"></i> KAEDAH</h4>
+                            <ul class="info-list">
+                                <li><i class="fas fa-cog"></i> <strong>SKRU</strong> - Mekanisme putaran</li>
+                                <li><i class="fas fa-cog"></i> <strong>CLIP</strong> - Sistem cengkaman</li>
+                                <li><i class="fas fa-cog"></i> <strong>ALATAN GALA</strong> - Tarikan dan tolakan</li>
+                                <li><i class="fas fa-cog"></i> <strong>KAEDAH PAHAT</strong> - Potongan tepat</li>
+                                <li><i class="fas fa-cog"></i> <strong>45 DARJAH</strong> - Sudut optimum</li>
+                                <li><i class="fas fa-cog"></i> <strong>PENOLAKAN</strong> - Gerakan menolak</li>
+                                <li><i class="fas fa-cog"></i> <strong>KAEDAH MEMULIS</strong> - Teknik khas</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -558,8 +660,8 @@
             <div class="card">
                 <div class="card-title"><i class="fas fa-bullhorn"></i> INFORMASI TERKINI</div>
                 <ul class="info-list">
-                    <li class="info-item"><i class="fas fa-check-circle"></i> PERMOHONAN INOVASI Q1 TELAH DIBUKA SEHINGGA 31 MAC 2026</li>
-                    <li class="info-item"><i class="fas fa-calendar-alt"></i> SCREENING & PITCHING PRODUK INOVASI: 07 APRIL 2026, IBU PEJABAT FPMSB</li>
+                    <li class="info-item"><i class="fas fa-check-circle"></i> PERMOHONAN INOVASI TELAH DIBUKA SEHINGGA 31 MAC 2026</li>
+                    <li class="info-item"><i class="fas fa-calendar-alt"></i> SCREENING & PITCHING PRODUK INOVASI: 16 MAC 2026, IBU PEJABAT FPMSB</li>
                 </ul>
             </div>
             
@@ -614,7 +716,6 @@
 <!-- JAVASCRIPT -->
 <script>
     // ========== DATA INOVASI 2026 (45 produk) ==========
-    // "satu chamber" telah ditukar kepada "sato chamber"
     const inovasiData = [
         {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
         {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 2",inventor:"Mecharattus",projek:"Mecharattus",kategori:"Inovasi Operasi Ladang",obj:"Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran"},
