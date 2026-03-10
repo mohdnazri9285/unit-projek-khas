@@ -214,7 +214,7 @@
             <!-- Pagination -->
             <div class="pagination">
                 <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
-                <span class="pagination-info" id="pageInfo">Halaman 1 / 1</span>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 2</span>
                 <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
             </div>
             
@@ -232,38 +232,39 @@
 
 <script>
     // ========== DATA PERMOHONAN (YANG ADA PERMOHONAN SAHAJA) ==========
-    const budgetData = [
-        { bil: 10, wilayah: "Mempaga", projek: "E-checkroll", amount: 1260 },
-        { bil: 11, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", amount: 7600 },
-        { bil: 12, wilayah: "Johor Bahru", projek: "Tunggal Piezometer", amount: 8200 },
-        { bil: 13, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", amount: 10400 },
-        { bil: 14, wilayah: "Kuantan", projek: "Finger-kit Note", amount: 1400 },
-        { bil: 15, wilayah: "Kuantan", projek: "Jumbo Informer", amount: 4000 },
-        { bil: 16, wilayah: "Kuantan", projek: "Agromeasure Pro", amount: 2200 },
-        { bil: 17, wilayah: "Kuantan", projek: "Bailey Bridge", amount: 5000 },
-        { bil: 18, wilayah: "Kuantan", projek: "Mud Grip", amount: 1000 },
-        { bil: 19, wilayah: "Kuantan", projek: "Spy Cam Bbc", amount: 4000 },
-        { bil: 20, wilayah: "Kuantan", projek: "Ryg Platform Counting", amount: 5000 },
-        { bil: 21, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", amount: 500 },
-        { bil: 22, wilayah: "Kuantan", projek: "Agro Water Level", amount: 2500 },
-        { bil: 23, wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", amount: 1500 },
-        { bil: 24, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", amount: 850 },
-        { bil: 25, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", amount: 96.16 },
-        { bil: 26, wilayah: "Segamat", projek: "ANIMO", amount: 15000 },
-        { bil: 27, wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", amount: 1200 },
-        { bil: 28, wilayah: "Segamat", projek: "E-HASIL", amount: 0 },
-        { bil: 29, wilayah: "Segamat", projek: "Roller Biji Relai", amount: 150 },
-        { bil: 30, wilayah: "Segamat", projek: "E-ATTENDANCE", amount: 110 },
-        { bil: 31, wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", amount: 2000 },
-        { bil: 32, wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", amount: 2500 },
-        { bil: 33, wilayah: "Segamat", projek: "CHECKING CHIPPING", amount: 10 },
-        { bil: 40, wilayah: "Raja Alias", projek: "Fertilizer Box", amount: 2000 },
-        { bil: 41, wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", amount: 4350 },
-        { bil: 44, wilayah: "Terengganu", projek: "E-trespasser Alert V2", amount: 3960 }
+    const rawData = [
+        { wilayah: "Mempaga", projek: "E-checkroll", amount: 1260 },
+        { wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", amount: 7600 },
+        { wilayah: "Johor Bahru", projek: "Tunggal Piezometer", amount: 8200 },
+        { wilayah: "Johor Bahru", projek: "Wira Soil Lestari", amount: 10400 },
+        { wilayah: "Kuantan", projek: "Finger-kit Note", amount: 1400 },
+        { wilayah: "Kuantan", projek: "Jumbo Informer", amount: 4000 },
+        { wilayah: "Kuantan", projek: "Agromeasure Pro", amount: 2200 },
+        { wilayah: "Kuantan", projek: "Bailey Bridge", amount: 5000 },
+        { wilayah: "Kuantan", projek: "Mud Grip", amount: 1000 },
+        { wilayah: "Kuantan", projek: "Spy Cam Bbc", amount: 4000 },
+        { wilayah: "Kuantan", projek: "Ryg Platform Counting", amount: 5000 },
+        { wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", amount: 500 },
+        { wilayah: "Kuantan", projek: "Agro Water Level", amount: 2500 },
+        { wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", amount: 1500 },
+        { wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", amount: 850 },
+        { wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", amount: 96.16 },
+        { wilayah: "Segamat", projek: "ANIMO", amount: 15000 },
+        { wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", amount: 1200 },
+        { wilayah: "Segamat", projek: "E-HASIL", amount: 0 },
+        { wilayah: "Segamat", projek: "Roller Biji Relai", amount: 150 },
+        { wilayah: "Segamat", projek: "E-ATTENDANCE", amount: 110 },
+        { wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", amount: 2000 },
+        { wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", amount: 2500 },
+        { wilayah: "Segamat", projek: "CHECKING CHIPPING", amount: 10 },
+        { wilayah: "Raja Alias", projek: "Fertilizer Box", amount: 2000 },
+        { wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", amount: 4350 },
+        { wilayah: "Terengganu", projek: "E-trespasser Alert V2", amount: 3960 }
     ];
 
-    // ========== TAMBAH STATUS "DALAM PROSES" ==========
-    const completeData = budgetData.map(item => ({
+    // ========== TAMBAH NOMBOR BIL IKUT URUTAN ==========
+    const budgetData = rawData.map((item, index) => ({
+        bil: index + 1,
         ...item,
         status: "Dalam Proses"
     }));
@@ -271,13 +272,18 @@
     // ========== PAGINATION VARIABLES ==========
     let currentPage = 1;
     const rowsPerPage = 15;
-    let filteredData = [...completeData];
+    let filteredData = [...budgetData];
 
     // ========== POPULATE WILAYAH FILTER ==========
     function populateWilayahFilter() {
-        const wilayahSet = new Set(completeData.map(item => item.wilayah));
+        const wilayahSet = new Set(budgetData.map(item => item.wilayah));
         const sortedWilayah = Array.from(wilayahSet).sort();
         const filterSelect = document.getElementById('wilayahFilter');
+        
+        // Clear existing options except first
+        while (filterSelect.options.length > 1) {
+            filterSelect.remove(1);
+        }
         
         sortedWilayah.forEach(wilayah => {
             const option = document.createElement('option');
@@ -341,8 +347,8 @@
         const wilayah = document.getElementById('wilayahFilter').value;
         
         filteredData = wilayah === "SEMUA" 
-            ? [...completeData] 
-            : completeData.filter(item => item.wilayah === wilayah);
+            ? [...budgetData] 
+            : budgetData.filter(item => item.wilayah === wilayah);
         
         currentPage = 1;
         renderTable();
@@ -351,7 +357,7 @@
     // ========== RESET FILTERS ==========
     window.resetFilters = function() {
         document.getElementById('wilayahFilter').value = "SEMUA";
-        filteredData = [...completeData];
+        filteredData = [...budgetData];
         currentPage = 1;
         renderTable();
     };
