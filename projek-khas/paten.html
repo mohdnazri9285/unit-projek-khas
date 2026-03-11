@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Favicon dalam folder image/ -->
+    <!-- Favicon dalam folder image/ -->
     <link rel="icon" type="image/x-icon" href="image/favicon.ico">
     <link rel="shortcut icon" href="image/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
@@ -18,6 +18,108 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles for paten page */
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-approved {
+            background: rgba(0, 200, 100, 0.2);
+            color: #00c864;
+            border: 1px solid #00c864;
+        }
+        
+        .status-pending {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
+        .status-process {
+            background: rgba(100, 150, 255, 0.2);
+            color: #6495ff;
+            border: 1px solid #6495ff;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            background: #102531;
+            border-radius: 24px;
+            padding: 0.2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 1000px;
+        }
+        
+        th {
+            background: #06313f;
+            color: var(--cyan);
+            padding: 1rem 0.8rem;
+            border-bottom: 3px solid var(--cyan);
+        }
+        
+        td {
+            padding: 1rem 0.8rem;
+            border-bottom: 1px solid #1d4b5e;
+        }
+        
+        tr:hover td {
+            background: #1b4050;
+        }
+        
+        .patent-number {
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--cyan-light);
+        }
+        
+        .stats-badge {
+            background: #0c2635;
+            border-radius: 60px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid #1b5e7a;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .stat-label {
+            color: var(--cyan);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 <div class="app-wrapper">
@@ -39,17 +141,81 @@
 
     <!-- MAIN CONTENT -->
     <div class="main-container">
-        <div class="card empty-patent">
-            <i class="fas fa-file-invoice" style="font-size: 4rem; color: var(--cyan); margin-bottom: 2rem;"></i>
-            <h2 style="color: var(--cyan);">PRODUK PATEN</h2>
-            <p style="margin: 1.5rem 0; font-size: 1.2rem;">Maklumat paten akan dikemaskini segera</p>
-            <div style="display: flex; gap: 2rem; justify-content: center; color: #96b8cc; flex-wrap: wrap; margin: 2rem 0;">
-                <div><i class="fas fa-box"></i> Nama produk</div>
-                <div><i class="fas fa-user"></i> Inventor</div>
-                <div><i class="fas fa-check-double"></i> Status paten</div>
-                <div><i class="fas fa-hashtag"></i> No. filing</div>
+        <div class="card">
+            <div class="card-title"><i class="fas fa-crown"></i> PRODUK PATEN</div>
+            
+            <!-- Stats Overview -->
+            <div class="stats-badge">
+                <div class="stat-item">
+                    <i class="fas fa-file-invoice" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Jumlah Paten</div>
+                        <div class="stat-value" id="totalPaten">3</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-check-circle" style="color: #00c864; font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Filing Complete</div>
+                        <div class="stat-value" id="totalComplete">2</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock" style="color: #ffa500; font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Dalam Proses</div>
+                        <div class="stat-value" id="totalProses">1</div>
+                    </div>
+                </div>
             </div>
-            <p style="margin-top: 3rem; opacity: 0.6; font-style: italic;">— data belum dimasukkan —</p>
+            
+            <!-- Table -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bil</th>
+                            <th>Nama Produk</th>
+                            <th>Inventor</th>
+                            <th>No. Pendaftaran</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Lightweight Applicator Handheld Spreader (LAH Spreader) -->
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Lightweight Applicator Handheld Spreader (LAH Spreader)</strong></td>
+                            <td>Mohd Shahrizal Bin Md Jali, Azwan Ariff Bin Azmi, Mohd Nazri Bin Hasim</td>
+                            <td class="patent-number">PA/99/0077</td>
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td>
+                        </tr>
+                        
+                        <!-- Jantan Spike -->
+                        <tr>
+                            <td>2</td>
+                            <td><strong>Jantan Spike</strong></td>
+                            <td><em>Akan dikemaskini</em></td>
+                            <td class="patent-number">PA/99/0078</td>
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td>
+                        </tr>
+                        
+                        <!-- SATO Chamber -->
+                        <tr>
+                            <td>3</td>
+                            <td><strong>SATO Chamber</strong></td>
+                            <td><em>Akan dikemaskini</em></td>
+                            <td class="patent-number"><em>Dalam proses</em></td>
+                            <td><span class="status-badge status-process"><i class="fas fa-clock"></i> Dalam Proses</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Info tambahan -->
+            <p style="text-align: right; margin-top: 1rem; color: var(--cyan); font-size: 0.8rem;">
+                <i class="fas fa-info-circle"></i> Kemaskini terakhir: 11 Mac 2026
+            </p>
         </div>
     </div>
 
@@ -59,8 +225,4 @@
     </footer>
 </div>
 </body>
-
 </html>
-
-
-
