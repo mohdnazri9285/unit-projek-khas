@@ -134,6 +134,14 @@
             color: white;
             font-weight: 500;
         }
+
+        /* Separator line */
+        .stat-separator {
+            width: 2px;
+            height: 40px;
+            background: #1b5e7a;
+            margin: 0 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -161,6 +169,28 @@
             
             <!-- Stats Overview -->
             <div class="stats-badge">
+                <!-- Bajet Penyelidikan (FIX) -->
+                <div class="stat-item">
+                    <i class="fas fa-flask" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Bajet Penyelidikan</div>
+                        <div class="stat-value" id="bajetPenyelidikan">RM 206,000.00</div>
+                    </div>
+                </div>
+                
+                <!-- Bajet Tersedia (tolak RM12,400) -->
+                <div class="stat-item">
+                    <i class="fas fa-piggy-bank" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Bajet Tersedia</div>
+                        <div class="stat-value" id="bajetTersedia">RM 193,600.00</div>
+                    </div>
+                </div>
+                
+                <!-- Separator -->
+                <div class="stat-separator"></div>
+                
+                <!-- Total Permohonan -->
                 <div class="stat-item">
                     <i class="fas fa-wallet" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
@@ -168,6 +198,8 @@
                         <div class="stat-value" id="totalPermohonan">0</div>
                     </div>
                 </div>
+                
+                <!-- Jumlah Permohonan (RM) -->
                 <div class="stat-item">
                     <i class="fas fa-coins" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
@@ -175,6 +207,8 @@
                         <div class="stat-value" id="totalBudget">RM 0</div>
                     </div>
                 </div>
+                
+                <!-- Dalam Proses -->
                 <div class="stat-item">
                     <i class="fas fa-clock" style="color: #ffa500; font-size: 1.5rem;"></i>
                     <div>
@@ -219,7 +253,7 @@
             </div>
             
             <p style="text-align: center; margin-top: 1rem; color: var(--cyan); font-size: 0.8rem;">
-                * Semua permohonan sedang dalam proses penilaian
+                * Bajet tersedia = RM206,000 - RM12,400 (ubahsuai)
             </p>
         </div>
     </div>
@@ -231,7 +265,11 @@
 </div>
 
 <script>
-    // ========== DATA PERMOHONAN (YANG ADA PERMOHONAN SAHAJA) ==========
+    // ========== BAJET TETAP ==========
+    const BAJET_PENYELIDIKAN = 206000;
+    const KOS_UBAHSUAI = 12400; // RM12,400 (tolak terus)
+
+    // ========== DATA PERMOHONAN (ASAL - SEMUA DALAM PROSES) ==========
     const rawData = [
         { wilayah: "Mempaga", projek: "E-checkroll", amount: 1260 },
         { wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", amount: 7600 },
@@ -266,7 +304,7 @@
     const budgetData = rawData.map((item, index) => ({
         bil: index + 1,
         ...item,
-        status: "Dalam Proses"
+        status: "Dalam Proses"  // SEMUA "Dalam Proses" (data asal)
     }));
 
     // ========== PAGINATION VARIABLES ==========
@@ -302,6 +340,10 @@
         document.getElementById('totalPermohonan').textContent = totalPermohonan;
         document.getElementById('totalBudget').textContent = 'RM ' + totalBudget.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         document.getElementById('totalProses').textContent = totalProses;
+        
+        // Bajet tersedia = Bajet tetap - kos ubahsuai (tolak je, tak kira lulus)
+        const bajetTersediaKira = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
+        document.getElementById('bajetTersedia').textContent = 'RM ' + bajetTersediaKira.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     }
 
     // ========== RENDER TABLE ==========
