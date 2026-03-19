@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Favicon dalam folder image/ -->
+    <!-- Favicon dalam folder image/ -->
     <link rel="icon" type="image/x-icon" href="image/favicon.ico">
     <link rel="shortcut icon" href="image/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
@@ -18,6 +18,247 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional COE styles */
+        .coe-banner {
+            width: 100%;
+            height: 180px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .coe-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .coe-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .coe-banner-text {
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+        
+        .coe-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .coe-section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(0,188,212,0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .coe-section-title i {
+            font-size: 1.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-card {
+            background: rgba(0, 188, 212, 0.05);
+            border-radius: 16px;
+            padding: 1.3rem;
+            border-left: 4px solid var(--cyan);
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+        
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .pill {
+            background: rgba(0, 188, 212, 0.1);
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--cyan);
+        }
+        
+        .pill i {
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .tunjang-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tunjang-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .tunjang-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .tunjang-list i {
+            color: var(--cyan);
+            width: 24px;
+            font-size: 1.1rem;
+        }
+        
+        .building-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0 2.5rem 0;
+        }
+        
+        .building-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .building-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .building-caption {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+            color: var(--cyan);
+            background: rgba(0,188,212,0.1);
+        }
+        
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .activity-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.2s;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0,188,212,0.3);
+        }
+        
+        .activity-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .activity-content {
+            padding: 1.2rem;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .activity-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-location {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .activity-location i {
+            color: var(--cyan);
+        }
+        
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .coe-banner {
+                height: 140px;
+            }
+            
+            .building-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .coe-banner-text {
+                font-size: 1rem;
+                bottom: 10px;
+                left: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="app-wrapper">
@@ -39,25 +280,164 @@
 
     <!-- MAIN CONTENT -->
     <div class="main-container">
+        <!-- Banner COE -->
+        <div class="coe-banner">
+            <img src="image/COE/SIGNBOARD COE.png" alt="Signboard COE Lurah Bilut" onerror="this.src='https://via.placeholder.com/1200x180/00bcd4/ffffff?text=COE+LURAH+BILUT';">
+            <div class="coe-banner-text">
+                <i class="fas fa-map-pin"></i> CENTRE OF EXCELLENCE · LURAH BILUT
+            </div>
+        </div>
+
+        <!-- Maklumat Asas COE -->
         <div class="card">
-            <div class="card-title"><i class="fas fa-star"></i> CENTRE OF EXCELLENCE LURAH BILUT</div>
-            <div class="coe-coming">
-                <i class="fas fa-rocket" style="font-size: 4rem; color: var(--cyan); margin-bottom: 2rem;"></i>
-                <h2 style="color: var(--cyan);">AKAN DATANG</h2>
-                <p style="font-size: 1.2rem; margin-top: 1rem;">Pusat Kecemerlangan Inovasi</p>
-                <p style="margin-top: 2rem; opacity: 0.8;">Galeri dan pameran produk inovasi akan dikemaskini</p>
+            <div class="card-title"><i class="fas fa-info-circle"></i> MAKLUMAT ASAS COE</div>
+            
+            <!-- Info Grid -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-calendar-alt"></i> PENUBUHAN</div>
+                    <div class="info-value">Unit Projek Khas ditubuhkan pada 2024 di bawah Bahagian Pembangunan Strategik</div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-eye"></i> VISI</div>
+                    <div class="info-value">Menjadi pemacu dalam pembangunan progresif penempatan negara</div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-bullseye"></i> MISI</div>
+                    <div class="info-value">Menambah nilai kepada kepentingan peneroka</div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-label"><i class="fas fa-gem"></i> NILAI FELDA</div>
+                    <div class="pill-container">
+                        <span class="pill"><i class="fas fa-chart-line"></i> Financial Sustainability</span>
+                        <span class="pill"><i class="fas fa-clock"></i> Efficient & Cost Control</span>
+                        <span class="pill"><i class="fas fa-history"></i> Legacy Reformation</span>
+                        <span class="pill"><i class="fas fa-users"></i> Digitalization People & Governance</span>
+                        <span class="pill"><i class="fas fa-handshake"></i> Advanced Cooperative</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tunjang Strategik -->
+            <div class="coe-section">
+                <div class="coe-section-title">
+                    <i class="fas fa-bullseye"></i> TUNJANG STRATEGIK
+                </div>
+                <ul class="tunjang-list">
+                    <li><i class="fas fa-trophy"></i> Mengungguli kecekapan operasi dan keberkesanan kos</li>
+                    <li><i class="fas fa-hand-pointer"></i> Menjadi pilihan utama dalam pengurusan ladang</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Galeri Bangunan COE -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-building"></i> COE LURAH BILUT</div>
+            
+            <div class="building-grid">
+                <div class="building-card">
+                    <img src="image/COE/COE OUT.jpg" alt="COE Luar" class="building-img" onerror="this.src='https://via.placeholder.com/600x400/1a2a3a/00bcd4?text=COE+OUT';">
+                    <div class="building-caption">
+                        <i class="fas fa-external-link-alt"></i> 
+                    </div>
+                </div>
+                
+                <div class="building-card">
+                    <img src="image/COE/COE IN.jpg" alt="COE Dalam" class="building-img" onerror="this.src='https://via.placeholder.com/600x400/1a2a3a/00bcd4?text=COE+IN';">
+                    <div class="building-caption">
+                        <i class="fas fa-inbox"></i> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program & Aktiviti COE -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-flask"></i> PROGRAM & AKTIVITI COE</div>
+            <p style="margin-bottom: 1.5rem; opacity: 0.8;">Kajian dan program inovasi di bawah seliaan Unit Projek Khas</p>
+            
+            <div class="activity-grid">
+                <!-- Program 1: CCHANNEL -->
+                <div class="activity-card">
+                    <img src="image/COE/CCHANNEL.jpg" alt="Kajian C-Channel" class="activity-img" onerror="this.src='https://via.placeholder.com/400x200/1a2a3a/00bcd4?text=C-CHANNEL';">
+                    <div class="activity-content">
+                        <div class="activity-title">Kajian Tiang Pagar Alu-zinc C-Section</div>
+                        <div class="activity-desc">Kajian pembinaan tiang pagar ladang menggunakan bahan Alu-zinc C-Section</div>
+                        <div class="activity-location">
+                            <i class="fas fa-map-marker-alt"></i> Rancangan: FPMSB Jengka 14
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Program 2: DIGIAGRI -->
+                <div class="activity-card">
+                    <img src="image/COE/DIGIAGRI.jpg" alt="Digital Agriculture" class="activity-img" onerror="this.src='https://via.placeholder.com/400x200/1a2a3a/00bcd4?text=DIGIAGRI';">
+                    <div class="activity-content">
+                        <div class="activity-title">Digital Agriculture</div>
+                        <div class="activity-desc">Kajian aplikasi Digital Agriculture bagi operasi ladang sawit berhasil</div>
+                        <div class="activity-location">
+                            <i class="fas fa-map-marker-alt"></i> Rancangan: FPMSB Lurah Bilut
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Program 3: NANO POLE -->
+                <div class="activity-card">
+                    <img src="image/COE/NANO POLE.jpg" alt="Nano Pole" class="activity-img" onerror="this.src='https://via.placeholder.com/400x200/1a2a3a/00bcd4?text=NANO+POLE';">
+                    <div class="activity-content">
+                        <div class="activity-title">Peralatan Nano Pole & Sickle Hybrid</div>
+                        <div class="activity-desc">Kajian penggunaan peralatan penualain Nano Pole, Pole Lock Plus & Sickle Hybrid</div>
+                        <div class="activity-location">
+                            <i class="fas fa-map-marker-alt"></i> Rancangan: FPMSB Lurah Bilut
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Program 4: TERRA -->
+                <div class="activity-card">
+                    <img src="image/COE/TERRA.jpg" alt="Jentera Elektrik" class="activity-img" onerror="this.src='https://via.placeholder.com/400x200/1a2a3a/00bcd4?text=TERRA';">
+                    <div class="activity-content">
+                        <div class="activity-title">Jentera Mekanisasi Berkuasa Elektrik</div>
+                        <div class="activity-desc">Kajian penggunaan jentera mekanisasi berkuasa elektrik bagi kerja memunggah BTS ke Platform</div>
+                        <div class="activity-location">
+                            <i class="fas fa-map-marker-alt"></i> Rancangan: FPMSB Kg. Sertik
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Program 5: PG1 -->
+                <div class="activity-card">
+                    <img src="image/COE/PG1.png" alt="Planters Gigglers" class="activity-img" onerror="this.src='https://via.placeholder.com/400x200/1a2a3a/00bcd4?text=PLANTERS+GIGGLERS';">
+                    <div class="activity-content">
+                        <div class="activity-title">Planters Gigglers 2024</div>
+                        <div class="activity-desc">Program Planters Gigglers 2024</div>
+                        <div class="activity-location">
+                            <i class="fas fa-map-marker-alt"></i> Rancangan: FELDA Sungai Nerek
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- FOOTER -->
     <footer>
-        <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
+        <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari · COE Lurah Bilut
     </footer>
 </div>
+
+<script>
+    // Image error handling
+    document.querySelectorAll('img').forEach(img => {
+        img.onerror = function() {
+            if (!this.src.includes('placeholder')) {
+                console.log('Image failed to load:', this.src);
+            }
+        };
+    });
+</script>
 </body>
-
 </html>
-
-
-
