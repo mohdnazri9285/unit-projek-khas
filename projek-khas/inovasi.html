@@ -81,17 +81,17 @@
             
             <!-- JADUAL -->
             <div class="table-responsive">
-                <table>
+                 <table>
                     <thead>
-                        <tr>
+                         <tr>
                             <th>Bil</th>
                             <th>Wilayah</th>
                             <th>Nama Projek</th>
                             <th>Kategori</th>
-                        </tr>
+                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
-                </table>
+                 </table>
             </div>
             
             <!-- PAGINATION -->
@@ -185,7 +185,7 @@
         { wilayah: "Alor Setar", projek: "Hidroelektrik", kategori: "Kejuruteraan & Infrastruktur", obj: "Menjana Tenaga Elektrik Dari Sumber Air" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
 
-    // ========== DATA 2026 (45 produk) ==========
+    // ========== DATA 2026 (46 produk - TAMBAH JENGKA) ==========
     const inovasi2026 = [
         { wilayah: "Gua Musang", projek: "Manpower Rekod (Mpr)", kategori: "Digital & Data", obj: "Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional Kepada Ekosistem Digital" },
         { wilayah: "Gua Musang", projek: "Mecharattus", kategori: "Inovasi Operasi Ladang", obj: "Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran" },
@@ -231,7 +231,9 @@
         { wilayah: "Trolak", projek: "1 Document Centre Wilayah Trolak (1dct)", kategori: "Digital & Data", obj: "Pendigitalan Rekod Kerja Harian" },
         { wilayah: "Trolak", projek: "satu chamber", kategori: "Kejuruteraan & Infrastruktur", obj: "Alat pengukur sudut kecembungan jalan" },
         { wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", obj: "Keselamatan Dan Kurangkan Risiko Kehilangan Hasil" },
-        { wilayah: "Terengganu", projek: "Tank Fertilizer (Ft)", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Pembaziran Baja" }
+        { wilayah: "Terengganu", projek: "Tank Fertilizer (Ft)", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Pembaziran Baja" },
+        // ========== TAMBAHAN JENGKA (ITEM 46) ==========
+        { wilayah: "Jengka", projek: "PERUMAH AIR DAN BAJA", kategori: "Inovasi Operasi Ladang", obj: "Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
 
     // ========== GABUNGKAN SEMUA DATA ==========
@@ -343,7 +345,7 @@
                 <td>${item.wilayah}</td>
                 <td>${item.projek}</td>
                 <td>${item.kategori}</td>
-            </tr>
+             </tr>
         `).join('');
         
         const totalPages = Math.ceil(filteredData.length / rowsPerPage);
@@ -379,4 +381,3 @@
 </script>
 </body>
 </html>
-
