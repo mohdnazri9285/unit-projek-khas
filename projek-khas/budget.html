@@ -19,7 +19,6 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Additional styles for budget tracker */
         .stats-badge {
             background: #0c2635;
             border-radius: 60px;
@@ -57,9 +56,6 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-        }
-        
-        .status-proses {
             background: rgba(255, 165, 0, 0.2);
             color: #ffa500;
             border: 1px solid #ffa500;
@@ -87,19 +83,19 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
-            min-width: 800px;
+            font-size: 0.85rem;
+            min-width: 900px;
         }
         
         th {
             background: #06313f;
             color: var(--cyan);
-            padding: 1rem 0.8rem;
+            padding: 0.8rem;
             border-bottom: 3px solid var(--cyan);
         }
         
         td {
-            padding: 1rem 0.8rem;
+            padding: 0.8rem;
             border-bottom: 1px solid #1d4b5e;
         }
         
@@ -135,12 +131,36 @@
             font-weight: 500;
         }
 
-        /* Separator line */
         .stat-separator {
             width: 2px;
             height: 40px;
             background: #1b5e7a;
             margin: 0 0.5rem;
+        }
+        
+        .filter-select {
+            background: #1e3f4e;
+            border: 2px solid var(--cyan);
+            color: white;
+            padding: 0.7rem 2rem 0.7rem 1rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            min-width: 180px;
+        }
+        
+        .filter-reset {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+        
+        .filter-reset:hover {
+            background: var(--cyan);
+            color: #0b141c;
         }
     </style>
 </head>
@@ -169,16 +189,14 @@
             
             <!-- Stats Overview -->
             <div class="stats-badge">
-                <!-- Bajet Penyelidikan (FIX) -->
                 <div class="stat-item">
                     <i class="fas fa-flask" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
                         <div class="stat-label">Bajet Penyelidikan</div>
-                        <div class="stat-value" id="bajetPenyelidikan">RM 206,000.00</div>
+                        <div class="stat-value">RM 206,000.00</div>
                     </div>
                 </div>
                 
-                <!-- Bajet Tersedia (tolak RM12,400) -->
                 <div class="stat-item">
                     <i class="fas fa-piggy-bank" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
@@ -187,10 +205,8 @@
                     </div>
                 </div>
                 
-                <!-- Separator -->
                 <div class="stat-separator"></div>
                 
-                <!-- Total Permohonan -->
                 <div class="stat-item">
                     <i class="fas fa-wallet" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
@@ -199,7 +215,6 @@
                     </div>
                 </div>
                 
-                <!-- Jumlah Permohonan (RM) -->
                 <div class="stat-item">
                     <i class="fas fa-coins" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
@@ -208,7 +223,6 @@
                     </div>
                 </div>
                 
-                <!-- Dalam Proses -->
                 <div class="stat-item">
                     <i class="fas fa-clock" style="color: #ffa500; font-size: 1.5rem;"></i>
                     <div>
@@ -220,7 +234,7 @@
             
             <!-- Filters -->
             <div class="filter-row">
-                <select id="wilayahFilter" class="filter-select" style="flex: 1;">
+                <select id="wilayahFilter" class="filter-select">
                     <option value="SEMUA">Semua Wilayah</option>
                 </select>
                 
@@ -229,20 +243,19 @@
             
             <!-- Table -->
             <div class="table-responsive">
-                <table>
+                  <table>
                     <thead>
-                        <tr>
+                         <tr>
                             <th>Bil</th>
                             <th>Wilayah</th>
                             <th>Nama Projek</th>
+                            <th>Kategori</th>
                             <th>Nilai (RM)</th>
                             <th>Status</th>
-                        </tr>
+                         </tr>
                     </thead>
-                    <tbody id="budgetTableBody">
-                        <!-- JS will populate -->
-                    </tbody>
-                </table>
+                    <tbody id="budgetTableBody"></tbody>
+                  </table>
             </div>
             
             <!-- Pagination -->
@@ -258,7 +271,6 @@
         </div>
     </div>
     
-    <!-- FOOTER -->
     <footer>
         <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
     </footer>
@@ -267,58 +279,56 @@
 <script>
     // ========== BAJET TETAP ==========
     const BAJET_PENYELIDIKAN = 206000;
-    const KOS_UBAHSUAI = 12400; // RM12,400 (tolak terus)
+    const KOS_UBAHSUAI = 12400;
+    const BAJET_TERSEDIA_FIX = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
 
-    // ========== DATA PERMOHONAN (ASAL - SEMUA DALAM PROSES) ==========
-    const rawData = [
-        { wilayah: "Mempaga", projek: "E-checkroll", amount: 1260 },
-        { wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", amount: 7600 },
-        { wilayah: "Johor Bahru", projek: "Tunggal Piezometer", amount: 8200 },
-        { wilayah: "Johor Bahru", projek: "Wira Soil Lestari", amount: 10400 },
-        { wilayah: "Kuantan", projek: "Finger-kit Note", amount: 1400 },
-        { wilayah: "Kuantan", projek: "Jumbo Informer", amount: 4000 },
-        { wilayah: "Kuantan", projek: "Agromeasure Pro", amount: 2200 },
-        { wilayah: "Kuantan", projek: "Bailey Bridge", amount: 5000 },
-        { wilayah: "Kuantan", projek: "Mud Grip", amount: 1000 },
-        { wilayah: "Kuantan", projek: "Spy Cam Bbc", amount: 4000 },
-        { wilayah: "Kuantan", projek: "Ryg Platform Counting", amount: 5000 },
-        { wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", amount: 500 },
-        { wilayah: "Kuantan", projek: "Agro Water Level", amount: 2500 },
-        { wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", amount: 1500 },
-        { wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", amount: 850 },
-        { wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", amount: 96.16 },
-        { wilayah: "Segamat", projek: "ANIMO", amount: 15000 },
-        { wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", amount: 1200 },
-        { wilayah: "Segamat", projek: "E-HASIL", amount: 0 },
-        { wilayah: "Segamat", projek: "Roller Biji Relai", amount: 150 },
-        { wilayah: "Segamat", projek: "E-ATTENDANCE", amount: 110 },
-        { wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", amount: 2000 },
-        { wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", amount: 2500 },
-        { wilayah: "Segamat", projek: "CHECKING CHIPPING", amount: 10 },
-        { wilayah: "Raja Alias", projek: "Fertilizer Box", amount: 2000 },
-        { wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", amount: 4350 },
-        { wilayah: "Terengganu", projek: "E-trespasser Alert V2", amount: 3960 }
+    // ========== DATA PERMOHONAN (27 PRODUK - ADA PERMOHONAN SAHAJA) ==========
+    // Jumlah keseluruhan = RM 90,076.16
+    const budgetData = [
+        // Mempaga (1)
+        { bil: 1, wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", amount: 4550 },
+        // Johor Bahru (3)
+        { bil: 2, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", amount: 7600 },
+        { bil: 3, wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Inovasi Operasi Ladang", amount: 8200 },
+        { bil: 4, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Digital & Data", amount: 10400 },
+        // Kuantan (10)
+        { bil: 5, wilayah: "Kuantan", projek: "Finger-kit Note", kategori: "ESG & Kesejahteraan", amount: 1400 },
+        { bil: 6, wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "ESG & Kesejahteraan", amount: 4000 },
+        { bil: 7, wilayah: "Kuantan", projek: "Agromeasure Pro", kategori: "Inovasi Operasi Ladang", amount: 2200 },
+        { bil: 8, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Kejuruteraan & Infrastruktur", amount: 5000 },
+        { bil: 9, wilayah: "Kuantan", projek: "Mud Grip", kategori: "Inovasi Operasi Ladang", amount: 1000 },
+        { bil: 10, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Digital & Data", amount: 4000 },
+        { bil: 11, wilayah: "Kuantan", projek: "Ryg Platform Counting", kategori: "Inovasi Operasi Ladang", amount: 5000 },
+        { bil: 12, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "ESG & Kesejahteraan", amount: 500 },
+        { bil: 13, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Inovasi Operasi Ladang", amount: 2500 },
+        { bil: 14, wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", kategori: "Inovasi Operasi Ladang", amount: 1500 },
+        // Segamat (10)
+        { bil: 15, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Inovasi Operasi Ladang", amount: 850 },
+        { bil: 16, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "ESG & Kesejahteraan", amount: 96.16 },
+        { bil: 17, wilayah: "Segamat", projek: "ANIMO", kategori: "Inovasi Operasi Ladang", amount: 15000 },
+        { bil: 18, wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", kategori: "ESG & Kesejahteraan", amount: 1200 },
+        { bil: 19, wilayah: "Segamat", projek: "E-HASIL", kategori: "Digital & Data", amount: 0 },
+        { bil: 20, wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Inovasi Operasi Ladang", amount: 150 },
+        { bil: 21, wilayah: "Segamat", projek: "E-ATTENDANCE", kategori: "Digital & Data", amount: 110 },
+        { bil: 22, wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", kategori: "Inovasi Operasi Ladang", amount: 2000 },
+        { bil: 23, wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", kategori: "Inovasi Operasi Ladang", amount: 2500 },
+        { bil: 24, wilayah: "Segamat", projek: "CHECKING CHIPPING", kategori: "Inovasi Operasi Ladang", amount: 10 },
+        // Raja Alias (2)
+        { bil: 25, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Inovasi Operasi Ladang", amount: 2000 },
+        { bil: 26, wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", kategori: "Inovasi Operasi Ladang", amount: 4350 },
+        // Terengganu (1)
+        { bil: 27, wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", amount: 3960 }
     ];
 
-    // ========== TAMBAH NOMBOR BIL IKUT URUTAN ==========
-    const budgetData = rawData.map((item, index) => ({
-        bil: index + 1,
-        ...item,
-        status: "Dalam Proses"  // SEMUA "Dalam Proses" (data asal)
-    }));
-
-    // ========== PAGINATION VARIABLES ==========
     let currentPage = 1;
     const rowsPerPage = 15;
     let filteredData = [...budgetData];
 
-    // ========== POPULATE WILAYAH FILTER ==========
     function populateWilayahFilter() {
         const wilayahSet = new Set(budgetData.map(item => item.wilayah));
         const sortedWilayah = Array.from(wilayahSet).sort();
         const filterSelect = document.getElementById('wilayahFilter');
         
-        // Clear existing options except first
         while (filterSelect.options.length > 1) {
             filterSelect.remove(1);
         }
@@ -331,22 +341,16 @@
         });
     }
 
-    // ========== UPDATE STATS ==========
     function updateStats(data) {
         const totalPermohonan = data.length;
         const totalBudget = data.reduce((sum, item) => sum + item.amount, 0);
-        const totalProses = data.filter(item => item.status === "Dalam Proses").length;
         
         document.getElementById('totalPermohonan').textContent = totalPermohonan;
         document.getElementById('totalBudget').textContent = 'RM ' + totalBudget.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        document.getElementById('totalProses').textContent = totalProses;
-        
-        // Bajet tersedia = Bajet tetap - kos ubahsuai (tolak je, tak kira lulus)
-        const bajetTersediaKira = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
-        document.getElementById('bajetTersedia').textContent = 'RM ' + bajetTersediaKira.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('totalProses').textContent = totalPermohonan;
+        document.getElementById('bajetTersedia').textContent = 'RM ' + BAJET_TERSEDIA_FIX.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     }
 
-    // ========== RENDER TABLE ==========
     function renderTable() {
         const start = (currentPage - 1) * rowsPerPage;
         const end = start + rowsPerPage;
@@ -359,32 +363,21 @@
                     <td>${item.bil}</td>
                     <td>${item.wilayah}</td>
                     <td>${item.projek}</td>
+                    <td>${item.kategori}</td>
                     <td class="amount">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                    <td><span class="status-badge status-proses">⏳ Dalam Proses</span></td>
+                    <td><span class="status-badge">⏳ Dalam Proses</span></td>
                 </tr>
             `;
         }).join('');
         
-        // Update pagination
         const totalPages = Math.ceil(filteredData.length / rowsPerPage);
         document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
         document.getElementById('prevPage').disabled = currentPage === 1;
         document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
         
-        // Update stats
         updateStats(filteredData);
     }
 
-    // ========== CHANGE PAGE ==========
-    window.changePage = function(direction) {
-        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-        currentPage += direction;
-        if (currentPage < 1) currentPage = 1;
-        if (currentPage > totalPages) currentPage = totalPages;
-        renderTable();
-    };
-
-    // ========== APPLY FILTERS ==========
     function applyFilters() {
         const wilayah = document.getElementById('wilayahFilter').value;
         
@@ -396,7 +389,14 @@
         renderTable();
     }
 
-    // ========== RESET FILTERS ==========
+    window.changePage = function(direction) {
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        currentPage += direction;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderTable();
+    };
+
     window.resetFilters = function() {
         document.getElementById('wilayahFilter').value = "SEMUA";
         filteredData = [...budgetData];
@@ -404,10 +404,8 @@
         renderTable();
     };
 
-    // ========== EVENT LISTENERS ==========
     document.getElementById('wilayahFilter').addEventListener('change', applyFilters);
 
-    // ========== INITIALIZE ==========
     populateWilayahFilter();
     renderTable();
 </script>
