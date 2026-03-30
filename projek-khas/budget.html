@@ -283,10 +283,10 @@
     const BAJET_TERSEDIA_FIX = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
 
     // ========== DATA PERMOHONAN (27 PRODUK - ADA PERMOHONAN SAHAJA) ==========
-    // Jumlah keseluruhan = RM 90,076.16
+    // Jumlah keseluruhan = RM 90,521.16 (E-checkroll = RM4,995)
     const budgetData = [
-        // Mempaga (1)
-        { bil: 1, wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", amount: 4550 },
+        // Mempaga (1) - HARGA E-CHECKROLL TELAH DIUBAH KE 4995
+        { bil: 1, wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", amount: 4995 },
         // Johor Bahru (3)
         { bil: 2, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", amount: 7600 },
         { bil: 3, wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Inovasi Operasi Ladang", amount: 8200 },
@@ -359,14 +359,14 @@
         const tbody = document.getElementById('budgetTableBody');
         tbody.innerHTML = pageData.map(item => {
             return `
-                <tr>
+                 <tr>
                     <td>${item.bil}</td>
                     <td>${item.wilayah}</td>
                     <td>${item.projek}</td>
                     <td>${item.kategori}</td>
                     <td class="amount">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                     <td><span class="status-badge">⏳ Dalam Proses</span></td>
-                </tr>
+                 </tr>
             `;
         }).join('');
         
