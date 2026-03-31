@@ -95,7 +95,7 @@
                     <i class="fas fa-flask" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
                         <div class="stat-label">Jumlah Produk</div>
-                        <div class="stat-value" id="totalProduk">44</div>
+                        <div class="stat-value" id="totalProduk">45</div>
                     </div>
                 </div>
                 <div class="stat-item">
@@ -132,17 +132,17 @@
             
             <!-- JADUAL -->
             <div class="table-responsive">
-                <table>
+                 <table>
                     <thead>
-                        <tr>
+                         <tr>
                             <th>Bil</th>
                             <th>Wilayah</th>
                             <th>Nama Projek</th>
                             <th>Kategori</th>
-                        </tr>
+                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
-                </table>
+                 </table>
             </div>
             
             <!-- PAGINATION -->
@@ -236,13 +236,9 @@
         { wilayah: "Alor Setar", projek: "Hidroelektrik", kategori: "Kejuruteraan & Infrastruktur", obj: "Menjana Tenaga Elektrik Dari Sumber Air" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
 
-    // ========== DATA 2026 (44 produk - DIUPDATE) ==========
-    // Perubahan:
-    // 1. Mecharattus - DIBUANG
-    // 2. Elaeis Root - DIBUANG
-    // 3. Efuel Tracer tukar nama ke J-Fosil
+    // ========== DATA 2026 (45 produk - dengan J5/4 SMART RAIN GAUGE) ==========
     const inovasi2026 = [
-        // Gua Musang (3 produk - Mecharattus & Elaeis Root dibuang)
+        // Gua Musang (3 produk)
         { wilayah: "Gua Musang", projek: "Manpower Rekod (Mpr)", kategori: "Digital & Data", obj: "Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional Kepada Ekosistem Digital" },
         { wilayah: "Gua Musang", projek: "Intergrated Bunch Monitoring Sistem (IBMS)", kategori: "Digital & Data", obj: "Mempercepatkan Proses Membuat Rumusan Bbc" },
         { wilayah: "Gua Musang", projek: "J-Fosil", kategori: "Digital & Data", obj: "Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko" },
@@ -294,8 +290,9 @@
         // Terengganu (2 produk)
         { wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", obj: "Keselamatan Dan Kurangkan Risiko Kehilangan Hasil" },
         { wilayah: "Terengganu", projek: "Tank Fertilizer (Ft)", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Pembaziran Baja" },
-        // Jengka (1 produk)
-        { wilayah: "Jengka", projek: "PERUMAH AIR DAN BAJA", kategori: "Inovasi Operasi Ladang", obj: "Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama" }
+        // Jengka (2 produk) - PERUMAH AIR DAN BAJA + J5/4 SMART RAIN GAUGE
+        { wilayah: "Jengka", projek: "PERUMAH AIR DAN BAJA", kategori: "Inovasi Operasi Ladang", obj: "Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama" },
+        { wilayah: "Jengka", projek: "J5/4 SMART RAIN GAUGE", kategori: "Inovasi Operasi Ladang", obj: "MENGUKUR JUMLAH HUJAN SECARA AUTOMATIK, MEMBANTU MEMBERI AMARAN AWAL HUJAN LEBAT ATAU BANJIR" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
 
     // ========== GABUNGKAN SEMUA DATA ==========
@@ -403,11 +400,42 @@
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = pageData.map(item => `
             <tr onclick="showDetailPopup(${item.bil})">
-                <td>${item.bil}</td>
-                <td>${item.wilayah}</td>
-                <td>${item.projek}</td>
-                <td>${item.kategori}</td>
-             </tr>
+                <td>${item.bil}${item.bil}${item.bil}${item.bil}${item.bil}${item.bil}
+                <td>${item.wilayah}${item.wilayah}${item.wilayah}${item.wilayah}${item.wilayah}${item.wilayah}
+                <td>${item.projek}${item.projek}${item.projek}${item.projek}${item.projek}${item.projek}
+                <td>${item.kategori}${item.kategori}${item.kategori}${item.kategori}${item.kategori}${item.kategori}
+              </tr>
         `).join('');
         
-        const totalPages = Math.ceil(filteredData.length / rowsPer
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+        document.getElementById('filterCount').innerText = `${filteredData.length} / ${currentData.length}`;
+    }
+
+    // ========== PAGINATION ==========
+    function changePage(direction) {
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        currentPage += direction;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderTable();
+    }
+
+    // ========== INITIALIZE ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        populateWilayahFilter();
+        renderTable();
+    });
+
+    // ========== EXPOSE FUNCTIONS ==========
+    window.showDetailPopup = showDetailPopup;
+    window.closeDetailPopup = closeDetailPopup;
+    window.filterByTahun = filterByTahun;
+    window.applyFilter = applyFilter;
+    window.resetFilter = resetFilter;
+    window.changePage = changePage;
+</script>
+</body>
+</html>
