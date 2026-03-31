@@ -290,7 +290,7 @@
         // Terengganu (2 produk)
         { wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", obj: "Keselamatan Dan Kurangkan Risiko Kehilangan Hasil" },
         { wilayah: "Terengganu", projek: "Tank Fertilizer (Ft)", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Pembaziran Baja" },
-        // Jengka (2 produk) - PERUMAH AIR DAN BAJA + J5/4 SMART RAIN GAUGE
+        // Jengka (2 produk)
         { wilayah: "Jengka", projek: "PERUMAH AIR DAN BAJA", kategori: "Inovasi Operasi Ladang", obj: "Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama" },
         { wilayah: "Jengka", projek: "J5/4 SMART RAIN GAUGE", kategori: "Inovasi Operasi Ladang", obj: "MENGUKUR JUMLAH HUJAN SECARA AUTOMATIK, MEMBANTU MEMBERI AMARAN AWAL HUJAN LEBAT ATAU BANJIR" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
@@ -400,11 +400,11 @@
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = pageData.map(item => `
             <tr onclick="showDetailPopup(${item.bil})">
-                <td>${item.bil}${item.bil}${item.bil}${item.bil}${item.bil}${item.bil}
-                <td>${item.wilayah}${item.wilayah}${item.wilayah}${item.wilayah}${item.wilayah}${item.wilayah}
-                <td>${item.projek}${item.projek}${item.projek}${item.projek}${item.projek}${item.projek}
-                <td>${item.kategori}${item.kategori}${item.kategori}${item.kategori}${item.kategori}${item.kategori}
-              </tr>
+                <td>${item.bil}</td>
+                <td>${item.wilayah}</td>
+                <td>${item.projek}</td>
+                <td>${item.kategori}</td>
+            </tr>
         `).join('');
         
         const totalPages = Math.ceil(filteredData.length / rowsPerPage);
