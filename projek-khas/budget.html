@@ -243,7 +243,7 @@
             
             <!-- Table -->
             <div class="table-responsive">
-                  <table>
+                 <table>
                     <thead>
                          <tr>
                             <th>Bil</th>
@@ -266,7 +266,7 @@
             </div>
             
             <p style="text-align: center; margin-top: 1rem; color: var(--cyan); font-size: 0.8rem;">
-                * Bajet tersedia adalah nilai peruntukan selepas ditolak permohonan yang telah mendapat kelulusan.
+                * Bajet tersedia = RM206,000 - RM12,400 (ubahsuai)
             </p>
         </div>
     </div>
@@ -283,9 +283,9 @@
     const BAJET_TERSEDIA_FIX = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
 
     // ========== DATA PERMOHONAN (27 PRODUK - ADA PERMOHONAN SAHAJA) ==========
-    // Jumlah keseluruhan = RM 90,521.16 (E-checkroll = RM4,995)
+    // Jumlah keseluruhan = RM 90,601.16
     const budgetData = [
-        // Mempaga (1) - HARGA E-CHECKROLL TELAH DIUBAH KE 4995
+        // Mempaga (1) - E-checkroll (RM4,995)
         { bil: 1, wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", amount: 4995 },
         // Johor Bahru (3)
         { bil: 2, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", amount: 7600 },
@@ -314,7 +314,7 @@
         { bil: 23, wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", kategori: "Inovasi Operasi Ladang", amount: 2500 },
         { bil: 24, wilayah: "Segamat", projek: "CHECKING CHIPPING", kategori: "Inovasi Operasi Ladang", amount: 10 },
         // Raja Alias (2)
-        { bil: 25, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Inovasi Operasi Ladang", amount: 2000 },
+        { bil: 25, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Inovasi Operasi Ladang", amount: 2080 },
         { bil: 26, wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", kategori: "Inovasi Operasi Ladang", amount: 4350 },
         // Terengganu (1)
         { bil: 27, wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", amount: 3960 }
@@ -359,14 +359,14 @@
         const tbody = document.getElementById('budgetTableBody');
         tbody.innerHTML = pageData.map(item => {
             return `
-                 <tr>
+                <tr>
                     <td>${item.bil}</td>
                     <td>${item.wilayah}</td>
                     <td>${item.projek}</td>
                     <td>${item.kategori}</td>
                     <td class="amount">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                     <td><span class="status-badge">⏳ Dalam Proses</span></td>
-                 </tr>
+                </tr>
             `;
         }).join('');
         
