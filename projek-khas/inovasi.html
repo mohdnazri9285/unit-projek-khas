@@ -33,6 +33,32 @@
             border-radius: 40px;
             font-weight: 700;
         }
+        .stats-badge {
+            background: #0c2635;
+            border-radius: 60px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid #1b5e7a;
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        .stat-label {
+            color: var(--cyan);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -61,7 +87,32 @@
     <!-- MAIN CONTENT -->
     <div class="main-container">
         <div class="card">
-            <div class="card-title"><i class="fas fa-flask"></i> SENARAI PRODUK INOVASI</div>
+            <div class="card-title"><i class="fas fa-flask"></i> SENARAI PRODUK INOVASI 2026</div>
+            
+            <!-- Stats Overview -->
+            <div class="stats-badge">
+                <div class="stat-item">
+                    <i class="fas fa-flask" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Jumlah Produk</div>
+                        <div class="stat-value" id="totalProduk">44</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-file-alt" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Kategori</div>
+                        <div class="stat-value" id="totalKategori">4</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-map-marker-alt" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Wilayah</div>
+                        <div class="stat-value">10</div>
+                    </div>
+                </div>
+            </div>
             
             <!-- FILTER TAHUN & WILAYAH -->
             <div class="filter-row">
@@ -81,23 +132,23 @@
             
             <!-- JADUAL -->
             <div class="table-responsive">
-                 <table>
+                <table>
                     <thead>
-                         <tr>
+                        <tr>
                             <th>Bil</th>
                             <th>Wilayah</th>
                             <th>Nama Projek</th>
                             <th>Kategori</th>
-                         </tr>
+                        </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
-                 </table>
+                </table>
             </div>
             
             <!-- PAGINATION -->
             <div class="pagination">
                 <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
-                <span class="pagination-info" id="pageInfo">Halaman 1 / 1</span>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 3</span>
                 <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
             </div>
             
@@ -185,21 +236,27 @@
         { wilayah: "Alor Setar", projek: "Hidroelektrik", kategori: "Kejuruteraan & Infrastruktur", obj: "Menjana Tenaga Elektrik Dari Sumber Air" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
 
-    // ========== DATA 2026 (46 produk - TAMBAH JENGKA) ==========
+    // ========== DATA 2026 (44 produk - DIUPDATE) ==========
+    // Perubahan:
+    // 1. Mecharattus - DIBUANG
+    // 2. Elaeis Root - DIBUANG
+    // 3. Efuel Tracer tukar nama ke J-Fosil
     const inovasi2026 = [
+        // Gua Musang (3 produk - Mecharattus & Elaeis Root dibuang)
         { wilayah: "Gua Musang", projek: "Manpower Rekod (Mpr)", kategori: "Digital & Data", obj: "Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional Kepada Ekosistem Digital" },
-        { wilayah: "Gua Musang", projek: "Mecharattus", kategori: "Inovasi Operasi Ladang", obj: "Memastikan Butik Dapat Ditabur Sepenuhnya Tanpa Pembaziran" },
-        { wilayah: "Gua Musang", projek: "Intergrated Bunch Monitoring Sistem (Ibms)", kategori: "Digital & Data", obj: "Mempercepatkan Proses Membuat Rumusan Bbc" },
-        { wilayah: "Gua Musang", projek: "Efuel Tracer", kategori: "Digital & Data", obj: "Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko" },
-        { wilayah: "Gua Musang", projek: "Elaeis Root", kategori: "ESG & Kesejahteraan", obj: "Penggunaan Sisa Industri (Fiber Sawit) Untuk Kawalan Rumpai" },
+        { wilayah: "Gua Musang", projek: "Intergrated Bunch Monitoring Sistem (IBMS)", kategori: "Digital & Data", obj: "Mempercepatkan Proses Membuat Rumusan Bbc" },
+        { wilayah: "Gua Musang", projek: "J-Fosil", kategori: "Digital & Data", obj: "Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko" },
+        // Mempaga (5 produk)
         { wilayah: "Mempaga", projek: "Magnetobucket", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Mengutip Dan Mengasingkan Biji Relai" },
         { wilayah: "Mempaga", projek: "Klau Cross Water", kategori: "Inovasi Operasi Ladang", obj: "Sistem Penghadang Air (Water Barrier) Untuk Tebing Kolam Pecah" },
         { wilayah: "Mempaga", projek: "Predanest-klau", kategori: "ESG & Kesejahteraan", obj: "Rumah Selamat Untuk Burung Pungguk Kawal Tikus" },
         { wilayah: "Mempaga", projek: "Rodentxklau", kategori: "Inovasi Operasi Ladang", obj: "Smart Rat Trap Box Untuk Kawalan Tikus" },
         { wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", obj: "Alternatif Digital Kepada Buku Pocket Checkroll" },
+        // Johor Bahru (3 produk)
         { wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Hujan Secara Automatik" },
         { wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Dalam Tanah" },
         { wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Digital & Data", obj: "Menentukan Siri Tanah, Ph Tanah, Elemen Kandungan Tanah" },
+        // Kuantan (10 produk)
         { wilayah: "Kuantan", projek: "Finger-kit Note", kategori: "ESG & Kesejahteraan", obj: "Menambah Nilai Penyelia Ladang" },
         { wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "ESG & Kesejahteraan", obj: "Mengesan Kehadiran Gajah Liar" },
         { wilayah: "Kuantan", projek: "Agromeasure Pro", kategori: "Inovasi Operasi Ladang", obj: "Alat Pengukuran Pelbagai Fungsi" },
@@ -210,6 +267,7 @@
         { wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "ESG & Kesejahteraan", obj: "Mengenalpasti Jenis, Saiz, Populasi Tikus" },
         { wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Inovasi Operasi Ladang", obj: "Memantau Dan Mengawal Paras Air Serta Ph Air" },
         { wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", kategori: "Inovasi Operasi Ladang", obj: "Pemantauan Cuaca Di Ladang Secara Sistematik" },
+        // Segamat (10 produk)
         { wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Inovasi Operasi Ladang", obj: "Alat Mesra Pengguna Untuk Cabut Akar" },
         { wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "ESG & Kesejahteraan", obj: "Memikat Burung Pungguk Menginap Di Sarang" },
         { wilayah: "Segamat", projek: "ANIMO", kategori: "Inovasi Operasi Ladang", obj: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
@@ -220,19 +278,23 @@
         { wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", kategori: "Inovasi Operasi Ladang", obj: "Rain Guard Untuk Perlindungan" },
         { wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
         { wilayah: "Segamat", projek: "CHECKING CHIPPING", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Penyemakan Standard Chipping" },
+        // Alor Setar (6 produk)
         { wilayah: "Alor Setar", projek: "2-stroke", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Ablation" },
         { wilayah: "Alor Setar", projek: "Smart Terrace Tool", kategori: "Inovasi Operasi Ladang", obj: "Menentukan Jarak Kecuraman Teres" },
         { wilayah: "Alor Setar", projek: "Sharp Shooter Seed (3s)", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Proses Penanaman Kpb" },
         { wilayah: "Alor Setar", projek: "E-perolehan", kategori: "Digital & Data", obj: "Pengurusan Dokumen" },
         { wilayah: "Alor Setar", projek: "E-quit", kategori: "Digital & Data", obj: "Kualiti Btb Dihantar Ke Kilang" },
         { wilayah: "Alor Setar", projek: "E-mandor", kategori: "Digital & Data", obj: "Data Tepat Dari Mandor Ladang" },
+        // Raja Alias (2 produk)
         { wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Membaja" },
         { wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", kategori: "Inovasi Operasi Ladang", obj: "Mengangkut Biji Relai Dari Pentas Tuai" },
+        // Trolak (2 produk)
         { wilayah: "Trolak", projek: "1 Document Centre Wilayah Trolak (1dct)", kategori: "Digital & Data", obj: "Pendigitalan Rekod Kerja Harian" },
-        { wilayah: "Trolak", projek: "satu chamber", kategori: "Kejuruteraan & Infrastruktur", obj: "Alat pengukur sudut kecembungan jalan" },
+        { wilayah: "Trolak", projek: "sato chamber", kategori: "Kejuruteraan & Infrastruktur", obj: "Alat pengukur sudut kecembungan jalan" },
+        // Terengganu (2 produk)
         { wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", obj: "Keselamatan Dan Kurangkan Risiko Kehilangan Hasil" },
         { wilayah: "Terengganu", projek: "Tank Fertilizer (Ft)", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Pembaziran Baja" },
-        // ========== TAMBAHAN JENGKA (ITEM 46) ==========
+        // Jengka (1 produk)
         { wilayah: "Jengka", projek: "PERUMAH AIR DAN BAJA", kategori: "Inovasi Operasi Ladang", obj: "Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
 
@@ -348,36 +410,4 @@
              </tr>
         `).join('');
         
-        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-        document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
-        document.getElementById('prevPage').disabled = currentPage === 1;
-        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
-        
-        document.getElementById('filterCount').innerText = `${filteredData.length} / ${currentData.length}`;
-    }
-
-    // ========== PAGINATION ==========
-    function changePage(direction) {
-        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-        currentPage += direction;
-        if (currentPage < 1) currentPage = 1;
-        if (currentPage > totalPages) currentPage = totalPages;
-        renderTable();
-    }
-
-    // ========== INITIALIZE ==========
-    document.addEventListener('DOMContentLoaded', function() {
-        populateWilayahFilter();
-        renderTable();
-    });
-
-    // ========== EXPOSE FUNCTIONS ==========
-    window.showDetailPopup = showDetailPopup;
-    window.closeDetailPopup = closeDetailPopup;
-    window.filterByTahun = filterByTahun;
-    window.applyFilter = applyFilter;
-    window.resetFilter = resetFilter;
-    window.changePage = changePage;
-</script>
-</body>
-</html>
+        const totalPages = Math.ceil(filteredData.length / rowsPer
