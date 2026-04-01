@@ -1,12 +1,624 @@
-tbody.innerHTML = pageData.map(item => {
-    return `
-        <tr onclick="showDetailPopup(${item.bil})">
-            <td>${item.bil}</td>
-            <td>${item.wilayah}</td>
-            <td>${item.projek}</td>
-            <td>${item.kategori}</td>
-            <td class="amount">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-            <td><span class="status-badge">⏳ Dalam Proses</span></td>
-        </tr>
-    `;
-}).join('');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <!-- Favicon dalam folder image/ -->
+    <link rel="icon" type="image/x-icon" href="image/favicon.ico">
+    <link rel="shortcut icon" href="image/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-16x16.png">
+    <link rel="manifest" href="image/site.webmanifest">
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Budget Tracker · Unit Projek Khas</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .stats-badge {
+            background: #0c2635;
+            border-radius: 60px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid #1b5e7a;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .stat-label {
+            color: var(--cyan);
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
+        .amount {
+            font-weight: 700;
+            color: var(--cyan);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            background: #102531;
+            border-radius: 24px;
+            padding: 0.2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 900px;
+            cursor: pointer;
+        }
+        
+        th {
+            background: #06313f;
+            color: var(--cyan);
+            padding: 0.8rem;
+            border-bottom: 3px solid var(--cyan);
+        }
+        
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #1d4b5e;
+        }
+        
+        tr:hover td {
+            background: #1b4050;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .pagination-btn {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .pagination-info {
+            color: white;
+            font-weight: 500;
+        }
+
+        .stat-separator {
+            width: 2px;
+            height: 40px;
+            background: #1b5e7a;
+            margin: 0 0.5rem;
+        }
+        
+        .filter-select {
+            background: #1e3f4e;
+            border: 2px solid var(--cyan);
+            color: white;
+            padding: 0.7rem 2rem 0.7rem 1rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            min-width: 180px;
+        }
+        
+        .filter-reset {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+        
+        .filter-reset:hover {
+            background: var(--cyan);
+            color: #0b141c;
+        }
+
+        /* ========== POPUP DETAIL ========== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .popup-card {
+            background: linear-gradient(145deg, #0b2635, #123645);
+            border: 2px solid var(--cyan);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 50px rgba(0,188,212,0.3);
+            position: relative;
+        }
+        
+        .popup-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(145deg, #0b2635, #123645);
+            padding: 1.2rem 1.5rem;
+            border-bottom: 2px solid var(--cyan);
+            border-radius: 28px 28px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .popup-header h3 {
+            color: var(--cyan);
+            font-size: 1.3rem;
+            margin: 0;
+            padding-right: 2rem;
+        }
+        
+        .popup-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            line-height: 1;
+            padding: 0.3rem;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .popup-close:hover {
+            color: var(--cyan);
+            background: rgba(0, 188, 212, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .popup-body {
+            padding: 1.5rem;
+        }
+        
+        .detail-row {
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #1c5568;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .detail-value {
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #e0edf5;
+        }
+        
+        .btn-popup-tutup {
+            background: var(--cyan);
+            color: #0b141c;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            transition: 0.2s;
+        }
+        
+        .btn-popup-tutup:hover {
+            background: transparent;
+            color: var(--cyan);
+            border: 2px solid var(--cyan);
+        }
+        
+        .popup-card::-webkit-scrollbar {
+            width: 6px;
+        }
+        .popup-card::-webkit-scrollbar-track {
+            background: #1a2833;
+            border-radius: 10px;
+        }
+        .popup-card::-webkit-scrollbar-thumb {
+            background: var(--cyan);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="logo-area">
+            <img class="logo-img" src="image/logo-fpm.png" alt="Logo" onerror="this.src='https://via.placeholder.com/48x48/00bcd4/ffffff?text=UPK';">
+            <span class="title-unit">UNIT PROJEK KHAS</span>
+        </div>
+        <div class="nav-tabs">
+            <a href="index.html"><button class="nav-btn"><i class="fas fa-home"></i> HOME</button></a>
+            <a href="inovasi.html"><button class="nav-btn"><i class="fas fa-flask"></i> PRODUK INOVASI</button></a>
+            <a href="budget.html"><button class="nav-btn active"><i class="fas fa-coins"></i> BUDGET TRACKER</button></a>
+            <a href="paten.html"><button class="nav-btn"><i class="fas fa-crown"></i> PRODUK PATEN</button></a>
+            <a href="sop.html"><button class="nav-btn"><i class="fas fa-file-alt"></i> SOP & BORANG</button></a>
+            <a href="coe.html"><button class="nav-btn"><i class="fas fa-star"></i> COE</button></a>
+        </div>
+    </div>
+
+    <!-- POPUP DETAIL PRODUK -->
+    <div id="detailPopup" class="popup-overlay">
+        <div class="popup-card" id="detailPopupContent">
+            <!-- Akan diisi JavaScript -->
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-coins"></i> BUDGET TRACKER INOVASI 2026</div>
+            
+            <!-- Stats Overview -->
+            <div class="stats-badge">
+                <div class="stat-item">
+                    <i class="fas fa-flask" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Bajet Penyelidikan</div>
+                        <div class="stat-value">RM 206,000.00</div>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <i class="fas fa-piggy-bank" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Bajet Tersedia</div>
+                        <div class="stat-value" id="bajetTersedia">RM 193,600.00</div>
+                    </div>
+                </div>
+                
+                <div class="stat-separator"></div>
+                
+                <div class="stat-item">
+                    <i class="fas fa-wallet" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Total Permohonan</div>
+                        <div class="stat-value" id="totalPermohonan">0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <i class="fas fa-coins" style="color: var(--cyan); font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Jumlah Permohonan</div>
+                        <div class="stat-value" id="totalBudget">RM 0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <i class="fas fa-clock" style="color: #ffa500; font-size: 1.5rem;"></i>
+                    <div>
+                        <div class="stat-label">Dalam Proses</div>
+                        <div class="stat-value" id="totalProses">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filter-row">
+                <select id="wilayahFilter" class="filter-select">
+                    <option value="SEMUA">Semua Wilayah</option>
+                </select>
+                
+                <button class="filter-reset" onclick="resetFilters()"><i class="fas fa-undo-alt"></i> Reset</button>
+            </div>
+            
+            <!-- Table -->
+            <div class="table-responsive">
+                 <table>
+                    <thead>
+                         <tr>
+                            <th>Bil</th>
+                            <th>Wilayah</th>
+                            <th>Nama Projek</th>
+                            <th>Kategori</th>
+                            <th>Nilai (RM)</th>
+                            <th>Status</th>
+                         </tr>
+                    </thead>
+                    <tbody id="budgetTableBody"></tbody>
+                 </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 2</span>
+                <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <p style="text-align: center; margin-top: 1rem; color: var(--cyan); font-size: 0.8rem;">
+                <i class="fas fa-hand-pointer"></i> Klik pada baris untuk lihat detail lengkap<br>
+                * Bajet tersedia = RM206,000 - RM12,400 (ubahsuai)
+            </p>
+        </div>
+    </div>
+    
+    <footer>
+        <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
+    </footer>
+</div>
+
+<script>
+    // ========== BAJET TETAP ==========
+    const BAJET_PENYELIDIKAN = 206000;
+    const KOS_UBAHSUAI = 12400;
+    const BAJET_TERSEDIA_FIX = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
+
+    // ========== DATA PERMOHONAN (27 PRODUK - ADA PERMOHONAN SAHAJA) ==========
+    const budgetData = [
+        // Mempaga (1)
+        { bil: 1, wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", amount: 4995, inventor: "E-checkroll Team", rancangan: "Fpmsb Lurah Bilut", objektif: "Alternatif Kepada Buku Pocket Checroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll" },
+        // Johor Bahru (3)
+        { bil: 2, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", amount: 7600, inventor: "Pluvio Team", rancangan: "Fpmsb Gugusan Tenggaroh", objektif: "Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik" },
+        { bil: 3, wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Inovasi Operasi Ladang", amount: 8200, inventor: "Tunggal Team", rancangan: "Fpmsb Johor Bahru", objektif: "Meningkatkan Kecekapan Pengurusan Memantau Paras Air Dalam Tanah" },
+        { bil: 4, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Digital & Data", amount: 10400, inventor: "Wira Team", rancangan: "Gugusan Air Tawar", objektif: "Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah" },
+        // Kuantan (10)
+        { bil: 5, wilayah: "Kuantan", projek: "Finger-kit Note", kategori: "ESG & Kesejahteraan", amount: 1400, inventor: "Finger-kit Team", rancangan: "Bukit Kuantan", objektif: "Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat." },
+        { bil: 6, wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "ESG & Kesejahteraan", amount: 4000, inventor: "Jumbo Team", rancangan: "Bukit Kuantan", objektif: "Mengesan Kehadiran Gajah Liar Lebih Awal, Menghantar Amaran Segera, Mengurangkan Kerosakan Pokok Sawit" },
+        { bil: 7, wilayah: "Kuantan", projek: "Agromeasure Pro", kategori: "Inovasi Operasi Ladang", amount: 2200, inventor: "Agromeasure Team", rancangan: "Bukit Kuantan/Sg. Panching Timur", objektif: "Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang, Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang" },
+        { bil: 8, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Kejuruteraan & Infrastruktur", amount: 5000, inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
+        { bil: 9, wilayah: "Kuantan", projek: "Mud Grip", kategori: "Inovasi Operasi Ladang", amount: 1000, inventor: "Mud Grip Team", rancangan: "Fpm Selancar 4/5", objektif: "Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan" },
+        { bil: 10, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Digital & Data", amount: 4000, inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
+        { bil: 11, wilayah: "Kuantan", projek: "Ryg Platform Counting", kategori: "Inovasi Operasi Ladang", amount: 5000, inventor: "Ryg Team", rancangan: "Fpm Selancar 4/5", objektif: "Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit." },
+        { bil: 12, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "ESG & Kesejahteraan", amount: 500, inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
+        { bil: 13, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Inovasi Operasi Ladang", amount: 2500, inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
+        { bil: 14, wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", kategori: "Inovasi Operasi Ladang", amount: 1500, inventor: "Smart Water Team", rancangan: "Agropolitan", objektif: "Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon" },
+        // Segamat (10)
+        { bil: 15, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Inovasi Operasi Ladang", amount: 850, inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
+        { bil: 16, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "ESG & Kesejahteraan", amount: 96.16, inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
+        { bil: 17, wilayah: "Segamat", projek: "ANIMO", kategori: "Inovasi Operasi Ladang", amount: 15000, inventor: "ANIMO Team", rancangan: "ULU DENGAR", objektif: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
+        { bil: 18, wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", kategori: "ESG & Kesejahteraan", amount: 1200, inventor: "Sarang Team", rancangan: "NITAR 1", objektif: "Memudahkan Kerja Bancian Dan Penjagaan" },
+        { bil: 19, wilayah: "Segamat", projek: "E-HASIL", kategori: "Digital & Data", amount: 0, inventor: "E-HASIL Team", rancangan: "TENANG", objektif: "Pantas dan mudah untuk lihat hasil - Alat mesra pengguna - Alternatif ke arah atas talian" },
+        { bil: 20, wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Inovasi Operasi Ladang", amount: 150, inventor: "Roller Team", rancangan: "fpmsb lenga", objektif: "Meningkatkan kecekapan mengutip biji relai" },
+        { bil: 21, wilayah: "Segamat", projek: "E-ATTENDANCE", kategori: "Digital & Data", amount: 110, inventor: "Attendance Team", rancangan: "NITAR 1", objektif: "Memudahkan Pengambilan Rekod Kehadiran Pekerja Dengan Menggunakan Telefon Bimbit Pekerja" },
+        { bil: 22, wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", kategori: "Inovasi Operasi Ladang", amount: 2000, inventor: "Rain Guard Team", rancangan: "FPMSB HUTAN PERCHA", objektif: "Rain Guard Untuk Perlindungan" },
+        { bil: 23, wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", kategori: "Inovasi Operasi Ladang", amount: 2500, inventor: "Seren Team", rancangan: "FPMSB KAHANG TIMUR", objektif: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
+        { bil: 24, wilayah: "Segamat", projek: "CHECKING CHIPPING", kategori: "Inovasi Operasi Ladang", amount: 10, inventor: "Chipping Team", rancangan: "FPMSB SRI LEDANG", objektif: "Memudahkan Penyemakan Standard Chipping" },
+        // Raja Alias (2)
+        { bil: 25, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Inovasi Operasi Ladang", amount: 2080, inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
+        { bil: 26, wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", kategori: "Inovasi Operasi Ladang", amount: 4350, inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" },
+        // Terengganu (1)
+        { bil: 27, wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", amount: 3960, inventor: "E-trespasser Team", rancangan: "Fpmsb Bukit Bading", objektif: "Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda" }
+    ];
+
+    let currentPage = 1;
+    const rowsPerPage = 15;
+    let filteredData = [...budgetData];
+
+    // ========== FUNGSI POPUP DETAIL ==========
+    function showDetailPopup(bil) {
+        const item = budgetData.find(i => i.bil === bil);
+        if (!item) return;
+        
+        const popupContent = document.getElementById('detailPopupContent');
+        popupContent.innerHTML = `
+            <div class="popup-header">
+                <h3><i class="fas fa-info-circle"></i> ${item.projek}</h3>
+                <button class="popup-close" onclick="closeDetailPopup()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="popup-body">
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-tag"></i> Nama Projek</div>
+                    <div class="detail-value">${item.projek}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-map-marker-alt"></i> Wilayah</div>
+                    <div class="detail-value">${item.wilayah}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-hashtag"></i> Bil</div>
+                    <div class="detail-value">${item.bil}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-building"></i> Rancangan</div>
+                    <div class="detail-value">${item.rancangan || "Tiada maklumat"}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-user"></i> Inventor / Pencipta</div>
+                    <div class="detail-value">${item.inventor || "Tiada maklumat"}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-tags"></i> Kategori</div>
+                    <div class="detail-value">${item.kategori}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-coins"></i> Nilai Permohonan (RM)</div>
+                    <div class="detail-value">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-clock"></i> Status</div>
+                    <div class="detail-value"><span class="status-badge">⏳ Dalam Proses</span></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-bullseye"></i> Objektif & Matlamat</div>
+                    <div class="detail-value">${item.objektif || "Tiada keterangan"}</div>
+                </div>
+                <button class="btn-popup-tutup" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i> Tutup</button>
+            </div>
+        `;
+        
+        document.getElementById('detailPopup').style.display = 'flex';
+    }
+
+    function closeDetailPopup() {
+        document.getElementById('detailPopup').style.display = 'none';
+    }
+
+    // ========== POPULATE WILAYAH FILTER ==========
+    function populateWilayahFilter() {
+        const wilayahSet = new Set(budgetData.map(item => item.wilayah));
+        const sortedWilayah = Array.from(wilayahSet).sort();
+        const filterSelect = document.getElementById('wilayahFilter');
+        
+        while (filterSelect.options.length > 1) {
+            filterSelect.remove(1);
+        }
+        
+        sortedWilayah.forEach(wilayah => {
+            const option = document.createElement('option');
+            option.value = wilayah;
+            option.textContent = wilayah;
+            filterSelect.appendChild(option);
+        });
+    }
+
+    // ========== UPDATE STATS ==========
+    function updateStats(data) {
+        const totalPermohonan = data.length;
+        const totalBudget = data.reduce((sum, item) => sum + item.amount, 0);
+        
+        document.getElementById('totalPermohonan').textContent = totalPermohonan;
+        document.getElementById('totalBudget').textContent = 'RM ' + totalBudget.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('totalProses').textContent = totalPermohonan;
+        document.getElementById('bajetTersedia').textContent = 'RM ' + BAJET_TERSEDIA_FIX.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+
+    // ========== RENDER TABLE ==========
+    function renderTable() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const pageData = filteredData.slice(start, end);
+        
+        const tbody = document.getElementById('budgetTableBody');
+        tbody.innerHTML = pageData.map(item => {
+            return `
+                <tr onclick="showDetailPopup(${item.bil})">
+                    <td>${item.bil}</td>
+                    <td>${item.wilayah}</td>
+                    <td>${item.projek}</td>
+                    <td>${item.kategori}</td>
+                    <td class="amount">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td><span class="status-badge">⏳ Dalam Proses</span></td>
+                </tr>
+            `;
+        }).join('');
+        
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+        
+        updateStats(filteredData);
+    }
+
+    // ========== APPLY FILTERS ==========
+    function applyFilters() {
+        const wilayah = document.getElementById('wilayahFilter').value;
+        
+        filteredData = wilayah === "SEMUA" 
+            ? [...budgetData] 
+            : budgetData.filter(item => item.wilayah === wilayah);
+        
+        currentPage = 1;
+        renderTable();
+    }
+
+    window.changePage = function(direction) {
+        const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        currentPage += direction;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderTable();
+    };
+
+    window.resetFilters = function() {
+        document.getElementById('wilayahFilter').value = "SEMUA";
+        filteredData = [...budgetData];
+        currentPage = 1;
+        renderTable();
+    };
+
+    document.getElementById('wilayahFilter').addEventListener('change', applyFilters);
+
+    populateWilayahFilter();
+    renderTable();
+    
+    // Expose functions to global scope
+    window.showDetailPopup = showDetailPopup;
+    window.closeDetailPopup = closeDetailPopup;
+</script>
+</body>
+</html>
