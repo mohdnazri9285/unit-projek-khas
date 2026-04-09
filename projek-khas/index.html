@@ -540,7 +540,7 @@
                     </div>
                     <div class="kategori-grid" id="kategoriContainer"></div>
                     <div class="kategori-total">
-                        Jumlah: <span id="totalProduk">45</span> produk
+                        Jumlah: <span id="totalProduk">48</span> produk
                     </div>
                 </div>
             </div>
@@ -620,63 +620,67 @@
 
 <!-- JAVASCRIPT -->
 <script>
-    // ========== DATA INOVASI 2026 (45 produk - dengan J5/4 SMART RAIN GAUGE) ==========
+    // ========== DATA INOVASI 2026 (48 produk) ==========
     const inovasiData = [
         // Gua Musang (3 produk)
         {bil:1,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 3",inventor:"Manpower Rekod (Mpr)",projek:"Manpower Rekod (Mpr)",kategori:"Digital & Data",obj:"Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional (Manual/kertas) Kepada Ekosistem Digital."},
         {bil:2,wilayah:"Gua Musang",rancangan:"Fpmsb Kemahang 1",inventor:"Ibms",projek:"Intergrated Bunch Monitoring Sistem (IBMS)",kategori:"Digital & Data",obj:"Mempercepatkan Proses Membuat Rumusan Bbc"},
         {bil:3,wilayah:"Gua Musang",rancangan:"Fpmsb Chiku 5",inventor:"Efuel Tracer",projek:"J-Fosil",kategori:"Digital & Data",obj:"Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko"},
-        // Mempaga (5 produk)
+        // Mempaga (8 produk - asal 5 + 3 baru)
         {bil:4,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Magnetobucket",projek:"Magnetobucket",kategori:"Inovasi Operasi Ladang",obj:"Membantu Memudahkan Kerja - Kerja Mengutip Dan Mengasingkan Biji Relai Di Lorong Tuai & Di Platform - Meminimumkan Kotoran/5ampah Daripada Turut Dikutip Ber5ama Biji Relai Melalui Sistem Penapisan - Dapat Membantu Mengurangkan Vops Di Setiap Bulatan Pokok"},
         {bil:5,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Klau Cross Water",projek:"Klau Cross Water",kategori:"Inovasi Operasi Ladang",obj:"Merupakan 1 Sistem Penghadang Air (Water Barrier) - Menangani Masalah Tebing Kolam Pecah Secara Pantas - Mencegah Hakisan Tanah Yang Lebih Serius - Meminimumkan Pembaziran Sumber Air - Menyediakan Penyelesaian 'Fast Response'"},
         {bil:6,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Predanest-klau",projek:"Predanest-klau",kategori:"ESG & Kesejahteraan",obj:"Menyediakan Rumah Selamat Dan Mudah Penyelenggaraan Untuk Burung Pungguk Di Kawasan Ladang - Menggalakan Burung Pungguk Menjadi Predator Semula Jadi Bagi Mengawal Populasi Tikus - Meningkatkan Ekosistem Ladang Yang Seimbang Dan Mesra Alam"},
         {bil:7,wilayah:"Mempaga",rancangan:"Fpmsb Lembah Klau",inventor:"Rodentxklau",projek:"Rodentxklau (Smart Rat Trap Box)",kategori:"Inovasi Operasi Ladang",obj:"Mengoptimumkan Kos Kawalan Perosak Jangka Masa Panjang - Mengurangkan Populasi Tikus Di Kawasan Ladang Secara Sistematik & Berkesan - Reka Bentuk Yang Tidak Memerlukan Kekerapan Dalam Pengunaan Kos Penyelenggaraan - Reka Bentuk Dilengkapi Septik Tank Bagi Memudahkan Proses Penguraian Semula Bangkai Tikus"},
         {bil:8,wilayah:"Mempaga",rancangan:"Fpmsb Lurah Bilut",inventor:"E-checkroll",projek:"E-checkroll",kategori:"Digital & Data",obj:"Alternatif Kepada Buku Pocket Checroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll"},
+        // PRODUK BARU Mempaga (3)
+        {bil:9,wilayah:"Mempaga",rancangan:"FPMSB BUKIT KEPAYANG",inventor:"-",projek:"Sambung Galah Tanpa Klip",kategori:"Inovasi Operasi Ladang",obj:"MENYAMBUNG GALAH PENUAIAN TANPA KLIP - MEMPERCEPAT PROSES MELARAS KETINGGIAN GALAH - DAPAT MEMINDAHKAN GALAH DARI POKOK KE POKOK DENGAN PANTAS"},
+        {bil:10,wilayah:"Mempaga",rancangan:"FPMSB MAYAM",inventor:"-",projek:"Pengawal Tangkai Panjang",kategori:"Inovasi Operasi Ladang",obj:"KAWALAN TANGKAI PANJANG - EVAKUASI BTS KE LORONG TUAI - MELAKSANA 3 KERJA DALAM SATU MASA"},
+        {bil:11,wilayah:"Mempaga",rancangan:"FPMSB BUKIT MENDI",inventor:"-",projek:"Sumber Air Mudah Alih",kategori:"Inovasi Operasi Ladang",obj:"MENYELESAIKAN MASALAH SUMBER AIR DI KAWASAN SULAMAN DAN PEMBANGUNAN KAWASAN TERES - MUDAH ALIH"},
         // Johor Bahru (3 produk)
-        {bil:9,wilayah:"Johor Bahru",rancangan:"Fpmsb Gugusan Tenggaroh",inventor:"Pluvio Data Sense",projek:"Pluvio Data Sense (Pds)",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik"},
-        {bil:10,wilayah:"Johor Bahru",rancangan:"Fpmsb Johor Bahru",inventor:"Tunggal Piezometer",projek:"Tunggal Piezometer",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan Memantau Paras Air Dalam Tanah"},
-        {bil:11,wilayah:"Johor Bahru",rancangan:"Gugusan Air Tawar",inventor:"Wira Soil Lestari",projek:"Wira Soil Lestari",kategori:"Digital & Data",obj:"Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah"},
+        {bil:12,wilayah:"Johor Bahru",rancangan:"Fpmsb Gugusan Tenggaroh",inventor:"Pluvio Data Sense",projek:"Pluvio Data Sense (Pds)",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik"},
+        {bil:13,wilayah:"Johor Bahru",rancangan:"Fpmsb Johor Bahru",inventor:"Tunggal Piezometer",projek:"Tunggal Piezometer",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan Kecekapan Pengurusan Memantau Paras Air Dalam Tanah"},
+        {bil:14,wilayah:"Johor Bahru",rancangan:"Gugusan Air Tawar",inventor:"Wira Soil Lestari",projek:"Wira Soil Lestari",kategori:"Digital & Data",obj:"Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah"},
         // Kuantan (10 produk)
-        {bil:12,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Finger-kit Note",projek:"Finger-kit Note",kategori:"ESG & Kesejahteraan",obj:"Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat."},
-        {bil:13,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Jumbo Informer",projek:"Jumbo Informer",kategori:"ESG & Kesejahteraan",obj:"A. Mengesan Kehadiran Gajah Liar Lebih Awal Dikawasan Sempadan Ladang, B. Menghantar Amaran Segera Kepada Pengurusan Ladang, C. Mengurangkan Kerosakan Pokok Sawit Akibat Serangan Gajah, 50-80% Kerosakan Tanaman Dalam Tempoh 1 Tahun, D. Meningkatkan Keselamatan Pekerja, Peneroka Dan Orang Ramai Di Ladang Dan Kawasan Kampung, E. Menyokong Usaha Mitigasi Konflik Manusia Hidupan Liar Selaras Dengan Garis Panduan Jabatan Perlindungan Hidupan Liar Dan Taman Negara."},
-        {bil:14,wilayah:"Kuantan",rancangan:"Bukit Kuantan/Sg. Panching Timur",inventor:"Agromeasure Pro",projek:"Agromeasure Pro",kategori:"Inovasi Operasi Ladang",obj:"A. Membangunkan Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang. B. Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang. C. Mengurangkan Ralat Ukuran Manual Dan Pergantungan Kepada Anggaran Visual"},
-        {bil:15,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Bailey Bridge",projek:"Bailey Bridge",kategori:"Kejuruteraan & Infrastruktur",obj:"Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang"},
-        {bil:16,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Mud Grip",projek:"Mud Grip",kategori:"Inovasi Operasi Ladang",obj:"Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan"},
-        {bil:17,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Spy Cam Bbc",projek:"Spy Cam Bbc",kategori:"Digital & Data",obj:"Bertujuan Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit Melalui Penggunaan Kamera Endoscope Dan Kecerdasan Buatan (AI)"},
-        {bil:18,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Ryg Platform Counting",projek:"Ryg Platform Counting",kategori:"Inovasi Operasi Ladang",obj:"Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit."},
-        {bil:19,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Agro Bait Box Cencus",projek:"Agro Bait Box Cencus (Abc)",kategori:"ESG & Kesejahteraan",obj:"Ia Dapat Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang"},
-        {bil:20,wilayah:"Kuantan",rancangan:"Fpmsb Agropolitan Tg. Batu",inventor:"Agro Water Level",projek:"Agro Water Level",kategori:"Inovasi Operasi Ladang",obj:"Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang"},
-        {bil:21,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Smart Water System Mini",projek:"Smart Water System Mini (Swsm)",kategori:"Inovasi Operasi Ladang",obj:"Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon"},
+        {bil:15,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Finger-kit Note",projek:"Finger-kit Note",kategori:"ESG & Kesejahteraan",obj:"Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat."},
+        {bil:16,wilayah:"Kuantan",rancangan:"Bukit Kuantan",inventor:"Jumbo Informer",projek:"Jumbo Informer",kategori:"ESG & Kesejahteraan",obj:"A. Mengesan Kehadiran Gajah Liar Lebih Awal Dikawasan Sempadan Ladang, B. Menghantar Amaran Segera Kepada Pengurusan Ladang, C. Mengurangkan Kerosakan Pokok Sawit Akibat Serangan Gajah, 50-80% Kerosakan Tanaman Dalam Tempoh 1 Tahun, D. Meningkatkan Keselamatan Pekerja, Peneroka Dan Orang Ramai Di Ladang Dan Kawasan Kampung, E. Menyokong Usaha Mitigasi Konflik Manusia Hidupan Liar Selaras Dengan Garis Panduan Jabatan Perlindungan Hidupan Liar Dan Taman Negara."},
+        {bil:17,wilayah:"Kuantan",rancangan:"Bukit Kuantan/Sg. Panching Timur",inventor:"Agromeasure Pro",projek:"Agromeasure Pro",kategori:"Inovasi Operasi Ladang",obj:"A. Membangunkan Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang. B. Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang. C. Mengurangkan Ralat Ukuran Manual Dan Pergantungan Kepada Anggaran Visual"},
+        {bil:18,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Bailey Bridge",projek:"Bailey Bridge",kategori:"Kejuruteraan & Infrastruktur",obj:"Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang"},
+        {bil:19,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Mud Grip",projek:"Mud Grip",kategori:"Inovasi Operasi Ladang",obj:"Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan"},
+        {bil:20,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Spy Cam Bbc",projek:"Spy Cam Bbc",kategori:"Digital & Data",obj:"Bertujuan Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit Melalui Penggunaan Kamera Endoscope Dan Kecerdasan Buatan (AI)"},
+        {bil:21,wilayah:"Kuantan",rancangan:"Fpm Selancar 4/5",inventor:"Ryg Platform Counting",projek:"Ryg Platform Counting",kategori:"Inovasi Operasi Ladang",obj:"Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit."},
+        {bil:22,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Agro Bait Box Cencus",projek:"Agro Bait Box Cencus (Abc)",kategori:"ESG & Kesejahteraan",obj:"Ia Dapat Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang"},
+        {bil:23,wilayah:"Kuantan",rancangan:"Fpmsb Agropolitan Tg. Batu",inventor:"Agro Water Level",projek:"Agro Water Level",kategori:"Inovasi Operasi Ladang",obj:"Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang"},
+        {bil:24,wilayah:"Kuantan",rancangan:"Agropolitan",inventor:"Smart Water System Mini",projek:"Smart Water System Mini (Swsm)",kategori:"Inovasi Operasi Ladang",obj:"Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon"},
         // Segamat (10 produk)
-        {bil:22,wilayah:"Segamat",rancangan:"Fpmsb Maokil 1",inventor:"Rootex",projek:"Rootex (Root Extraction Tool)",kategori:"Inovasi Operasi Ladang",obj:"Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai - Pertanian Hijau Lestari"},
-        {bil:23,wilayah:"Segamat",rancangan:"Fpmsb Medoi",inventor:"Eogs",projek:"Eogs (Eco Owl Guard System)",kategori:"ESG & Kesejahteraan",obj:"Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang."},
-        {bil:24,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"ANIMO",projek:"ANIMO",kategori:"Inovasi Operasi Ladang",obj:"Memberi Maklumat Awal Kemasukan Haiwan Liar"},
-        {bil:25,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"Sarang Burung Boleh Laras",projek:"Sarang Burung Boleh Laras",kategori:"ESG & Kesejahteraan",obj:"Memudahkan Kerja Bancian Dan Penjagaan"},
-        {bil:26,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"E-HASIL",projek:"E-HASIL",kategori:"Digital & Data",obj:"Pantas dan mudah untuk lihat hasil"},
-        {bil:27,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"Roller Biji Relai",projek:"Roller Biji Relai",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan kecekapan mengutip biji relai"},
-        {bil:28,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"E-ATTENDANCE",projek:"E-ATTENDANCE",kategori:"Digital & Data",obj:"Pengambilan Rekod Kehadiran Pekerja"},
-        {bil:29,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"PROTECTING HAVEST RUBBER TAPPING RAIN GUARD",projek:"PROTECTING HAVEST RUBBER TAPPING RAIN GUARD",kategori:"Inovasi Operasi Ladang",obj:"Rain Guard Untuk Perlindungan"},
-        {bil:30,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"SEREN PENGHALAU GAJAH",projek:"SEREN PENGHALAU GAJAH",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Kemasukan Gajah Ke Dalam Ladang"},
-        {bil:31,wilayah:"Segamat",rancangan:"Fpmsb",inventor:"CHECKING CHIPPING",projek:"CHECKING CHIPPING",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Penyemakan Standard Chipping"},
+        {bil:25,wilayah:"Segamat",rancangan:"Fpmsb Maokil 1",inventor:"Rootex",projek:"Rootex (Root Extraction Tool)",kategori:"Inovasi Operasi Ladang",obj:"Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai - Pertanian Hijau Lestari"},
+        {bil:26,wilayah:"Segamat",rancangan:"Fpmsb Medoi",inventor:"Eogs",projek:"Eogs (Eco Owl Guard System)",kategori:"ESG & Kesejahteraan",obj:"Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang."},
+        {bil:27,wilayah:"Segamat",rancangan:"ULU DENGAR",inventor:"ANIMO",projek:"ANIMO",kategori:"Inovasi Operasi Ladang",obj:"Memberi Maklumat Awal Kemasukan Haiwan Liar"},
+        {bil:28,wilayah:"Segamat",rancangan:"NITAR 1",inventor:"Sarang Burung Boleh Laras",projek:"SARANG BURUNG BOLEH LARAS",kategori:"ESG & Kesejahteraan",obj:"Memudahkan Kerja Bancian Dan Penjagaan"},
+        {bil:29,wilayah:"Segamat",rancangan:"TENANG",inventor:"E-HASIL",projek:"E-HASIL",kategori:"Digital & Data",obj:"Pantas dan mudah untuk lihat hasil - Alat mesra pengguna - Alternatif ke arah atas talian"},
+        {bil:30,wilayah:"Segamat",rancangan:"fpmsb lenga",inventor:"Roller Biji Relai",projek:"Roller Biji Relai",kategori:"Inovasi Operasi Ladang",obj:"Meningkatkan kecekapan mengutip biji relai"},
+        {bil:31,wilayah:"Segamat",rancangan:"NITAR 1",inventor:"E-ATTENDANCE",projek:"E-ATTENDANCE",kategori:"Digital & Data",obj:"Memudahkan Pengambilan Rekod Kehadiran Pekerja Dengan Menggunakan Telefon Bimbit Pekerja"},
+        {bil:32,wilayah:"Segamat",rancangan:"FPMSB HUTAN PERCHA",inventor:"PROTECTING HAVEST",projek:"PROTECTING HAVEST RUBBER TAPPING RAIN GUARD",kategori:"Inovasi Operasi Ladang",obj:"Rain Guard Untuk Perlindungan"},
+        {bil:33,wilayah:"Segamat",rancangan:"FPMSB KAHANG TIMUR",inventor:"SEREN PENGHALAU GAJAH",projek:"SEREN PENGHALAU GAJAH",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Kemasukan Gajah Ke Dalam Ladang"},
+        {bil:34,wilayah:"Segamat",rancangan:"FPMSB SRI LEDANG",inventor:"CHECKING CHIPPING",projek:"CHECKING CHIPPING",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Penyemakan Standard Chipping"},
         // Alor Setar (6 produk)
-        {bil:32,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"2-stroke",projek:"2-stroke",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Ablation Dijalankan - Mengelakkan Pokok Daripada Cedera"},
-        {bil:33,wilayah:"Alor Setar",rancangan:"Fpmsb Teloi Kanan",inventor:"Smart Terrace Tool",projek:"Smart Terrace Tool",kategori:"Inovasi Operasi Ladang",obj:"Menentukan Jarak Kecuraman Teres Dengan Lebih Tepat - Dapat Menentukan Lebar Teres Mengikut Ukuran Yang Ditetapkan"},
-        {bil:34,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"Sharp Shooter Seed",projek:"Sharp Shooter Seed (3s)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Proses Penanaman Kpb. - Dapat Mengurangkan Kuantiti Pekerja Penanaman Kpb"},
-        {bil:35,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-perolehan",projek:"E-perolehan",kategori:"Digital & Data",obj:"Memastikan Proses Pengurusan Dokumen Berjalan Lancar"},
-        {bil:36,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-quit",projek:"E-quit",kategori:"Digital & Data",obj:"Memastikan Kualiti Btb Dihantar Ke Kilang 100% Baik - Memastikan Tiada Masalah Backlog Di Ladang"},
-        {bil:37,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-mandor",projek:"E-mandor",kategori:"Digital & Data",obj:"Data Yang Tepat Dan Cepat Diterima Dari Mandor Ladang Kepada Pengurusan"},
+        {bil:35,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"2-stroke",projek:"2-stroke",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Ablation Dijalankan - Mengelakkan Pokok Daripada Cedera"},
+        {bil:36,wilayah:"Alor Setar",rancangan:"Fpmsb Teloi Kanan",inventor:"Smart Terrace Tool",projek:"Smart Terrace Tool",kategori:"Inovasi Operasi Ladang",obj:"Menentukan Jarak Kecuraman Teres Dengan Lebih Tepat - Dapat Menentukan Lebar Teres Mengikut Ukuran Yang Ditetapkan"},
+        {bil:37,wilayah:"Alor Setar",rancangan:"Fpmsb Lubuk Merbau",inventor:"Sharp Shooter Seed",projek:"Sharp Shooter Seed (3s)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Proses Penanaman Kpb. - Dapat Mengurangkan Kuantiti Pekerja Penanaman Kpb"},
+        {bil:38,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-perolehan",projek:"E-perolehan",kategori:"Digital & Data",obj:"Memastikan Proses Pengurusan Dokumen Berjalan Lancar"},
+        {bil:39,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-quit",projek:"E-quit",kategori:"Digital & Data",obj:"Memastikan Kualiti Btb Dihantar Ke Kilang 100% Baik - Memastikan Tiada Masalah Backlog Di Ladang"},
+        {bil:40,wilayah:"Alor Setar",rancangan:"Wilayah Alor Setar",inventor:"E-mandor",projek:"E-mandor",kategori:"Digital & Data",obj:"Data Yang Tepat Dan Cepat Diterima Dari Mandor Ladang Kepada Pengurusan"},
         // Raja Alias (2 produk)
-        {bil:38,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"Fertilizer Box",projek:"Fertilizer Box",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual"},
-        {bil:39,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"ELFC",projek:"Escalator Loose Friut Collector (ELFC)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori"},
+        {bil:41,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"Fertilizer Box",projek:"Fertilizer Box",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual"},
+        {bil:42,wilayah:"Raja Alias",rancangan:"Fpmsb Serting Hilir 1,2,3",inventor:"ELFC",projek:"Escalator Loose Friut Collector (ELFC)",kategori:"Inovasi Operasi Ladang",obj:"Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori"},
         // Trolak (2 produk)
-        {bil:40,wilayah:"Trolak",rancangan:"Zon Trolak / Zon Hulu Perak",inventor:"1dct",projek:"1 Document Centre Wilayah Trolak (1dct)",kategori:"Digital & Data",obj:"Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan"},
-        {bil:41,wilayah:"Trolak",rancangan:"Fpmsb",inventor:"sato chamber",projek:"sato chamber",kategori:"Kejuruteraan & Infrastruktur",obj:"Alat pengukur sudut kecembungan jalan"},
+        {bil:43,wilayah:"Trolak",rancangan:"Zon Trolak / Zon Hulu Perak",inventor:"1dct",projek:"1 Document Centre Wilayah Trolak (1dct)",kategori:"Digital & Data",obj:"Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan"},
+        {bil:44,wilayah:"Trolak",rancangan:"zon trolak",inventor:"sato chamber",projek:"sato chamber",kategori:"Kejuruteraan & Infrastruktur",obj:"Alat pengukur sudut kecembungan jalan pertanian"},
         // Terengganu (2 produk)
-        {bil:42,wilayah:"Terengganu",rancangan:"Fpmsb Bukit Bading",inventor:"E-trespasser Alert V2",projek:"E-trespasser Alert V2",kategori:"Digital & Data",obj:"Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda"},
-        {bil:43,wilayah:"Terengganu",rancangan:"Fpmsb Kerteh 5",inventor:"Tank Fertilizer (Ft)",projek:"Tank Fertilizer (Ft)",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Pembaziran Baja - Mempercepat Proses Pengagihan Baja - Mengurangkan Risiko Tumpahan Baja - Meningkatkan Produktiviti Pembajaan"},
+        {bil:45,wilayah:"Terengganu",rancangan:"Fpmsb Bukit Bading",inventor:"E-trespasser Alert V2",projek:"E-trespasser Alert V2",kategori:"Digital & Data",obj:"Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda"},
+        {bil:46,wilayah:"Terengganu",rancangan:"Fpmsb Kerteh 5",inventor:"Tank Fertilizer (Ft)",projek:"Tank Fertilizer (Ft)",kategori:"Inovasi Operasi Ladang",obj:"Mengurangkan Pembaziran Baja - Mempercepat Proses Pengagihan Baja - Mengurangkan Risiko Tumpahan Baja - Meningkatkan Produktiviti Pembajaan"},
         // Jengka (2 produk)
-        {bil:44,wilayah:"Jengka",rancangan:"Jengka 2",inventor:"-",projek:"PERUMAH AIR DAN BAJA",kategori:"Inovasi Operasi Ladang",obj:"Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama"},
-        {bil:45,wilayah:"Jengka",rancangan:"JENGKA 5/4",inventor:"-",projek:"J5/4 SMART RAIN GAUGE",kategori:"Inovasi Operasi Ladang",obj:"MENGUKUR JUMLAH HUJAN SECARA AUTOMATIK, MEMBANTU MEMBERI AMARAN AWAL HUJAN LEBAT ATAU BANJIR"}
+        {bil:47,wilayah:"Jengka",rancangan:"JENGKA 2",inventor:"-",projek:"PERUMAH AIR DAN BAJA",kategori:"Inovasi Operasi Ladang",obj:"Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama"},
+        {bil:48,wilayah:"Jengka",rancangan:"JENGKA 5/4",inventor:"-",projek:"J5/4 SMART RAIN GAUGE",kategori:"Inovasi Operasi Ladang",obj:"MENGUKUR JUMLAH HUJAN SECARA AUTOMATIK, MEMBANTU MEMBERI AMARAN AWAL HUJAN LEBAT ATAU BANJIR"}
     ];
 
     // ========== FUNGSI POPUP KATEGORI ==========
@@ -747,13 +751,11 @@
 
     // ========== GRAF WILAYAH ==========
     function renderWilayahChart() {
-        // Kira bilangan produk setiap wilayah dari data 2026
         const wilayahCount = {};
         inovasiData.forEach(item => {
             wilayahCount[item.wilayah] = (wilayahCount[item.wilayah] || 0) + 1;
         });
         
-        // Pastikan semua 10 wilayah ada
         const semuaWilayah = ["Gua Musang", "Mempaga", "Johor Bahru", "Kuantan", "Segamat", 
                              "Alor Setar", "Raja Alias", "Trolak", "Terengganu", "Jengka"];
         
@@ -784,12 +786,11 @@
         }
     }
 
-    // ========== SLIDER AUTO dengan poster dari folder ==========
+    // ========== SLIDER AUTO ==========
     function initSlider() {
         const sliderImg = document.getElementById('sliderImage');
         const sliderCap = document.getElementById('sliderCaption');
         
-        // Senarai poster dari folder image/poster/
         const posters = [
             { src: "image/poster/ADJUSTABLE HOOK_001.png", caption: "Adjustable Hook" },
             { src: "image/poster/CATCH & CARRY_001.png", caption: "Catch & Carry" },
@@ -801,13 +802,11 @@
         
         let idx = 0;
         
-        // Set first image
         if (sliderImg) {
             sliderImg.src = posters[0].src;
             sliderCap.innerText = posters[0].caption;
         }
         
-        // Rotate every 2 seconds
         setInterval(() => {
             idx = (idx + 1) % posters.length;
             if (sliderImg) {
@@ -818,20 +817,18 @@
     }
 
     // ========== POPUP REMINDER CONTROL ==========
-    // Muncul sekali setiap session
     if (!sessionStorage.getItem('popupReminderShown')) {
         document.getElementById('reminderPopup').style.display = 'flex';
         sessionStorage.setItem('popupReminderShown', 'true');
     }
 
-    // ========== INITIALIZE SEMUA ==========
+    // ========== INITIALIZE ==========
     document.addEventListener('DOMContentLoaded', function() {
         renderKategoriStats();
         renderWilayahChart();
         initSlider();
     });
 
-    // Expose functions to global scope (untuk onclick)
     window.showKategoriPopup = showKategoriPopup;
     window.closePopup = closePopup;
     window.closeDetailPopup = closeDetailPopup;
