@@ -11,14 +11,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Produk Inovasi · Unit Projek Khas</title>
-    
+
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+
     <style>
+        /* ========== RESET & VARIABLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1219;
+            color: #e6edf3;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        :root {
+            --cyan: #00bcd4;
+            --cyan-light: #4dd0e1;
+            --carbon: #0f1a24;
+            --carbon-light: #1e2b36;
+            --white: #ffffff;
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #1a2833; }
+        ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+
+        /* ========== HEADER (STICKY) ========== */
+        .navbar {
+            background: #0b141c;
+            padding: 0.8rem 2rem;
+            border-bottom: 2px solid var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            background-color: rgba(11, 20, 28, 0.95);
+            gap: 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 48px;
+            width: auto;
+            filter: drop-shadow(0 0 6px var(--cyan));
+            border-radius: 8px;
+            background: white;
+            padding: 4px;
+            object-fit: contain;
+        }
+        .title-unit {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #fff 0%, var(--cyan) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        /* ========== NAVIGATION TABS ========== */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background: #10222e;
+            padding: 0.5rem 1rem;
+            border-radius: 48px;
+            border: 1px solid #1e3b4a;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: #a0b8c5;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .nav-btn i {
+            color: var(--cyan);
+        }
+        .nav-btn.active {
+            background: var(--cyan);
+            color: #0b141c;
+            box-shadow: 0 0 12px #00bcd4;
+        }
+        .nav-btn.active i {
+            color: #0b141c;
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .main-container {
+            flex: 1;
+            padding: 2rem 2rem 1.5rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ========== POPUP DETAIL ========== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .popup-card {
+            background: linear-gradient(145deg, #0b2635, #123645);
+            border: 2px solid var(--cyan);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 30px 50px rgba(0,188,212,0.3);
+            position: relative;
+            text-align: center;
+        }
+        .popup-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+        .popup-close:hover { color: var(--cyan); }
+        .popup-detail {
+            max-width: 500px;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        .popup-detail h3 {
+            color: var(--cyan);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-right: 30px;
+        }
+        .detail-row {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #1c5568;
+        }
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+        }
+        .detail-value {
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-top: 0.2rem;
+        }
+        .btn-primary {
+            background: var(--cyan);
+            color: #0b141c;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--carbon-light);
+            border-radius: 28px;
+            padding: 1.5rem;
+            border: 1px solid #264653;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
+            margin-bottom: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 6px solid var(--cyan);
+            padding-left: 1rem;
+        }
+        .card-title i { color: var(--cyan); }
+
+        /* ========== FILTERS ========== */
         .filter-row {
             display: flex;
             gap: 1rem;
@@ -26,13 +240,91 @@
             margin-bottom: 1.5rem;
             align-items: center;
         }
-        .tahun-badge {
+        .filter-select {
+            background: #1e3f4e;
+            border: 2px solid var(--cyan);
+            color: white;
+            padding: 0.7rem 2rem 0.7rem 1rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            min-width: 180px;
+        }
+        .filter-badge {
             background: var(--cyan);
             color: #0b141c;
+            border-radius: 30px;
+            padding: 0.4rem 1.2rem;
+            font-weight: 600;
+        }
+        .filter-reset {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
             padding: 0.5rem 1.5rem;
             border-radius: 40px;
-            font-weight: 700;
+            cursor: pointer;
         }
+        .filter-reset:hover {
+            background: var(--cyan);
+            color: #0b141c;
+        }
+
+        /* ========== TABLE ========== */
+        .table-responsive {
+            overflow-x: auto;
+            background: #102531;
+            border-radius: 24px;
+            padding: 0.2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 900px;
+            cursor: pointer;
+        }
+        th {
+            background: #06313f;
+            color: var(--cyan);
+            padding: 0.8rem;
+            border-bottom: 3px solid var(--cyan);
+        }
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #1d4b5e;
+        }
+        tr:hover td {
+            background: #1b4050;
+        }
+
+        /* ========== PAGINATION ========== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .pagination-btn {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .pagination-info {
+            color: white;
+            font-weight: 500;
+        }
+
+        /* ========== STATS BADGE ========== */
         .stats-badge {
             background: #0c2635;
             border-radius: 60px;
@@ -58,6 +350,48 @@
         .stat-label {
             color: var(--cyan);
             font-size: 0.9rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center;
+            padding: 1.2rem;
+            border-top: 1px solid #1a3645;
+        }
+
+        /* ========== MEDIA QUERIES (MOBILE) ========== */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 0.6rem 1rem;
+            }
+            .logo-img {
+                height: 36px;
+            }
+            .title-unit {
+                font-size: 1rem;
+            }
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .nav-btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+            }
+            .main-container {
+                padding: 1rem 0.8rem;
+            }
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            .filter-select {
+                width: 100%;
+            }
+            .stats-badge {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -88,21 +422,21 @@
     <div class="main-container">
         <div class="card">
             <div class="card-title"><i class="fas fa-flask"></i> SENARAI PRODUK INOVASI 2026</div>
-            
+
             <!-- Stats Overview -->
             <div class="stats-badge">
                 <div class="stat-item">
                     <i class="fas fa-flask" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
                         <div class="stat-label">Jumlah Produk</div>
-                        <div class="stat-value" id="totalProduk">45</div>
+                        <div class="stat-value" id="totalProduk">48</div>
                     </div>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-file-alt" style="color: var(--cyan); font-size: 1.5rem;"></i>
                     <div>
                         <div class="stat-label">Kategori</div>
-                        <div class="stat-value" id="totalKategori">4</div>
+                        <div class="stat-value">4</div>
                     </div>
                 </div>
                 <div class="stat-item">
@@ -113,23 +447,31 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- FILTER TAHUN & WILAYAH -->
+
+            <!-- FILTER TAHUN, WILAYAH & KATEGORI -->
             <div class="filter-row">
-                <select id="tahunFilter" class="filter-select" onchange="filterByTahun()">
+                <select id="tahunFilter" class="filter-select" onchange="applyAllFilters()">
                     <option value="2026">2026</option>
                     <option value="2025">2025</option>
                     <option value="2024">2024</option>
                 </select>
-                
-                <select id="wilayahFilter" class="filter-select" onchange="applyFilter()">
+
+                <select id="wilayahFilter" class="filter-select" onchange="applyAllFilters()">
                     <option value="SEMUA">Semua Wilayah</option>
                 </select>
-                
+
+                <select id="kategoriFilter" class="filter-select" onchange="applyAllFilters()">
+                    <option value="SEMUA">Semua Kategori</option>
+                    <option value="Digital & Data">Digital & Data</option>
+                    <option value="Inovasi Operasi Ladang">Inovasi Operasi Ladang</option>
+                    <option value="ESG & Kesejahteraan">ESG & Kesejahteraan</option>
+                    <option value="Kejuruteraan & Infrastruktur">Kejuruteraan & Infrastruktur</option>
+                </select>
+
                 <div class="filter-badge" id="filterCount">0 / 0</div>
-                <button class="filter-reset" onclick="resetFilter()"><i class="fas fa-undo-alt"></i> Reset</button>
+                <button class="filter-reset" onclick="resetAllFilters()"><i class="fas fa-undo-alt"></i> Reset</button>
             </div>
-            
+
             <!-- JADUAL -->
             <div class="table-responsive">
                  <table>
@@ -144,20 +486,20 @@
                     <tbody id="tableBody"></tbody>
                  </table>
             </div>
-            
+
             <!-- PAGINATION -->
             <div class="pagination">
                 <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
-                <span class="pagination-info" id="pageInfo">Halaman 1 / 3</span>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 4</span>
                 <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
             </div>
-            
+
             <p style="text-align: center; margin-top: 1rem; color: var(--cyan);">
                 <i class="fas fa-hand-pointer"></i> Klik pada baris untuk lihat detail
             </p>
         </div>
     </div>
-    
+
     <!-- FOOTER -->
     <footer>
         <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
@@ -236,18 +578,21 @@
         { wilayah: "Alor Setar", projek: "Hidroelektrik", kategori: "Kejuruteraan & Infrastruktur", obj: "Menjana Tenaga Elektrik Dari Sumber Air" }
     ].map((item, index) => ({ bil: index + 1, ...item }));
 
-    // ========== DATA 2026 (45 produk - dengan J5/4 SMART RAIN GAUGE) ==========
+    // ========== DATA 2026 (48 produk) ==========
     const inovasi2026 = [
         // Gua Musang (3 produk)
         { wilayah: "Gua Musang", projek: "Manpower Rekod (Mpr)", kategori: "Digital & Data", obj: "Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional Kepada Ekosistem Digital" },
         { wilayah: "Gua Musang", projek: "Intergrated Bunch Monitoring Sistem (IBMS)", kategori: "Digital & Data", obj: "Mempercepatkan Proses Membuat Rumusan Bbc" },
         { wilayah: "Gua Musang", projek: "J-Fosil", kategori: "Digital & Data", obj: "Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko" },
-        // Mempaga (5 produk)
+        // Mempaga (8 produk)
         { wilayah: "Mempaga", projek: "Magnetobucket", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Mengutip Dan Mengasingkan Biji Relai" },
         { wilayah: "Mempaga", projek: "Klau Cross Water", kategori: "Inovasi Operasi Ladang", obj: "Sistem Penghadang Air (Water Barrier) Untuk Tebing Kolam Pecah" },
         { wilayah: "Mempaga", projek: "Predanest-klau", kategori: "ESG & Kesejahteraan", obj: "Rumah Selamat Untuk Burung Pungguk Kawal Tikus" },
         { wilayah: "Mempaga", projek: "Rodentxklau", kategori: "Inovasi Operasi Ladang", obj: "Smart Rat Trap Box Untuk Kawalan Tikus" },
         { wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", obj: "Alternatif Digital Kepada Buku Pocket Checkroll" },
+        { wilayah: "Mempaga", projek: "Sambung Galah Tanpa Klip", kategori: "Inovasi Operasi Ladang", obj: "MENYAMBUNG GALAH PENUAIAN TANPA KLIP - MEMPERCEPAT PROSES MELARAS KETINGGIAN GALAH - DAPAT MEMINDAHKAN GALAH DARI POKOK KE POKOK DENGAN PANTAS" },
+        { wilayah: "Mempaga", projek: "Pengawal Tangkai Panjang", kategori: "Inovasi Operasi Ladang", obj: "KAWALAN TANGKAI PANJANG - EVAKUASI BTS KE LORONG TUAI - MELAKSANA 3 KERJA DALAM SATU MASA" },
+        { wilayah: "Mempaga", projek: "Sumber Air Mudah Alih", kategori: "Inovasi Operasi Ladang", obj: "MENYELESAIKAN MASALAH SUMBER AIR DI KAWASAN SULAMAN DAN PEMBANGUNAN KAWASAN TERES - MUDAH ALIH" },
         // Johor Bahru (3 produk)
         { wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Hujan Secara Automatik" },
         { wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Dalam Tanah" },
@@ -267,7 +612,7 @@
         { wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Inovasi Operasi Ladang", obj: "Alat Mesra Pengguna Untuk Cabut Akar" },
         { wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "ESG & Kesejahteraan", obj: "Memikat Burung Pungguk Menginap Di Sarang" },
         { wilayah: "Segamat", projek: "ANIMO", kategori: "Inovasi Operasi Ladang", obj: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
-        { wilayah: "Segamat", projek: "Sarang Burung Boleh Laras", kategori: "ESG & Kesejahteraan", obj: "Memudahkan Kerja Bancian Dan Penjagaan" },
+        { wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", kategori: "ESG & Kesejahteraan", obj: "Memudahkan Kerja Bancian Dan Penjagaan" },
         { wilayah: "Segamat", projek: "E-HASIL", kategori: "Digital & Data", obj: "Pantas dan mudah untuk lihat hasil" },
         { wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan kecekapan mengutip biji relai" },
         { wilayah: "Segamat", projek: "E-ATTENDANCE", kategori: "Digital & Data", obj: "Pengambilan Rekod Kehadiran Pekerja" },
@@ -302,111 +647,92 @@
         2026: inovasi2026
     };
 
-    // ========== VARIABEL GLOBAL ==========
     let currentTahun = "2026";
     let currentData = [...inovasi2026];
     let filteredData = [...currentData];
     let currentPage = 1;
     const rowsPerPage = 15;
 
-    // ========== FUNGSI POPUP DETAIL ==========
     function showDetailPopup(bil) {
         const item = currentData.find(i => i.bil === bil);
         if (!item) return;
-        
         const popup = document.getElementById('detailPopupContent');
         popup.innerHTML = `
             <button class="popup-close" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i></button>
             <h3><i class="fas fa-flask" style="color: var(--cyan);"></i> ${item.projek}</h3>
-            
-            <div class="detail-row">
-                <div class="detail-label">Wilayah</div>
-                <div class="detail-value">${item.wilayah}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Bil</div>
-                <div class="detail-value">${item.bil}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Kategori</div>
-                <div class="detail-value">${item.kategori}</div>
-            </div>
-            <div class="detail-row">
-                <div class="detail-label">Objektif</div>
-                <div class="detail-value">${item.obj || "Tiada keterangan"}</div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <button class="btn-primary" onclick="closeDetailPopup()">Tutup</button>
-            </div>
+            <div class="detail-row"><div class="detail-label">Wilayah</div><div class="detail-value">${item.wilayah}</div></div>
+            <div class="detail-row"><div class="detail-label">Bil</div><div class="detail-value">${item.bil}</div></div>
+            <div class="detail-row"><div class="detail-label">Kategori</div><div class="detail-value">${item.kategori}</div></div>
+            <div class="detail-row"><div class="detail-label">Objektif</div><div class="detail-value">${item.obj || "Tiada keterangan"}</div></div>
+            <div style="text-align: center; margin-top: 1.5rem;"><button class="btn-primary" onclick="closeDetailPopup()">Tutup</button></div>
         `;
-        
         document.getElementById('detailPopup').style.display = 'flex';
     }
 
-    function closeDetailPopup() {
-        document.getElementById('detailPopup').style.display = 'none';
-    }
+    function closeDetailPopup() { document.getElementById('detailPopup').style.display = 'none'; }
 
-    // ========== FILTER FUNCTIONS ==========
     function populateWilayahFilter() {
         const wilayahSet = new Set(currentData.map(item => item.wilayah));
         const sortedWilayah = Array.from(wilayahSet).sort();
         const filterSelect = document.getElementById('wilayahFilter');
-        
         filterSelect.innerHTML = '<option value="SEMUA">Semua Wilayah</option>';
-        sortedWilayah.forEach(wilayah => {
-            const option = document.createElement('option');
-            option.value = wilayah;
-            option.textContent = wilayah;
-            filterSelect.appendChild(option);
-        });
+        sortedWilayah.forEach(w => { const opt = document.createElement('option'); opt.value = w; opt.textContent = w; filterSelect.appendChild(opt); });
     }
 
-    function filterByTahun() {
-        currentTahun = document.getElementById('tahunFilter').value;
-        currentData = [...semuaData[currentTahun]];
-        filteredData = [...currentData];
-        currentPage = 1;
-        
-        populateWilayahFilter();
-        renderTable();
-    }
-
-    function applyFilter() {
+    function applyAllFilters() {
+        const tahun = document.getElementById('tahunFilter').value;
         const wilayah = document.getElementById('wilayahFilter').value;
-        
-        filteredData = wilayah === "SEMUA" 
-            ? [...currentData] 
-            : currentData.filter(item => item.wilayah === wilayah);
-        
+        const kategori = document.getElementById('kategoriFilter').value;
+
+        // Update current data based on year
+        currentData = [...semuaData[tahun]];
+
+        // Apply filters
+        let filtered = [...currentData];
+
+        if (wilayah !== "SEMUA") {
+            filtered = filtered.filter(item => item.wilayah === wilayah);
+        }
+
+        if (kategori !== "SEMUA") {
+            filtered = filtered.filter(item => item.kategori === kategori);
+        }
+
+        filteredData = filtered;
         currentPage = 1;
+
+        // Re-populate wilayah filter based on current year data
+        const wilayahSet = new Set(currentData.map(item => item.wilayah));
+        const sortedWilayah = Array.from(wilayahSet).sort();
+        const filterSelect = document.getElementById('wilayahFilter');
+        filterSelect.innerHTML = '<option value="SEMUA">Semua Wilayah</option>';
+        sortedWilayah.forEach(w => { const opt = document.createElement('option'); opt.value = w; opt.textContent = w; filterSelect.appendChild(opt); });
+
         renderTable();
     }
 
-    function resetFilter() {
+    function resetAllFilters() {
+        document.getElementById('tahunFilter').value = "2026";
         document.getElementById('wilayahFilter').value = "SEMUA";
-        filteredData = [...currentData];
-        currentPage = 1;
-        renderTable();
+        document.getElementById('kategoriFilter').value = "SEMUA";
+        applyAllFilters();
     }
 
-    // ========== TABLE RENDER ==========
     function renderTable() {
         const start = (currentPage - 1) * rowsPerPage;
         const end = start + rowsPerPage;
         const pageData = filteredData.slice(start, end);
-        
+
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = pageData.map(item => `
             <tr onclick="showDetailPopup(${item.bil})">
-                <td>${item.bil}</td>
-                <td>${item.wilayah}</td>
-                <td>${item.projek}</td>
-                <td>${item.kategori}</td>
+                <td>${item.bil}
+                <td>${item.wilayah}
+                <td>${item.projek}
+                <td>${item.kategori}
             </tr>
         `).join('');
-        
+
         const totalPages = Math.ceil(filteredData.length / rowsPerPage);
         document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
         document.getElementById('prevPage').disabled = currentPage === 1;
@@ -414,7 +740,6 @@
         document.getElementById('filterCount').innerText = `${filteredData.length} / ${currentData.length}`;
     }
 
-    // ========== PAGINATION ==========
     function changePage(direction) {
         const totalPages = Math.ceil(filteredData.length / rowsPerPage);
         currentPage += direction;
@@ -423,18 +748,15 @@
         renderTable();
     }
 
-    // ========== INITIALIZE ==========
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
         populateWilayahFilter();
         renderTable();
     });
 
-    // ========== EXPOSE FUNCTIONS ==========
     window.showDetailPopup = showDetailPopup;
     window.closeDetailPopup = closeDetailPopup;
-    window.filterByTahun = filterByTahun;
-    window.applyFilter = applyFilter;
-    window.resetFilter = resetFilter;
+    window.applyAllFilters = applyAllFilters;
+    window.resetAllFilters = resetAllFilters;
     window.changePage = changePage;
 </script>
 </body>
