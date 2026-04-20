@@ -119,6 +119,153 @@
             color: var(--cyan);
             font-size: 0.9rem;
         }
+
+        /* ========== TRL SECTION STYLES ========== */
+        .trl-section {
+            margin: 1.5rem 0;
+        }
+        
+        .trl-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-left: 4px solid var(--cyan);
+            padding-left: 1rem;
+        }
+        
+        .trl-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .trl-card {
+            background: linear-gradient(145deg, #0d2b3a, #0a1f2b);
+            border-radius: 20px;
+            padding: 1.2rem;
+            border: 1px solid rgba(0,188,212,0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .trl-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyan);
+            box-shadow: 0 10px 25px rgba(0,188,212,0.2);
+        }
+        
+        .trl-card.expanded {
+            grid-column: span 3;
+            margin-bottom: 0.5rem;
+        }
+        
+        .trl-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .trl-badge {
+            background: var(--cyan);
+            color: #0b141c;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .trl-level {
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+        }
+        
+        .trl-desc {
+            font-size: 0.85rem;
+            color: #c7d1d9;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+        
+        .trl-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin-top: 0;
+        }
+        
+        .trl-card.expanded .trl-detail {
+            max-height: 300px;
+            margin-top: 1rem;
+            padding: 1rem;
+        }
+        
+        .trl-detail-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .trl-detail-list li {
+            padding: 0.5rem 0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+        
+        .trl-detail-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .trl-detail-list i {
+            color: var(--cyan);
+            width: 20px;
+        }
+        
+        .trl-expand-icon {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            color: var(--cyan);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .trl-footer {
+            background: rgba(0, 188, 212, 0.05);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+            border-left: 4px solid var(--cyan);
+        }
+        
+        .trl-footer p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .trl-grid {
+                grid-template-columns: 1fr;
+            }
+            .trl-card.expanded {
+                grid-column: span 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -135,7 +282,7 @@
             <a href="budget.html"><button class="nav-btn"><i class="fas fa-coins"></i> BUDGET TRACKER</button></a>
             <a href="paten.html"><button class="nav-btn active"><i class="fas fa-crown"></i> PRODUK PATEN</button></a>
             <a href="sop.html"><button class="nav-btn"><i class="fas fa-file-alt"></i> SOP & BORANG</button></a>
-            <a href="coe.html"><button class="nav-btn"><i class="fas fa-star"></i> COE</button></a>
+            <a href="coe.html"><button class="nav-btn"><i class="fas fa-star"></i> COE @ UPK</button></a>
         </div>
     </div>
 
@@ -169,9 +316,83 @@
                 </div>
             </div>
             
+            <!-- ========== PELAN PENGURUSAN PATEN & KOMERSIAL (TRL-BASED) ========== -->
+            <div class="trl-section">
+                <div class="trl-title">
+                    <i class="fas fa-chart-line"></i> PELAN PENGURUSAN PATEN & KOMERSIAL
+                    <span style="font-size: 0.8rem; opacity: 0.7;">(Technology Readiness Level - TRL)</span>
+                </div>
+                
+                <div class="trl-grid" id="trlGrid">
+                    <!-- TRL 1-3 -->
+                    <div class="trl-card" onclick="toggleTRL(this)">
+                        <div class="trl-header">
+                            <span class="trl-badge">TRL 1-3</span>
+                            <span class="trl-level">Pembentukan Konsep & Kajian Awal</span>
+                        </div>
+                        <div class="trl-desc">
+                            Pembentukan konsep, kajian awal dan pembuktian prinsip asas.
+                        </div>
+                        <div class="trl-detail">
+                            <ul class="trl-detail-list">
+                                <li><i class="fas fa-book-open"></i> Kajian literatur dan analisis keperluan</li>
+                                <li><i class="fas fa-chalkboard-user"></i> Pembangunan model konsep dan simulasi awal</li>
+                                <li><i class="fas fa-flask"></i> Pembuktian prinsip asas (proof of concept)</li>
+                                <li><i class="fas fa-file-alt"></i> Dokumentasi awal dan penilaian kebolehlaksanaan</li>
+                            </ul>
+                        </div>
+                        <i class="fas fa-chevron-down trl-expand-icon"></i>
+                    </div>
+                    
+                    <!-- TRL 4-6 -->
+                    <div class="trl-card" onclick="toggleTRL(this)">
+                        <div class="trl-header">
+                            <span class="trl-badge">TRL 4-6</span>
+                            <span class="trl-level">Pembangunan Prototaip & Ujian</span>
+                        </div>
+                        <div class="trl-desc">
+                            Fasa pembangunan prototaip dan ujian.
+                        </div>
+                        <div class="trl-detail">
+                            <ul class="trl-detail-list">
+                                <li><i class="fas fa-cogs"></i> Pembangunan prototaip awal (TRL 4)</li>
+                                <li><i class="fas fa-vial"></i> Pengujian dalam persekitaran makmal (TRL 5)</li>
+                                <li><i class="fas fa-truck"></i> Demonstrasi dalam persekitaran relevan (TRL 6)</li>
+                                <li><i class="fas fa-file-signature"></i> Kerjasama dengan pihak luar di bawah Perjanjian Kerahsiaan (NDA)</li>
+                            </ul>
+                        </div>
+                        <i class="fas fa-chevron-down trl-expand-icon"></i>
+                    </div>
+                    
+                    <!-- TRL 7-9 -->
+                    <div class="trl-card" onclick="toggleTRL(this)">
+                        <div class="trl-header">
+                            <span class="trl-badge">TRL 7-9</span>
+                            <span class="trl-level">Paten, Pengkomersialan & Operasi</span>
+                        </div>
+                        <div class="trl-desc">
+                            Paten, Pengkomersialan & Aplikasi Operasi
+                        </div>
+                        <div class="trl-detail">
+                            <ul class="trl-detail-list">
+                                <li><i class="fas fa-file-invoice"></i> Permohonan paten dan perlindungan harta intelek</li>
+                                <li><i class="fas fa-chart-line"></i> Pengkomersialan produk (TRL 8)</li>
+                                <li><i class="fas fa-check-double"></i> Teknologi telah terbukti berfungsi dalam persekitaran operasi sebenar (TRL 9)</li>
+                                <li><i class="fas fa-handshake"></i> Pelesenan dan kerjasama strategik</li>
+                            </ul>
+                        </div>
+                        <i class="fas fa-chevron-down trl-expand-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="trl-footer">
+                    <p><i class="fas fa-info-circle"></i> Klik pada mana-mana kad untuk melihat maklumat terperinci setiap peringkat TRL</p>
+                </div>
+            </div>
+            
             <!-- Table -->
             <div class="table-responsive">
-                <table>
+                </table>
                     <thead>
                         <tr>
                             <th>Bil</th>
@@ -184,38 +405,38 @@
                     <tbody>
                         <!-- Lightweight Applicator Handheld Spreader (LAH Spreader) -->
                         <tr>
-                            <td>1</td>
-                            <td><strong>Lightweight Applicator Handheld Spreader (LAH Spreader)</strong></td>
-                            <td>(1)Mohd Shahrizal Bin Md Jali (2) Azwan Ariff Bin Azmi (3) Mohd Nazri Bin Hasim</td>
-                            <td class="patent-number">PA/99/0077</td>
-                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td>
+                            <td>1</td
+                            <td><strong>Lightweight Applicator Handheld Spreader (LAH Spreader)</strong></td
+                            <td>(1)Mohd Shahrizal Bin Md Jali (2) Azwan Ariff Bin Azmi (3) Mohd Nazri Bin Hasim</td
+                            <td class="patent-number">PA/99/0077</td
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td
                         </tr>
                         
                         <!-- Jantan Spike -->
                         <tr>
-                            <td>2</td>
-                            <td><strong>Jantan Spike</strong></td>
-                            <td><em>Akan dikemaskini</em></td>
-                            <td class="patent-number">PA/99/0078</td>
-                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td>
+                            <td>2</td
+                            <td><strong>Jantan Spike</strong></td
+                            <td><em>Akan dikemaskini</em></td
+                            <td class="patent-number">PA/99/0078</td
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td
                         </tr>
                         
                         <!-- BDC -->
                         <tr>
-                            <td>3</td>
-                            <td><strong>Besout Digital Cencus</strong></td>
-                            <td><em>Akan dikemaskini</em></td>
-                            <td class="patent-number"><em>PA/99/0079</em></td>
-                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td>
+                            <td>3</td
+                            <td><strong>Besout Digital Cencus</strong></td
+                            <td><em>Akan dikemaskini</em></td
+                            <td class="patent-number"><em>PA/99/0079</em></td
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td
                         </tr>
 
                         <!-- SATO Chamber -->
                         <tr>
-                            <td>4</td>
-                            <td><strong>SATO Chamber</strong></td>
-                            <td><em>Akan dikemaskini</em></td>
-                            <td class="patent-number"><em>Dalam proses</em></td>
-                            <td><span class="status-badge status-process"><i class="fas fa-clock"></i> Dalam Proses</span></td>
+                            <td>4</td
+                            <td><strong>SATO Chamber</strong></td
+                            <td><em>Akan dikemaskini</em></td
+                            <td class="patent-number"><em>Dalam proses</em></td
+                            <td><span class="status-badge status-process"><i class="fas fa-clock"></i> Dalam Proses</span></td
                         </tr>
                     </tbody>
                 </table>
@@ -233,7 +454,36 @@
         <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
     </footer>
 </div>
+
+<script>
+    // ========== TRL CARD TOGGLE FUNCTION ==========
+    function toggleTRL(element) {
+        // Close all other cards
+        const allCards = document.querySelectorAll('.trl-card');
+        allCards.forEach(card => {
+            if (card !== element && card.classList.contains('expanded')) {
+                card.classList.remove('expanded');
+            }
+        });
+        
+        // Toggle current card
+        element.classList.toggle('expanded');
+        
+        // Scroll to make sure expanded card is visible
+        if (element.classList.contains('expanded')) {
+            setTimeout(() => {
+                element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+    }
+    
+    // Optional: Initialize with first card expanded for better UX
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const firstCard = document.querySelector('.trl-card');
+    //     if (firstCard) {
+    //         // firstCard.classList.add('expanded'); // Uncomment if you want first card expanded by default
+    //     }
+    // });
+</script>
 </body>
 </html>
-
-
