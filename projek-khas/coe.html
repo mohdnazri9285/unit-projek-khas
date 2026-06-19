@@ -617,20 +617,15 @@
             font-size: 0.8rem;
             font-weight: 600;
         }
-        .popup-status.active {
-            background: rgba(255, 165, 0, 0.2);
-            color: #ffa500;
-            border: 1px solid #ffa500;
-        }
         .popup-status.completed {
             background: rgba(0, 200, 100, 0.2);
             color: #00c864;
             border: 1px solid #00c864;
         }
-        .popup-status.pending {
-            background: rgba(100, 150, 255, 0.2);
-            color: #6495ff;
-            border: 1px solid #6495ff;
+        .popup-status.active {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
         }
 
         .popup-chart-container {
@@ -959,7 +954,7 @@
 </div>
 
 <script>
-    // ====== DATA KAJIAN (6 Program) dengan gambar baru ======
+    // ====== DATA KAJIAN (6 Program) ======
     const kajianData = [
         {
             id: 1,
@@ -1138,7 +1133,7 @@
             dapatan: [
                 "Menggunakan Google Cloud Platform - selamat dan stabil",
                 "Mengurangkan pengendalian berganda data kerja",
-                "Fungsi Audit Log untuk semakan",
+                "Paparan interaktif mesra pengguna",
                 "Kos pelaksanaan RM4,995 untuk 9 bulan"
             ],
             kesimpulan: "Sistem digital ini berpotensi menggantikan buku fizikal dengan lebih efisien dan menjimatkan kos.",
@@ -1148,9 +1143,9 @@
                 { label: "Rancangan Rintis", value: "3", desc: "Projek" }
             ],
             chartData: {
-                labels: ["Lurah Bilut", "Lembah Klau", "Raja Alias"],
+                labels: ["Lurah Bilut", "Redong", "Lenga"],
                 values: [1, 1, 1],
-                label: "Rancangan Rintis"
+                label: "Projek Rintis"
             }
         }
     ];
@@ -1168,7 +1163,7 @@
                     <div class="activity-location"><i class="fas fa-map-marker-alt"></i> ${item.location}</div>
                     <div class="activity-supplier"><i class="fas fa-building"></i> ${item.supplier}</div>
                     <div style="margin-top: 0.6rem; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-                        <span class="popup-status ${item.statusClass}">${item.status === 'active' ? '⏳ Dalam Kajian' : '✅ Dalam kajian'}</span>
+                        <span class="popup-status ${item.statusClass}">${item.status === 'active' ? '⏳ Dalam Kajian' : '✅ Selesai'}</span>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
                 </div>
