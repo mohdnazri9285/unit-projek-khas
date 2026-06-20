@@ -402,91 +402,151 @@
             margin-right: 0.5rem;
         }
 
-        /* ====== ACTIVITY GRID ====== */
-        .activity-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
+        /* ====== TIMELINE STYLES - LINE DI ATAS ====== */
+        .timeline-section {
             margin-top: 1rem;
-        }
-        .activity-card {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.2s, border-color 0.2s;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-        .activity-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0,188,212,0.5);
-            box-shadow: 0 8px 25px rgba(0,188,212,0.15);
-        }
-        .activity-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            background: #1a2a3a;
-        }
-        .activity-content {
-            padding: 1.2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .activity-title {
-            font-weight: 600;
-            color: var(--cyan);
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-            line-height: 1.3;
-        }
-        .activity-desc {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            line-height: 1.5;
-            margin-bottom: 0.3rem;
-            color: #c7d1d9;
-            flex: 1;
-        }
-        .activity-location {
-            font-size: 0.8rem;
-            color: #8aaec0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.3rem;
-        }
-        .activity-location i { color: var(--cyan); }
-        .activity-supplier {
-            font-size: 0.75rem;
-            color: #6a8fa0;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            margin-top: 0.3rem;
-        }
-        .activity-supplier i { color: var(--cyan-light); }
-        .click-hint {
-            display: inline-block;
-            margin-top: 0.6rem;
-            font-size: 0.7rem;
-            color: var(--cyan);
-            opacity: 0.6;
-            border: 1px solid rgba(0,188,212,0.2);
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-            transition: 0.2s;
-            align-self: flex-start;
-        }
-        .activity-card:hover .click-hint {
-            opacity: 1;
-            border-color: var(--cyan);
+            padding: 1rem 0;
+            overflow-x: auto;
         }
 
-        /* ====== POPUP ====== */
+        .timeline-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+            position: relative;
+            min-width: 900px;
+            padding: 0 0.5rem;
+            padding-top: 2rem;
+        }
+
+        /* Garisan di ATAS */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, rgba(0,188,212,0.1), var(--cyan), var(--cyan), rgba(0,188,212,0.1));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0 0.5rem;
+            z-index: 2;
+            max-width: 180px;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Bulat pada garisan */
+        .timeline-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--cyan);
+            border: 3px solid #0b141c;
+            box-shadow: 0 0 0 3px var(--cyan), 0 0 20px rgba(0,188,212,0.3);
+            margin-bottom: 0.8rem;
+            margin-top: -11px;
+            position: relative;
+            z-index: 3;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            box-shadow: 0 0 0 4px var(--cyan), 0 0 30px rgba(0,188,212,0.5);
+            transform: scale(1.15);
+        }
+
+        .timeline-dot.completed {
+            background: #00c864;
+            border-color: #0b141c;
+            box-shadow: 0 0 0 3px #00c864, 0 0 20px rgba(0,200,100,0.3);
+        }
+
+        .timeline-dot.active {
+            background: #ffa500;
+            border-color: #0b141c;
+            box-shadow: 0 0 0 3px #ffa500, 0 0 20px rgba(255,165,0,0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 3px #ffa500, 0 0 20px rgba(255,165,0,0.3); }
+            50% { box-shadow: 0 0 0 6px #ffa500, 0 0 35px rgba(255,165,0,0.5); }
+            100% { box-shadow: 0 0 0 3px #ffa500, 0 0 20px rgba(255,165,0,0.3); }
+        }
+
+        /* KOTAK DIBESARKAN - DUDUK BAWAH LINE */
+        .timeline-card {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+            border: 1px solid rgba(0,188,212,0.15);
+            transition: all 0.3s;
+            max-width: 220px;
+            width: 100%;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timeline-item:hover .timeline-card {
+            border-color: rgba(0,188,212,0.4);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 25px rgba(0,188,212,0.1);
+        }
+
+        .timeline-card .tl-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            line-height: 1.3;
+            margin-bottom: 0.4rem;
+            text-align: center;
+        }
+
+        .timeline-card .tl-status {
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .tl-status.completed {
+            background: rgba(0, 200, 100, 0.2);
+            color: #00c864;
+            border: 1px solid #00c864;
+        }
+
+        .tl-status.active {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+
+        .timeline-item .tl-date {
+            font-size: 0.65rem;
+            color: #6a8fa0;
+            margin-top: 0.5rem;
+        }
+
+        /* Popup detail */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -512,17 +572,9 @@
             box-shadow: 0 30px 50px rgba(0,188,212,0.3);
             position: relative;
         }
-        .popup-card::-webkit-scrollbar {
-            width: 6px;
-        }
-        .popup-card::-webkit-scrollbar-track {
-            background: #1a2833;
-            border-radius: 10px;
-        }
-        .popup-card::-webkit-scrollbar-thumb {
-            background: var(--cyan);
-            border-radius: 10px;
-        }
+        .popup-card::-webkit-scrollbar { width: 6px; }
+        .popup-card::-webkit-scrollbar-track { background: #1a2833; border-radius: 10px; }
+        .popup-card::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
         .popup-header {
             position: sticky;
             top: 0;
@@ -610,19 +662,19 @@
             font-size: 0.7rem;
         }
 
-        .popup-status {
+        .popup-status-badge {
             display: inline-block;
             padding: 0.2rem 1rem;
             border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 600;
         }
-        .popup-status.completed {
+        .popup-status-badge.completed {
             background: rgba(0, 200, 100, 0.2);
             color: #00c864;
             border: 1px solid #00c864;
         }
-        .popup-status.active {
+        .popup-status-badge.active {
             background: rgba(255, 165, 0, 0.2);
             color: #ffa500;
             border: 1px solid #ffa500;
@@ -747,13 +799,43 @@
             .chart-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .activity-grid {
-                grid-template-columns: 1fr;
+            .timeline-container {
+                min-width: 700px;
+                padding-top: 1.8rem;
+            }
+            .timeline-card {
+                max-width: 160px;
+                padding: 0.8rem 1rem;
+                min-height: 65px;
+            }
+            .timeline-card .tl-title {
+                font-size: 0.75rem;
+            }
+            .timeline-dot {
+                width: 18px;
+                height: 18px;
+                margin-top: -9px;
             }
         }
         @media (max-width: 480px) {
             .chart-grid {
                 grid-template-columns: 1fr;
+            }
+            .timeline-container {
+                min-width: 550px;
+            }
+            .timeline-card {
+                max-width: 120px;
+                padding: 0.6rem 0.8rem;
+                min-height: 55px;
+            }
+            .timeline-card .tl-title {
+                font-size: 0.65rem;
+            }
+            .timeline-dot {
+                width: 14px;
+                height: 14px;
+                margin-top: -7px;
             }
         }
     </style>
@@ -921,7 +1003,7 @@
             </div>
         </div>
 
-        <!-- ====== COE GALLERY - 3 IMAGES SIDE BY SIDE ====== -->
+        <!-- ====== COE GALLERY ====== -->
         <div class="card">
             <div class="card-title"><i class="fas fa-images"></i> GALERI COE LURAH BILUT</div>
             <div class="coe-gallery">
@@ -940,11 +1022,27 @@
             </div>
         </div>
 
-        <!-- Program & Aktiviti COE -->
+        <!-- ====== PROGRAM & AKTIVITI COE - TIMELINE ====== -->
         <div class="card">
-            <div class="card-title"><i class="fas fa-flask"></i> PROGRAM & AKTIVITI COE</div>
-            <p style="margin-bottom: 1.5rem; opacity: 0.8;">Kajian dan program inovasi bersama Unit Projek Khas — <strong>Klik pada kad untuk lihat detail</strong></p>
-            <div class="activity-grid" id="activityGrid"></div>
+            <div class="card-title"><i class="fas fa-clock"></i> PROGRAM & AKTIVITI COE</div>
+            <p style="margin-bottom: 0.5rem; opacity: 0.8;">kajian dan program inovasi bersama Unit Projek Khas — <strong>Klik pada kad untuk lihat detail</strong></p>
+            
+            <div class="timeline-section">
+                <div class="timeline-container" id="timelineContainer">
+                    <!-- Akan diisi oleh JavaScript -->
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap;">
+                <span style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #8aaec0;">
+                    <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #00c864; border: 2px solid #0b141c; box-shadow: 0 0 0 2px #00c864;"></span>
+                    Selesai
+                </span>
+                <span style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #8aaec0;">
+                    <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ffa500; border: 2px solid #0b141c; box-shadow: 0 0 0 2px #ffa500; animation: pulse 2s infinite;"></span>
+                    Dalam Kajian
+                </span>
+            </div>
         </div>
     </div>
 
@@ -954,16 +1052,16 @@
 </div>
 
 <script>
-    // ====== DATA KAJIAN (6 Program) ======
-    // Digiagri (id:4) dan E-Checkroll (id:6) = "Dalam Kajian"
+    // ====== DATA KAJIAN ======
     const kajianData = [
         {
             id: 1,
-            title: "Kajian Aplikasi Tiang Pagar Alu-zinc C-Section",
+            title: "Tiang Pagar C-Channel",
             location: "FPMSB Jengka 14 (Peringkat 1)",
             supplier: "Koperasi Peneroka-Peneroka FELDA Raya Bhd",
             status: "Selesai",
             statusClass: "completed",
+            date: "Jan 2026",
             image: "image/COE/CCHANNEL.jpg",
             desc: "Kajian penggunaan tiang pagar C-Channel Double sebagai alternatif kepada tiang konkrit konvensional.",
             objektif: [
@@ -976,13 +1074,13 @@
                 "Berat tiang C-Channel 5.4kg vs 48kg (konkrit) - 89% lebih ringan",
                 "Kos pembinaan RM20.35/meter vs RM20.50/meter (konkrit)",
                 "Bekalan lebih mudah diperoleh berbanding tiang konkrit",
-                "Pemasangan lebih cepat - 4 hari untuk 30 meter"
+                "Pemasangan lebih cepat - 4 hari untuk 840 meter"
             ],
             kesimpulan: "Tiang pagar C-Channel adalah praktikal dan ekonomik untuk menggantikan tiang pagar konkrit.",
             metrics: [
                 { label: "Pengurangan Berat", value: "89%", desc: "5.4kg vs 48kg" },
                 { label: "Penjimatan Kos", value: "0.7%", desc: "RM20.35 vs RM20.50" },
-                { label: "Tempoh Pemasangan", value: "4 Hari", desc: "30 meter" }
+                { label: "Tempoh Pemasangan", value: "4 Hari", desc: "840 meter" }
             ],
             chartData: {
                 labels: ["C-Channel", "Konkrit"],
@@ -991,109 +1089,13 @@
             }
         },
         {
-            id: 2,
-            title: "Peralatan Penuaian Sawit Matang Utama",
-            location: "FPMSB Lurah Bilut (Peringkat 1A & 1G)",
-            supplier: "ICP Agro Solutions Sdn Bhd",
-            status: "Selesai",
-            statusClass: "completed",
-            image: "image/COE/NANO POLE.jpg",
-            desc: "Kajian lapangan menilai prestasi kit alat menuai Nano Pole, Pole Lock Plus & Sickle Hybrid.",
-            objektif: [
-                "Tahap ketahanan dan keberkesanan peralatan penuaian",
-                "Peningkatan produktiviti penuaian",
-                "Menilai tahap keselamatan produk"
-            ],
-            dapatan: [
-                "Nano Pole 2.72kg vs 4.5kg (40% lebih ringan)",
-                "Pole Lock Plus menjimatkan masa pelarasan 15-20 minit",
-                "Sickle Hybrid lebih tajam, ketahanan asahan 7 hari vs 5 hari",
-                "Penambahbaikan bahan Carbon Steel (64% ke 58%)"
-            ],
-            kesimpulan: "Berpotensi meningkatkan produktiviti pekerja dan kecekapan operasi ladang.",
-            metrics: [
-                { label: "Pengurangan Berat", value: "40%", desc: "2.72kg vs 4.5kg" },
-                { label: "Penjimatan Masa", value: "15-20 min", desc: "Pelarasan galah" },
-                { label: "Ketahanan Sabit", value: "7 Hari", desc: "1 kali asahan" }
-            ],
-            chartData: {
-                labels: ["Nano Pole", "Pole Biasa"],
-                values: [2.72, 4.5],
-                label: "Berat Galah (kg)"
-            }
-        },
-        {
-            id: 3,
-            title: "Jentera Mekanisasi Berkuasa Elektrik (EV)",
-            location: "FPMSB Kg. Sertik",
-            supplier: "Koperasi Pekerja Felda Malaysia Bhd (KOGUNA)",
-            status: "Selesai",
-            statusClass: "completed",
-            image: "image/COE/TERRA.jpg",
-            desc: "Kajian penggunaan jentera elektrik Terra Advance bagi operasi memunggah BTS ke Platform.",
-            objektif: [
-                "Menilai tahap ketahanan dan keberkesanan jentera",
-                "Mengukur prestasi berbanding jentera konvensional",
-                "Menilai keselamatan, keselesaan dan kecekapan tenaga"
-            ],
-            dapatan: [
-                "Kos operasi harian hanya RM8 (caj elektrik)",
-                "Muatan 1000 kg, kelajuan maksimum 45 km/j",
-                "Bateri tahan 8 jam operasi (~40 km berbukit)",
-                "Tiada pelepasan karbon, lebih mesra alam",
-                "Produktiviti 1.06 tan/manday (584 manday → 585 tan)"
-            ],
-            kesimpulan: "Berpotensi sebagai pilihan dalam operasi pengangkutan ladang sawit.",
-            metrics: [
-                { label: "Kos Operasi", value: "RM8/hari", desc: "Caj elektrik" },
-                { label: "Muatan", value: "1000 kg", desc: "Kotak kargo" },
-                { label: "Produktiviti", value: "1.06", desc: "Tan/Manday" }
-            ],
-            chartData: {
-                labels: ["Feb", "Mac", "Apr", "Mei"],
-                values: [1.20, 1.29, 0.98, 0.78],
-                label: "Produktiviti (Tan/Manday)"
-            }
-        },
-        {
-            id: 4,
-            title: "Digital Agriculture (Digiagri)",
-            location: "FPMSB Lurah Bilut (Peringkat 4 & 1A)",
-            supplier: "KPF Agro Properties Sdn Bhd",
-            status: "Dalam Kajian",
-            statusClass: "active",
-            image: "image/COE/DIGIAGRI.jpg",
-            desc: "Kajian aplikasi Digital Agriculture bagi operasi kehadiran, penuaian dan pengangkutan hasil.",
-            objektif: [
-                "Menilai ketepatan dan keberkesanan aplikasi",
-                "Mengukur prestasi sistem berbanding kaedah konvensional",
-                "Menilai keupayaan sistem dalam menyediakan data masa nyata"
-            ],
-            dapatan: [
-                "Masa pemprosesan laporan: 90 minit → 10 minit (89% lebih cepat)",
-                "Menghapuskan risiko kehilangan data fizikal",
-                "6 laporan utama dapat dihasilkan secara digital",
-                "Ciri offline dan auto sync operasi tanpa gangguan"
-            ],
-            kesimpulan: "Aplikasi ini berpotensi digunakan secara meluas dalam operasi pelaporan ladang.",
-            metrics: [
-                { label: "Penjimatan Masa", value: "89%", desc: "90 → 10 minit" },
-                { label: "Laporan Digital", value: "6", desc: "Modul utama" },
-                { label: "Pengurangan Ralat", value: "Rendah", desc: "Berbanding manual" }
-            ],
-            chartData: {
-                labels: ["Manual", "Digiagri"],
-                values: [90, 10],
-                label: "Masa Pemprosesan (minit)"
-            }
-        },
-        {
             id: 5,
-            title: "Kajian Bahan Kimia Sentinel 15",
+            title: "Aplikasi Bahan Kimia Sentinel 15",
             location: "FPMSB Lurah Bilut (Peringkat 1A Blok 13)",
             supplier: "S&H Techventure Sdn Bhd",
             status: "Selesai",
             statusClass: "completed",
+            date: "Jan 2026",
             image: "image/COE/sentinel.png",
             desc: "Kajian keberkesanan racun rumpai Sentinel 15 dalam program kawalan rumpai.",
             objektif: [
@@ -1118,12 +1120,114 @@
             }
         },
         {
-            id: 6,
-            title: "Sistem Digital E-Checkroll",
-            location: "FPMSB Lurah Bilut, Redong, Lenga",
-            supplier: "Dalaman (Google Cloud Platform)",
+            id: 3,
+            title: "Jentera Mekanisasi (EV) Terra Advance",
+            location: "FPMSB Kg. Sertik",
+            supplier: "Koperasi Pekerja Felda Malaysia Bhd (KOGUNA)",
+            status: "Selesai",
+            statusClass: "completed",
+            date: "Feb 2026",
+            image: "image/COE/TERRA.jpg",
+            desc: "Kajian penggunaan jentera elektrik Terra Advance bagi operasi memunggah BTS ke Platform.",
+            objektif: [
+                "Menilai tahap ketahanan dan keberkesanan jentera",
+                "Mengukur prestasi berbanding jentera konvensional",
+                "Menilai keselamatan, keselesaan dan kecekapan tenaga"
+            ],
+            dapatan: [
+                "Kos operasi harian RM8 (caj elektrik)",
+                "Muatan 1000 kg",
+                "kelajuan maksimum 45 km/j",
+                "Ketahanan bateri 16 jam operasi untuk 1 kali pengecasan",
+                "Digunakan mengangkut pekerja ke lokasi kerja",
+                "dilengkapi dengan ciri-ciri keselamatan semasa pengendalian"
+            ],
+            kesimpulan: "Berpotensi sebagai pilihan dalam operasi pengangkutan ladang sawit.",
+            metrics: [
+                { label: "Kos Operasi", value: "RM8/hari", desc: "Caj elektrik" },
+                { label: "Muatan", value: "1000 kg", desc: "Kotak kargo" },
+                { label: "Produktiviti", value: "1.06", desc: "Tan/Manday" }
+            ],
+            chartData: {
+                labels: ["Feb", "Mac", "Apr", "Mei"],
+                values: [1.20, 1.29, 0.98, 0.78],
+                label: "Produktiviti (Tan/Manday)"
+            }
+        },
+        {
+            id: 2,
+            title: "Aplikasi Peralatan Penuaian",
+            location: "FPMSB Lurah Bilut (Peringkat 1A & 1G)",
+            supplier: "ICP Agro Solutions Sdn Bhd",
+            status: "Selesai",
+            statusClass: "completed",
+            date: "Mac 2026",
+            image: "image/COE/NANO POLE.jpg",
+            desc: "Kajian lapangan menilai prestasi kit alat menuai Nano Pole, Pole Lock Plus & Sickle Hybrid.",
+            objektif: [
+                "Tahap ketahanan dan keberkesanan peralatan penuaian",
+                "Melancarkan aktiviti penuaian",
+                "Menilai tahap keselamatan produk"
+            ],
+            dapatan: [
+                "Nano Pole 2.72kg vs 4.5kg (40% lebih ringan)",
+                "Pole Lock Plus menjimatkan masa pelarasan 5-10 minit dan perlu penyelenggaraan",
+                "Sickle Hybrid lebih tajam, ketahanan rendah",
+                "Penambahbaikan bahan Carbon Steel (64% ke 58%)"
+            ],
+            kesimpulan: "Berpotensi meningkatkan produktiviti pekerja dan kecekapan operasi ladang.",
+            metrics: [
+                { label: "Pengurangan Berat", value: "40%", desc: "2.72kg vs 4.5kg" },
+                { label: "Penjimatan Masa", value: "5-10 min", desc: "Pelarasan galah" },
+                { label: "Ketahanan Sabit", value: "30% risiko kerosakan", desc: "" }
+            ],
+            chartData: {
+                labels: ["Nano Pole", "Pole Biasa"],
+                values: [2.72, 4.5],
+                label: "Berat Galah (kg)"
+            }
+        },
+        {
+            id: 4,
+            title: "Digital Agriculture (Digiagri)",
+            location: "FPMSB Lurah Bilut (Peringkat 4 & 1A)",
+            supplier: "KPF Agro Properties Sdn Bhd",
             status: "Dalam Kajian",
             statusClass: "active",
+            date: "Apr 2026",
+            image: "image/COE/DIGIAGRI.jpg",
+            desc: "Kajian aplikasi Digital Agriculture bagi operasi kehadiran, penuaian dan pengangkutan hasil.",
+            objektif: [
+                "Menilai ketepatan dan keberkesanan aplikasi",
+                "Mengukur prestasi sistem berbanding kaedah konvensional",
+                "Menilai keupayaan sistem dalam menyediakan data masa nyata"
+            ],
+            dapatan: [
+                "Masa pemprosesan laporan: 90 minit → 10 minit (89% lebih cepat)",
+                "Menghapuskan risiko kehilangan data fizikal",
+                "6 laporan utama dapat dihasilkan secara digital",
+                "Ciri offline dan auto sync operasi tanpa gangguan"
+            ],
+            kesimpulan: "Aplikasi ini berpotensi digunakan secara meluas dalam operasi pelaporan ladang.",
+            metrics: [
+                { label: "Penjimatan Masa", value: "89%", desc: "90 → 10 minit" },
+                { label: "Laporan Digital", value: "6", desc: "eFC Tuai & Angkut, Pin System , Cit BTS, Interval Tuai, Muster Chit" },
+                { label: "Pengurangan Ralat", value: "Rendah", desc: "Berbanding manual" }
+            ],
+            chartData: {
+                labels: ["Manual", "Digiagri"],
+                values: [90, 10],
+                label: "Masa Pemprosesan (minit)"
+            }
+        },
+        {
+            id: 6,
+            title: "Sistem Pengiraan Gaji E-Checkroll",
+            location: "FPMSB Lurah Bilut, Redong, Lenga",
+            supplier: "Unit Pprojek Khas",
+            status: "Dalam Kajian",
+            statusClass: "active",
+            date: "Jun 2026",
             image: "image/COE/ecekroll.png",
             desc: "Kajian sistem digital E-Checkroll sebagai alternatif kepada buku Pocket Checkroll fizikal.",
             objektif: [
@@ -1134,42 +1238,55 @@
             dapatan: [
                 "Menggunakan Google Cloud Platform - selamat dan stabil",
                 "Mengurangkan pengendalian berganda data kerja",
-                "Paparan intektaktif dan mesra pengguna",
-                "Kos pelaksanaan RM4,995 untuk 9 bulan"
+                "Paparan interaktif dan mesra pengguna",
+                "Kos pelaksanaan RM555.00/bulan"
             ],
             kesimpulan: "Sistem digital ini berpotensi menggantikan buku fizikal dengan lebih efisien dan menjimatkan kos.",
             metrics: [
                 { label: "Penjimatan Kos", value: "RM300K", desc: "Setahun" },
-                { label: "Kos Pelaksanaan", value: "RM4,995", desc: "9 bulan" },
+                { label: "Kos Pelaksanaan", value: "RM555.00", desc: "1 bulan" },
                 { label: "Rancangan Rintis", value: "3", desc: "Projek" }
             ],
             chartData: {
                 labels: ["Lurah Bilut", "Redong", "Lenga"],
                 values: [1, 1, 1],
-                label: "Projek Rintis"
+                label: "Rancangan Rintis"
             }
         }
     ];
 
-    // ====== RENDER KAD ======
-    function renderKajian() {
-        const grid = document.getElementById('activityGrid');
-        if (!grid) return;
-        grid.innerHTML = kajianData.map(item => `
-            <div class="activity-card" onclick="showKajianPopup(${item.id})">
-                <img src="${item.image}" alt="${item.title}" class="activity-img" onerror="this.src='https://via.placeholder.com/400x200/1a2a3a/00bcd4?text=${encodeURIComponent(item.title.substring(0,30))}'">
-                <div class="activity-content">
-                    <div class="activity-title">${item.title}</div>
-                    <div class="activity-desc">${item.desc}</div>
-                    <div class="activity-location"><i class="fas fa-map-marker-alt"></i> ${item.location}</div>
-                    <div class="activity-supplier"><i class="fas fa-building"></i> ${item.supplier}</div>
-                    <div style="margin-top: 0.6rem; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-                        <span class="popup-status ${item.statusClass}">${item.status === 'active' ? '⏳ Dalam Kajian' : '✅ Selesai'}</span>
-                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
+    // ====== RENDER TIMELINE ======
+    // Susunan: C-Channel (1) → Sentinel 15 (5) → Terra (3) → Nano Pole (2) → Digiagri (4) → E-Checkroll (6)
+    function renderTimeline() {
+        const container = document.getElementById('timelineContainer');
+        if (!container) return;
+
+        const order = [1, 5, 3, 2, 4, 6];
+        
+        container.innerHTML = order.map(id => {
+            const item = kajianData.find(k => k.id === id);
+            if (!item) return '';
+            
+            const dotClass = item.statusClass === 'completed' ? 'completed' : 'active';
+            const statusText = item.statusClass === 'active' ? '⏳ Dalam Kajian' : '✅ Selesai';
+            
+            // Shorten title if too long
+            let titleDisplay = item.title;
+            if (titleDisplay.length > 35) {
+                titleDisplay = titleDisplay.substring(0, 32) + '...';
+            }
+            
+            return `
+                <div class="timeline-item" onclick="showKajianPopup(${item.id})">
+                    <div class="timeline-dot ${dotClass}"></div>
+                    <div class="timeline-card">
+                        <div class="tl-title">${titleDisplay}</div>
+                        <span class="tl-status ${item.statusClass}">${statusText}</span>
                     </div>
+                    <div class="tl-date">${item.date}</div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     // ====== POPUP DETAIL ======
@@ -1241,7 +1358,10 @@
         }
     }
 
-    // ====== RENDER CHART DENGAN LABEL SENTIASA KELIHATAN ======
+    function closeKajianPopup() {
+        document.getElementById('detailPopup').style.display = 'none';
+    }
+
     function renderChart(canvasId, data) {
         const ctx = document.getElementById(canvasId);
         if (!ctx) return;
@@ -1268,42 +1388,27 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        labels: { color: '#e0edf5', font: { size: 10 } }
-                    },
+                    legend: { labels: { color: '#e0edf5', font: { size: 10 } } },
                     datalabels: {
                         color: '#e0edf5',
                         font: { weight: 'bold', size: 11 },
                         anchor: 'end',
                         align: 'end',
                         offset: 2,
-                        formatter: function(value) {
-                            return value + (value % 1 === 0 ? '' : '');
-                        }
+                        formatter: function(value) { return value + (value % 1 === 0 ? '' : ''); }
                     }
                 },
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: { color: '#b0d4e0', font: { size: 9 } }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#b0d4e0', font: { size: 9 } }
-                    }
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#b0d4e0', font: { size: 9 } } },
+                    x: { grid: { display: false }, ticks: { color: '#b0d4e0', font: { size: 9 } } }
                 }
             },
             plugins: [ChartDataLabels]
         });
     }
 
-    function closeKajianPopup() {
-        document.getElementById('detailPopup').style.display = 'none';
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
-        renderKajian();
+        renderTimeline();
     });
 
     window.showKajianPopup = showKajianPopup;
