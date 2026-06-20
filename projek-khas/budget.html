@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Favicon dalam folder image/ -->
+    <link rel="icon" type="image/x-icon" href="image/favicon.ico">
+    <link rel="shortcut icon" href="image/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-16x16.png">
+    <link rel="manifest" href="image/site.webmanifest">
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Budget Tracker · Unit Projek Khas</title>
+    
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* ===== RESET & ROOT ===== */
+        /* ========== RESET & ROOT ========== */
         * {
             margin: 0;
             padding: 0;
@@ -16,109 +28,141 @@
 
         :root {
             --cyan: #00bcd4;
-            --dark-bg: #0b141c;
-            --card-bg: #0f1f2b;
-            --border-color: #1d4b5e;
-            --text-light: #e0edf5;
+            --cyan-light: #4dd0e1;
+            --carbon: #0f1a24;
+            --carbon-light: #1e2b36;
+            --white: #ffffff;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--dark-bg);
-            color: #fff;
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1219;
+            color: #e6edf3;
+            line-height: 1.5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .app-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 1.5rem 2rem;
-        }
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #1a2833; }
+        ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
 
-        /* ===== NAVBAR ===== */
+        /* ========== HEADER (STICKY) - SAMA SEPERTI INDEX ========== */
         .navbar {
+            background: #0b141c;
+            padding: 0.8rem 2rem;
+            border-bottom: 2px solid var(--cyan);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 0 0.5rem;
-            border-bottom: 2px solid var(--cyan);
             flex-wrap: wrap;
-            gap: 0.8rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            background-color: rgba(11, 20, 28, 0.95);
+            gap: 20px;
         }
-
+        
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 15px;
+            flex-shrink: 0;
         }
-
         .logo-img {
             height: 48px;
-            width: 48px;
+            width: auto;
+            filter: drop-shadow(0 0 6px var(--cyan));
+            border-radius: 8px;
+            background: white;
+            padding: 4px;
             object-fit: contain;
         }
-
         .title-unit {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--cyan);
-            letter-spacing: 1px;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #fff 0%, var(--cyan) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
         }
 
+        /* ========== NAVIGATION TABS ========== */
         .nav-tabs {
             display: flex;
+            gap: 8px;
+            background: #10222e;
+            padding: 0.5rem 1rem;
+            border-radius: 48px;
+            border: 1px solid #1e3b4a;
             flex-wrap: wrap;
-            gap: 0.5rem;
         }
-
         .nav-btn {
             background: transparent;
-            border: 2px solid transparent;
-            color: #8aa8b9;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
+            border: none;
+            color: #a0b8c5;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 1rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
             cursor: pointer;
-            transition: 0.25s;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
             font-family: 'Inter', sans-serif;
         }
-
-        .nav-btn:hover {
-            color: #fff;
-            border-color: var(--cyan);
+        .nav-btn i {
+            color: var(--cyan);
         }
-
         .nav-btn.active {
             background: var(--cyan);
             color: #0b141c;
-            border-color: var(--cyan);
+            box-shadow: 0 0 12px #00bcd4;
+        }
+        .nav-btn.active i {
+            color: #0b141c;
+        }
+        .nav-btn:hover:not(.active) {
+            color: #fff;
         }
 
-        /* ===== MAIN CARD ===== */
+        /* ========== MAIN CONTAINER ========== */
         .main-container {
-            margin-top: 1.5rem;
+            flex: 1;
+            padding: 2rem 2rem 1.5rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
         }
 
+        /* ========== CARD ========== */
         .card {
-            background: var(--card-bg);
+            background: var(--carbon-light);
             border-radius: 28px;
-            padding: 1.8rem 2rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 30px rgba(0, 188, 212, 0.06);
+            padding: 1.5rem;
+            border: 1px solid #264653;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
+            margin-bottom: 1.5rem;
         }
-
         .card-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.4rem;
-            color: var(--cyan);
+            font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 10px;
+            border-left: 6px solid var(--cyan);
+            padding-left: 1rem;
+            font-family: 'Poppins', sans-serif;
         }
+        .card-title i { color: var(--cyan); }
 
         /* ===== STATS BADGE ===== */
         .stats-badge {
@@ -305,7 +349,7 @@
             font-size: 0.9rem;
         }
 
-        /* ===== POPUP ===== */
+        /* ===== POPUP DETAIL ===== */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -448,32 +492,38 @@
         /* ===== FOOTER ===== */
         footer {
             text-align: center;
-            padding: 2rem 0 0.5rem;
+            padding: 1.2rem;
+            border-top: 1px solid #1a3645;
             color: #3a6a7a;
             font-size: 0.8rem;
-            border-top: 1px solid #1a3a48;
-            margin-top: 2rem;
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .app-wrapper {
-                padding: 0 0.8rem 1rem;
-            }
+        @media screen and (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0.5rem;
+                padding: 0.6rem 1rem;
+            }
+            .logo-img {
+                height: 36px;
+            }
+            .title-unit {
+                font-size: 1rem;
             }
             .nav-tabs {
-                justify-content: center;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding: 0.4rem 0.8rem;
             }
             .nav-btn {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.8rem;
+                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+            }
+            .main-container {
+                padding: 1rem 0.8rem;
             }
             .card {
                 padding: 1rem;
+                margin-bottom: 1rem;
             }
             .stats-badge {
                 padding: 0.8rem 1rem;
@@ -504,12 +554,16 @@
             th, td {
                 padding: 0.5rem 0.6rem;
             }
+            .popup-card {
+                max-width: 95%;
+                margin: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
 <div class="app-wrapper">
-    <!-- ===== NAVBAR ===== -->
+    <!-- ===== NAVBAR (SAMA SEPERTI INDEX) ===== -->
     <div class="navbar">
         <div class="logo-area">
             <img class="logo-img" src="image/logo-fpm.png" alt="Logo" onerror="this.src='https://via.placeholder.com/48x48/00bcd4/ffffff?text=UPK';">
@@ -525,7 +579,7 @@
         </div>
     </div>
 
-    <!-- ===== POPUP ===== -->
+    <!-- ===== POPUP DETAIL ===== -->
     <div id="detailPopup" class="popup-overlay">
         <div class="popup-card" id="detailPopupContent"></div>
     </div>
@@ -631,7 +685,7 @@
 
     // ===== DATA (22 PRODUK) =====
     // Penambahbaikan: 12 item
-    // Penciptaan Baru: 10 item (E-HASIL RM0.00 dibuang)
+    // Penciptaan Baru: 10 item
     const budgetData = [
         // ===== PENAMBAHBAIKAN (12) =====
         { bil: 1, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Penambahbaikan", amount: 7600, inventor: "Pluvio Team", rancangan: "Fpmsb Gugusan Tenggaroh", objektif: "Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik" },
@@ -650,14 +704,15 @@
         // ===== PENCIPTAAN BARU (10) =====
         { bil: 13, wilayah: "Mempaga", projek: "E-Checkroll", kategori: "Penciptaan Baru", amount: 4995, inventor: "E-checkroll Team", rancangan: "Fpmsb Lurah Bilut", objektif: "Alternatif Kepada Buku Pocket Checkroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll" },
         { bil: 14, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Penciptaan Baru", amount: 10400, inventor: "Wira Team", rancangan: "Gugusan Air Tawar", objektif: "Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah" },
-        { bil: 15, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Penciptaan Baru", amount: 5000, inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
-        { bil: 16, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Penciptaan Baru", amount: 4000, inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
-        { bil: 17, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "Penciptaan Baru", amount: 500, inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
-        { bil: 18, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Penciptaan Baru", amount: 2500, inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
-        { bil: 19, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Penciptaan Baru", amount: 850, inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
-        { bil: 20, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "Penciptaan Baru", amount: 96.16, inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
-        { bil: 21, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Penciptaan Baru", amount: 2080, inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
-        { bil: 22, wilayah: "Raja Alias", projek: "Escalator Loose Fruit Collector (ELFC)", kategori: "Penciptaan Baru", amount: 4350, inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" }
+        { bil: 15, wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Penciptaan Baru", amount: 8200, inventor: "Tunggal Team", rancangan: "Fpmsb Johor Bahru", objektif: "Meningkatkan Kecekapan Pengurusan Memantau Paras Air Dalam Tanah" },
+        { bil: 16, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Penciptaan Baru", amount: 5000, inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
+        { bil: 17, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Penciptaan Baru", amount: 4000, inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
+        { bil: 18, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "Penciptaan Baru", amount: 500, inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
+        { bil: 19, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Penciptaan Baru", amount: 2500, inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
+        { bil: 20, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Penciptaan Baru", amount: 850, inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
+        { bil: 21, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "Penciptaan Baru", amount: 96.16, inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
+        { bil: 22, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Penciptaan Baru", amount: 2080, inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
+        { bil: 23, wilayah: "Raja Alias", projek: "Escalator Loose Fruit Collector (ELFC)", kategori: "Penciptaan Baru", amount: 4350, inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" }
     ];
 
     // ===== VARIABLES =====
