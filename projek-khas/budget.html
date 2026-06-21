@@ -683,11 +683,11 @@
     const KOS_UBAHSUAI = 12400;
     const BAJET_TERSEDIA = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
 
-    // ===== DATA (22 PRODUK) =====
-    // Penambahbaikan: 12 item
-    // Penciptaan Baru: 10 item
+    // ===== DATA (25 PRODUK) =====
+    // Penambahbaikan: 13 item
+    // Penciptaan Baru: 12 item (10 asal + E-Attendance + 1DCT)
     const budgetData = [
-        // ===== PENAMBAHBAIKAN (12) =====
+        // ===== PENAMBAHBAIKAN (13) =====
         { bil: 1, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Penambahbaikan", amount: 7600, inventor: "Pluvio Team", rancangan: "Fpmsb Gugusan Tenggaroh", objektif: "Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik" },
         { bil: 2, wilayah: "Kuantan", projek: "Finger-Kit Note", kategori: "Penambahbaikan", amount: 1400, inventor: "Finger-kit Team", rancangan: "Bukit Kuantan", objektif: "Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat." },
         { bil: 3, wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "Penambahbaikan", amount: 4000, inventor: "Jumbo Team", rancangan: "Bukit Kuantan", objektif: "Mengesan Kehadiran Gajah Liar Lebih Awal, Menghantar Amaran Segera, Mengurangkan Kerosakan Pokok Sawit" },
@@ -700,18 +700,21 @@
         { bil: 10, wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Penambahbaikan", amount: 150, inventor: "Roller Team", rancangan: "fpmsb lenga", objektif: "Meningkatkan kecekapan mengutip biji relai" },
         { bil: 11, wilayah: "Segamat", projek: "Siren Penghalau Gajah", kategori: "Penambahbaikan", amount: 2500, inventor: "Seren Team", rancangan: "FPMSB KAHANG TIMUR", objektif: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
         { bil: 12, wilayah: "Terengganu", projek: "E-Trépasser Alert V2", kategori: "Penambahbaikan", amount: 3960, inventor: "E-trespasser Team", rancangan: "Fpmsb Bukit Bading", objektif: "Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda" },
+        { bil: 13, wilayah: "Jengka", projek: "J5/4 Smart Rain Gauge", kategori: "Penambahbaikan", amount: 560, inventor: "J5/4 Team", rancangan: "JENGKA 5/4", objektif: "Mengukur jumlah Hujan Secara Automatik. Pemantauan Data Hujan Secara Langsung Tanpa Periksa Manual." },
         
-        // ===== PENCIPTAAN BARU (10) =====
-        { bil: 13, wilayah: "Mempaga", projek: "E-Checkroll", kategori: "Penciptaan Baru", amount: 4995, inventor: "E-checkroll Team", rancangan: "Fpmsb Lurah Bilut", objektif: "Alternatif Kepada Buku Pocket Checkroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll" },
-        { bil: 14, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Penciptaan Baru", amount: 10400, inventor: "Wira Team", rancangan: "Gugusan Air Tawar", objektif: "Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah" },
-        { bil: 15, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Penciptaan Baru", amount: 5000, inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
-        { bil: 16, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Penciptaan Baru", amount: 4000, inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
-        { bil: 17, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "Penciptaan Baru", amount: 500, inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
-        { bil: 18, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Penciptaan Baru", amount: 2500, inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
-        { bil: 19, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Penciptaan Baru", amount: 850, inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
-        { bil: 20, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "Penciptaan Baru", amount: 96.16, inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
-        { bil: 21, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Penciptaan Baru", amount: 2080, inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
-        { bil: 22, wilayah: "Raja Alias", projek: "Escalator Loose Fruit Collector (ELFC)", kategori: "Penciptaan Baru", amount: 4350, inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" }
+        // ===== PENCIPTAAN BARU (12) =====
+        { bil: 14, wilayah: "Mempaga", projek: "E-Checkroll", kategori: "Penciptaan Baru", amount: 4995, inventor: "E-checkroll Team", rancangan: "Fpmsb Lurah Bilut", objektif: "Alternatif Kepada Buku Pocket Checkroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll" },
+        { bil: 15, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Penciptaan Baru", amount: 10400, inventor: "Wira Team", rancangan: "Gugusan Air Tawar", objektif: "Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah" },
+        { bil: 16, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Penciptaan Baru", amount: 5000, inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
+        { bil: 17, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Penciptaan Baru", amount: 4000, inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
+        { bil: 18, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "Penciptaan Baru", amount: 500, inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
+        { bil: 19, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Penciptaan Baru", amount: 2500, inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
+        { bil: 20, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Penciptaan Baru", amount: 850, inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
+        { bil: 21, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "Penciptaan Baru", amount: 96.16, inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
+        { bil: 22, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Penciptaan Baru", amount: 2080, inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
+        { bil: 23, wilayah: "Raja Alias", projek: "Escalator Loose Fruit Collector (ELFC)", kategori: "Penciptaan Baru", amount: 4350, inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" },
+        { bil: 24, wilayah: "Segamat", projek: "E-Attendance", kategori: "Penciptaan Baru", amount: 110, inventor: "Attendance Team", rancangan: "NITAR 1", objektif: "Memudahkan Pengambilan Rekod Kehadiran Pekerja Dengan Menggunakan Telefon Bimbit Pekerja" },
+        { bil: 25, wilayah: "Trolak", projek: "1 Document Centre Wilayah Trolak (1DCT)", kategori: "Penciptaan Baru", amount: 5000, inventor: "1DCT Team", rancangan: "Zon Trolak / Zon Hulu Perak", objektif: "Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan" }
     ];
 
     // ===== VARIABLES =====
