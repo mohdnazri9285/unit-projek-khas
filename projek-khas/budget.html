@@ -226,6 +226,8 @@
             cursor: pointer;
             transition: 0.2s;
             user-select: none;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .q-header:hover {
@@ -236,6 +238,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .q-header-left h3 {
@@ -249,6 +252,7 @@
             display: flex;
             align-items: center;
             gap: 2rem;
+            flex-wrap: wrap;
         }
 
         .q-stat {
@@ -284,6 +288,75 @@
             transform: rotate(180deg);
         }
 
+        /* ===== FILTER BAR WITHIN Q ===== */
+        .q-filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1.5rem;
+            background: #05242f;
+            border-bottom: 1px solid #1a4050;
+            flex-wrap: wrap;
+        }
+        
+        .q-filter-bar label {
+            font-size: 0.75rem;
+            color: #8aa8b9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        .q-filter-bar select {
+            background: #1e3f4e;
+            border: 1px solid var(--cyan);
+            color: #fff;
+            padding: 0.3rem 1.8rem 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%2300bcd4' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.6rem center;
+            min-width: 140px;
+        }
+        
+        .q-filter-bar select option {
+            background: #0f1f2b;
+            color: #fff;
+        }
+        
+        .q-filter-bar .filter-reset-btn {
+            background: transparent;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .q-filter-bar .filter-reset-btn:hover {
+            background: var(--cyan);
+            color: #0b141c;
+        }
+        
+        .q-filter-bar .filter-info {
+            font-size: 0.7rem;
+            color: #8aa8b9;
+            margin-left: auto;
+        }
+        
+        .q-filter-bar .filter-info span {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
         .q-body {
             padding: 0;
             max-height: 0;
@@ -293,7 +366,7 @@
 
         .q-body.open {
             max-height: 5000px;
-            padding: 1rem 1.5rem 1.5rem;
+            padding: 0 0 1.5rem 0;
         }
 
         .q-body table {
@@ -373,7 +446,7 @@
             display: flex;
             justify-content: flex-end;
             gap: 2rem;
-            padding: 1rem 0 0;
+            padding: 1rem 1.5rem 0;
             border-top: 2px solid #1a4050;
             margin-top: 1rem;
         }
@@ -469,11 +542,20 @@
                 flex-wrap: wrap;
                 gap: 0.5rem;
             }
+            .q-filter-bar {
+                padding: 0.5rem 1rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .q-filter-bar .filter-info {
+                margin-left: 0;
+                text-align: center;
+            }
             .q-body {
                 padding: 0 0.5rem;
             }
             .q-body.open {
-                padding: 0.5rem;
+                padding: 0 0.5rem 0.5rem;
             }
             .q-body table {
                 font-size: 0.7rem;
@@ -486,6 +568,7 @@
                 flex-direction: column;
                 gap: 0.5rem;
                 align-items: flex-end;
+                padding: 0.5rem 0.5rem 0;
             }
         }
     </style>
@@ -541,14 +624,25 @@
                     <div class="q-header-right">
                         <div class="q-stat">
                             <span class="q-stat-label">Jumlah Permohonan</span>
-                            <span class="q-stat-value orange">RM 80,956.16</span>
+                            <span class="q-stat-value orange" id="q1TotalPermohonan">RM 80,956.16</span>
                         </div>
                         <div class="q-stat">
                             <span class="q-stat-label">Jumlah Diluluskan</span>
-                            <span class="q-stat-value green">RM 36,521.16</span>
+                            <span class="q-stat-value green" id="q1TotalDiluluskan">RM 36,521.16</span>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Q1 Filter Bar -->
+                <div class="q-filter-bar">
+                    <label><i class="fas fa-filter"></i> TAPIS WILAYAH</label>
+                    <select id="q1WilayahFilter" onchange="filterQ1()">
+                        <option value="SEMUA">Semua Wilayah</option>
+                    </select>
+                    <button class="filter-reset-btn" onclick="resetQ1Filter()"><i class="fas fa-undo-alt"></i> Reset</button>
+                    <span class="filter-info">Menunjukkan: <span id="q1FilterCount">26</span> produk</span>
+                </div>
+                
                 <div class="q-body open" id="q1Body">
                     <div class="table-responsive">
                         <table>
@@ -570,11 +664,11 @@
                     <div class="q-footer">
                         <div class="q-footer-item">
                             <span class="q-footer-label">Jumlah Permohonan</span>
-                            <span class="q-footer-value orange">RM 80,956.16</span>
+                            <span class="q-footer-value orange" id="q1FooterPermohonan">RM 80,956.16</span>
                         </div>
                         <div class="q-footer-item">
                             <span class="q-footer-label">Jumlah Diluluskan</span>
-                            <span class="q-footer-value green">RM 36,521.16</span>
+                            <span class="q-footer-value green" id="q1FooterDiluluskan">RM 36,521.16</span>
                         </div>
                     </div>
                 </div>
@@ -598,6 +692,17 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Q2 Filter Bar -->
+                <div class="q-filter-bar">
+                    <label><i class="fas fa-filter"></i> TAPIS WILAYAH</label>
+                    <select id="q2WilayahFilter" onchange="filterQ2()">
+                        <option value="SEMUA">Semua Wilayah</option>
+                    </select>
+                    <button class="filter-reset-btn" onclick="resetQ2Filter()"><i class="fas fa-undo-alt"></i> Reset</button>
+                    <span class="filter-info">Menunjukkan: <span id="q2FilterCount">0</span> produk</span>
+                </div>
+                
                 <div class="q-body" id="q2Body">
                     <div class="q-empty">
                         <i class="fas fa-clock" style="font-size:2rem; color:var(--cyan); margin-bottom:1rem; display:block;"></i>
@@ -766,46 +871,49 @@
 </style>
 
 <script>
-    // ===== DATA Q1 (26 PRODUK) =====
-    // Jumlah Permohonan: RM80,956.16 (TIDAK termasuk E-Checkroll)
+    // ===== DATA Q1 (26 PRODUK) - SUSUNAN BETUL MENGIKUT LAPORAN =====
     const q1Data = [
-        // Penciptaan Baru (13)
-        { bil: 1, kategori: "Penciptaan Baru", projek: "E-Checkroll", wilayah: "Mempaga", kosDipohon: 4995.00, kosDiluluskan: 4995.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 2, kategori: "Penciptaan Baru", projek: "Wira Soil Lestari", wilayah: "Johor Bahru", kosDipohon: 10400.00, kosDiluluskan: 3000.00, ulasan: "Disokong untuk pembangunan, perbanyakkan data", status: "Disokong" },
-        { bil: 3, kategori: "Penciptaan Baru", projek: "Bailey Bridge", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: 5000.00, ulasan: "Tambahbaik objektif - bagi tujuan laluan yang dikhaskan", status: "Disokong" },
-        { bil: 4, kategori: "Penciptaan Baru", projek: "Spy Cam Bbc", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
-        { bil: 5, kategori: "Penciptaan Baru", projek: "Agro Bait Box Cencus (Abc)", wilayah: "Kuantan", kosDipohon: 500.00, kosDiluluskan: 500.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 6, kategori: "Penciptaan Baru", projek: "Agro Water Level", wilayah: "Kuantan", kosDipohon: 2500.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
-        { bil: 7, kategori: "Penciptaan Baru", projek: "Rootex (Root Extraction Tool)", wilayah: "Segamat", kosDipohon: 850.00, kosDiluluskan: 850.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 8, kategori: "Penciptaan Baru", projek: "Eogs (Eco Owl Guard System)", wilayah: "Segamat", kosDipohon: 96.16, kosDiluluskan: 96.16, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 9, kategori: "Penciptaan Baru", projek: "Fertilizer Box", wilayah: "Raja Alias", kosDipohon: 2080.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 10, kategori: "Penciptaan Baru", projek: "Escalator Loose Fruit Collector (ELFC)", wilayah: "Raja Alias", kosDipohon: 4350.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 11, kategori: "Penciptaan Baru", projek: "E-Attendance", wilayah: "Segamat", kosDipohon: 110.00, kosDiluluskan: 110.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 12, kategori: "Penciptaan Baru", projek: "1 Document Centre Wilayah Trolak (1DCT)", wilayah: "Trolak", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 13, kategori: "Penciptaan Baru", projek: "Tunggal Piezometer", wilayah: "Johor Bahru", kosDipohon: 8200.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        // ===== PENCIPTAAN BARU (11) =====
+        { bil: 1, kategori: "Penciptaan Baru", projek: "Wira Soil Lestari", wilayah: "Johor Bahru", kosDipohon: 10400.00, kosDiluluskan: 3000.00, ulasan: "Disokong untuk pembangunan, perbanyakkan data", status: "Disokong" },
+        { bil: 2, kategori: "Penciptaan Baru", projek: "Bailey Bridge", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: 5000.00, ulasan: "Tambahbaik objektif - bagi tujuan laluan yang dikhaskan", status: "Disokong" },
+        { bil: 3, kategori: "Penciptaan Baru", projek: "Spy Cam Bbc", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
+        { bil: 4, kategori: "Penciptaan Baru", projek: "Agro Bait Box Cencus (Abc)", wilayah: "Kuantan", kosDipohon: 500.00, kosDiluluskan: 500.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 5, kategori: "Penciptaan Baru", projek: "Agro Water Level", wilayah: "Kuantan", kosDipohon: 2500.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
+        { bil: 6, kategori: "Penciptaan Baru", projek: "Rootex (Root Extraction Tool)", wilayah: "Segamat", kosDipohon: 850.00, kosDiluluskan: 850.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 7, kategori: "Penciptaan Baru", projek: "Eogs (Eco Owl Guard System)", wilayah: "Segamat", kosDipohon: 96.16, kosDiluluskan: 96.16, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 8, kategori: "Penciptaan Baru", projek: "Fertilizer Box", wilayah: "Raja Alias", kosDipohon: 2080.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 9, kategori: "Penciptaan Baru", projek: "Escalator Loose Fruit Collector (ELFC)", wilayah: "Raja Alias", kosDipohon: 4350.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 10, kategori: "Penciptaan Baru", projek: "E-Attendance", wilayah: "Segamat", kosDipohon: 110.00, kosDiluluskan: 110.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 11, kategori: "Penciptaan Baru", projek: "1 Document Centre Wilayah Trolak (1DCT)", wilayah: "Trolak", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
         
-        // Penambahbaikan (13)
-        { bil: 14, kategori: "Penambahbaikan", projek: "Pluvio Data Sense (PDS)", wilayah: "Johor Bahru", kosDipohon: 7600.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 15, kategori: "Penambahbaikan", projek: "Finger-Kit Note", wilayah: "Kuantan", kosDipohon: 1400.00, kosDiluluskan: 1400.00, ulasan: "Perlu penambahbaikan - masukkan nota kedalam apps yang bersesuaian", status: "Disokong" },
-        { bil: 16, kategori: "Penambahbaikan", projek: "Jumbo Informer", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: 4000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 17, kategori: "Penambahbaikan", projek: "Agromeasure Pro", wilayah: "Kuantan", kosDipohon: 2200.00, kosDiluluskan: 2200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 18, kategori: "Penambahbaikan", projek: "Mud Grip", wilayah: "Kuantan", kosDipohon: 1000.00, kosDiluluskan: 1000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 19, kategori: "Penambahbaikan", projek: "Ryg Platform Counting", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 20, kategori: "Penambahbaikan", projek: "Smart Weather System Mini (Swsm)", wilayah: "Kuantan", kosDipohon: 1500.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 21, kategori: "Penambahbaikan", projek: "ANIMO", wilayah: "Segamat", kosDipohon: 15000.00, kosDiluluskan: 5000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 22, kategori: "Penambahbaikan", projek: "Sarang Burung Boleh Laras", wilayah: "Segamat", kosDipohon: 1200.00, kosDiluluskan: 1200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 23, kategori: "Penambahbaikan", projek: "Roller Biji Relai", wilayah: "Segamat", kosDipohon: 150.00, kosDiluluskan: 150.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 24, kategori: "Penambahbaikan", projek: "Siren Penghalau Gajah", wilayah: "Segamat", kosDipohon: 2500.00, kosDiluluskan: 2500.00, ulasan: "Gabungkan fungsi dengan produk 'Jumbo Informer'", status: "Disokong" },
-        { bil: 25, kategori: "Penambahbaikan", projek: "E-Trespasser Alert V2", wilayah: "Terengganu", kosDipohon: 3960.00, kosDiluluskan: 3960.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 26, kategori: "Penambahbaikan", projek: "J5/4 Smart Rain Gauge", wilayah: "Jengka", kosDipohon: 560.00, kosDiluluskan: 560.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" }
+        // ===== PENCIPTAAN BARU (TAMBAHAN - ITEM 25 & 26) =====
+        { bil: 25, kategori: "Penciptaan Baru", projek: "E-Checkroll", wilayah: "Mempaga", kosDipohon: 4995.00, kosDiluluskan: 4995.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 26, kategori: "Penciptaan Baru", projek: "Tunggal Piezometer", wilayah: "Johor Bahru", kosDipohon: 8200.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        
+        // ===== PENAMBAHBAIKAN (13) =====
+        { bil: 12, kategori: "Penambahbaikan", projek: "Pluvio Data Sense (PDS)", wilayah: "Johor Bahru", kosDipohon: 7600.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 13, kategori: "Penambahbaikan", projek: "Finger-Kit Note", wilayah: "Kuantan", kosDipohon: 1400.00, kosDiluluskan: 1400.00, ulasan: "Perlu penambahbaikan - masukkan nota kedalam apps yang bersesuaian", status: "Disokong" },
+        { bil: 14, kategori: "Penambahbaikan", projek: "Jumbo Informer", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: 4000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 15, kategori: "Penambahbaikan", projek: "Agromeasure Pro", wilayah: "Kuantan", kosDipohon: 2200.00, kosDiluluskan: 2200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 16, kategori: "Penambahbaikan", projek: "Mud Grip", wilayah: "Kuantan", kosDipohon: 1000.00, kosDiluluskan: 1000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 17, kategori: "Penambahbaikan", projek: "Ryg Platform Counting", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 18, kategori: "Penambahbaikan", projek: "Smart Weather System Mini (Swsm)", wilayah: "Kuantan", kosDipohon: 1500.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 19, kategori: "Penambahbaikan", projek: "ANIMO", wilayah: "Segamat", kosDipohon: 15000.00, kosDiluluskan: 5000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 20, kategori: "Penambahbaikan", projek: "Sarang Burung Boleh Laras", wilayah: "Segamat", kosDipohon: 1200.00, kosDiluluskan: 1200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 21, kategori: "Penambahbaikan", projek: "Roller Biji Relai", wilayah: "Segamat", kosDipohon: 150.00, kosDiluluskan: 150.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 22, kategori: "Penambahbaikan", projek: "Siren Penghalau Gajah", wilayah: "Segamat", kosDipohon: 2500.00, kosDiluluskan: 2500.00, ulasan: "Gabungkan fungsi dengan produk 'Jumbo Informer'", status: "Disokong" },
+        { bil: 23, kategori: "Penambahbaikan", projek: "E-Trespasser Alert V2", wilayah: "Terengganu", kosDipohon: 3960.00, kosDiluluskan: 3960.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 24, kategori: "Penambahbaikan", projek: "J5/4 Smart Rain Gauge", wilayah: "Jengka", kosDipohon: 560.00, kosDiluluskan: 560.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" }
     ];
 
-    // Kira jumlah diluluskan
-    const totalDiluluskan = q1Data
-        .filter(item => item.kosDiluluskan !== null)
-        .reduce((sum, item) => sum + item.kosDiluluskan, 0);
+    // ===== Q2 DATA (Empty for now) =====
+    const q2Data = [];
 
-    // ===== FUNGSI TOGGLE Q1 =====
+    // ===== VARIABLES =====
+    let q1FilteredData = [...q1Data];
+    let q2FilteredData = [...q2Data];
+
+    // ===== FUNGSI TOGGLE =====
     function toggleQ1() {
         const body = document.getElementById('q1Body');
         const toggle = document.getElementById('q1Toggle');
@@ -876,10 +984,60 @@
         document.getElementById('detailPopup').style.display = 'none';
     }
 
-    // ===== RENDER Q1 TABLE =====
+    // ===== POPULATE WILAYAH FILTERS =====
+    function populateWilayahFilters() {
+        const wilayahSet = new Set(q1Data.map(item => item.wilayah));
+        const sorted = Array.from(wilayahSet).sort();
+        
+        // Q1 Filter
+        const q1Select = document.getElementById('q1WilayahFilter');
+        sorted.forEach(w => {
+            const opt = document.createElement('option');
+            opt.value = w;
+            opt.textContent = w;
+            q1Select.appendChild(opt);
+        });
+        
+        // Q2 Filter (empty for now)
+        const q2Select = document.getElementById('q2WilayahFilter');
+        // Add default option only
+    }
+
+    // ===== FILTER Q1 =====
+    function filterQ1() {
+        const wilayah = document.getElementById('q1WilayahFilter').value;
+        
+        q1FilteredData = wilayah === "SEMUA" 
+            ? [...q1Data] 
+            : q1Data.filter(item => item.wilayah === wilayah);
+        
+        renderQ1();
+    }
+
+    // ===== RESET Q1 FILTER =====
+    function resetQ1Filter() {
+        document.getElementById('q1WilayahFilter').value = "SEMUA";
+        q1FilteredData = [...q1Data];
+        renderQ1();
+    }
+
+    // ===== FILTER Q2 =====
+    function filterQ2() {
+        // Q2 empty for now
+        renderQ2();
+    }
+
+    // ===== RESET Q2 FILTER =====
+    function resetQ2Filter() {
+        document.getElementById('q2WilayahFilter').value = "SEMUA";
+        q2FilteredData = [...q2Data];
+        renderQ2();
+    }
+
+    // ===== RENDER Q1 =====
     function renderQ1() {
         const tbody = document.getElementById('q1TableBody');
-        tbody.innerHTML = q1Data.map(item => {
+        tbody.innerHTML = q1FilteredData.map(item => {
             const statusClass = item.status === "Disokong" ? "lulus" : item.status === "KIV" ? "kiv" : "tidak";
             const kosDiluluskan = item.kosDiluluskan !== null ? 'RM ' + item.kosDiluluskan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '-';
             const kosDiluluskanClass = item.kosDiluluskan !== null ? 'amount-lulus' : 'amount-kosong';
@@ -898,20 +1056,43 @@
             `;
         }).join('');
 
-        // Update footer totals
-        const totalPermohonan = q1Data.reduce((sum, item) => sum + item.kosDipohon, 0);
-        document.querySelector('.q-footer .orange').textContent = 'RM ' + totalPermohonan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        document.querySelector('.q-footer .green').textContent = 'RM ' + totalDiluluskan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        // Update totals
+        const totalPermohonan = q1FilteredData.reduce((sum, item) => sum + item.kosDipohon, 0);
+        const totalDiluluskan = q1FilteredData
+            .filter(item => item.kosDiluluskan !== null)
+            .reduce((sum, item) => sum + item.kosDiluluskan, 0);
+        
+        document.getElementById('q1FooterPermohonan').textContent = 'RM ' + totalPermohonan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('q1FooterDiluluskan').textContent = 'RM ' + totalDiluluskan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        
+        // Update header stats
+        document.getElementById('q1TotalPermohonan').textContent = 'RM ' + totalPermohonan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('q1TotalDiluluskan').textContent = 'RM ' + totalDiluluskan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        
+        // Update filter count
+        document.getElementById('q1FilterCount').textContent = q1FilteredData.length;
+    }
+
+    // ===== RENDER Q2 =====
+    function renderQ2() {
+        // Q2 empty for now
+        document.getElementById('q2FilterCount').textContent = '0';
     }
 
     // ===== INIT =====
+    populateWilayahFilters();
     renderQ1();
+    renderQ2();
 
     // Expose functions
     window.toggleQ1 = toggleQ1;
     window.toggleQ2 = toggleQ2;
     window.showDetailPopup = showDetailPopup;
     window.closeDetailPopup = closeDetailPopup;
+    window.filterQ1 = filterQ1;
+    window.resetQ1Filter = resetQ1Filter;
+    window.filterQ2 = filterQ2;
+    window.resetQ2Filter = resetQ2Filter;
 </script>
 </body>
 </html>
