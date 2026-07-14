@@ -47,6 +47,18 @@
             border: 1px solid #6495ff;
         }
         
+        .status-completed {
+            background: rgba(0, 200, 100, 0.2);
+            color: #00c864;
+            border: 1px solid #00c864;
+        }
+        
+        .status-upcoming {
+            background: rgba(255, 165, 0, 0.15);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
         .filter-row {
             display: flex;
             gap: 1rem;
@@ -282,6 +294,227 @@
             font-weight: 600;
             min-width: 20px;
         }
+
+        /* ========== COMMERCIALISATION TIMELINE ========== */
+        .commercial-section {
+            margin: 1.5rem 0;
+        }
+        
+        .commercial-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-left: 4px solid var(--cyan);
+            padding-left: 1rem;
+        }
+        
+        .commercial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: #06313f;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            user-select: none;
+            margin-bottom: 0;
+        }
+        
+        .commercial-header:hover {
+            background: #0a4050;
+        }
+        
+        .commercial-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .commercial-header-left h4 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .commercial-header-left .product-tag {
+            background: var(--cyan);
+            color: #0b141c;
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        
+        .commercial-toggle {
+            color: var(--cyan);
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+        
+        .commercial-toggle.open {
+            transform: rotate(180deg);
+        }
+        
+        .commercial-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            background: #0a1a26;
+            border-radius: 0 0 16px 16px;
+        }
+        
+        .commercial-body.open {
+            max-height: 2000px;
+            padding: 1.5rem 1.5rem 1.5rem;
+        }
+        
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--cyan), rgba(0,188,212,0.2));
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.1rem;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            background: #0a1a26;
+            z-index: 1;
+        }
+        
+        .timeline-item.completed::before {
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+        
+        .timeline-item.completed::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: -2.05rem;
+            top: 4px;
+            font-size: 0.6rem;
+            color: #0b141c;
+            z-index: 2;
+        }
+        
+        .timeline-item.upcoming::before {
+            border-color: #ffa500;
+            background: #0a1a26;
+        }
+        
+        .timeline-item .tl-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .timeline-item .tl-title {
+            font-weight: 600;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+        
+        .timeline-item .tl-date {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+        }
+        
+        .timeline-item .tl-date.completed-date {
+            color: #00c864;
+            background: rgba(0, 200, 100, 0.15);
+            border: 1px solid #00c864;
+        }
+        
+        .timeline-item .tl-date.upcoming-date {
+            color: #ffa500;
+            background: rgba(255, 165, 0, 0.15);
+            border: 1px solid #ffa500;
+        }
+        
+        .timeline-item .tl-desc {
+            font-size: 0.85rem;
+            color: #b0c8d4;
+            margin-top: 0.3rem;
+        }
+        
+        .timeline-item .tl-status-icon {
+            margin-right: 0.5rem;
+        }
+        
+        .commercial-footer {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #1a4050;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .commercial-footer-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .commercial-footer-item .dot-completed {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--cyan);
+            border: 2px solid var(--cyan);
+        }
+        
+        .commercial-footer-item .dot-upcoming {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: transparent;
+            border: 2px solid #ffa500;
+        }
+        
+        .commercial-footer-item .label {
+            color: #8aa8b9;
+        }
         
         @media (max-width: 768px) {
             .trl-grid {
@@ -289,6 +522,33 @@
             }
             .trl-card.expanded {
                 grid-column: span 1;
+            }
+            .commercial-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+            }
+            .commercial-header-left {
+                flex-wrap: wrap;
+            }
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            .timeline-item {
+                padding-left: 1rem;
+            }
+            .timeline-item::before {
+                left: -1.1rem;
+                width: 14px;
+                height: 14px;
+            }
+            .timeline-item.completed::after {
+                left: -1.05rem;
+                font-size: 0.5rem;
+            }
+            .timeline-item .tl-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -415,6 +675,105 @@
                 </div>
             </div>
             
+            <!-- ========== COMMERCIALISATION TIMELINE - JANTAN SPIKE ========== -->
+            <div class="commercial-section">
+                <div class="commercial-title">
+                    <i class="fas fa-rocket"></i> PENGKOMERSIALAN PRODUK
+                    <span style="font-size: 0.8rem; opacity: 0.7;">(Timeline & Status)</span>
+                </div>
+                
+                <div class="commercial-header" onclick="toggleCommercial()">
+                    <div class="commercial-header-left">
+                        <h4><i class="fas fa-crown" style="color: var(--cyan);"></i> Jantan Spike</h4>
+                        <span class="product-tag">Wilayah Jengka</span>
+                        <span style="font-size: 0.8rem; color: #8aa8b9;">PA/99/0078</span>
+                    </div>
+                    <i class="fas fa-chevron-down commercial-toggle open" id="commercialToggle"></i>
+                </div>
+                
+                <div class="commercial-body open" id="commercialBody">
+                    <div class="timeline">
+                        <!-- Item 1 - Selesai -->
+                        <div class="timeline-item completed">
+                            <div class="tl-header">
+                                <span class="tl-title"><i class="fas fa-check-circle tl-status-icon" style="color: #00c864;"></i> Mesyuarat Komersial Produk Jantan Spike</span>
+                                <span class="tl-date completed-date"><i class="fas fa-calendar-check"></i> 10/04/2026</span>
+                            </div>
+                            <div class="tl-desc">Mesyuarat komersial awal produk Jantan Spike bersama pasukan pembangunan</div>
+                        </div>
+                        
+                        <!-- Item 2 - Selesai -->
+                        <div class="timeline-item completed">
+                            <div class="tl-header">
+                                <span class="tl-title"><i class="fas fa-check-circle tl-status-icon" style="color: #00c864;"></i> Mesyuarat Komersial Bersama Pembekal</span>
+                                <span class="tl-date completed-date"><i class="fas fa-calendar-check"></i> 13/05/2026</span>
+                            </div>
+                            <div class="tl-desc">Mesyuarat komersial produk Jantan Spike bersama pembekal untuk perbincangan spesifikasi dan keperluan</div>
+                        </div>
+                        
+                        <!-- Item 3 - Selesai -->
+                        <div class="timeline-item completed">
+                            <div class="tl-header">
+                                <span class="tl-title"><i class="fas fa-check-circle tl-status-icon" style="color: #00c864;"></i> Tandatangan Perjanjian Kerahsiaan (NDA)</span>
+                                <span class="tl-date completed-date"><i class="fas fa-calendar-check"></i> 08/06/2026</span>
+                            </div>
+                            <div class="tl-desc">Sesi tandatangan perjanjian kerahsiaan (Non-Disclosure Agreement) bersama pembekal</div>
+                        </div>
+                        
+                        <!-- Item 4 - Akan datang -->
+                        <div class="timeline-item upcoming">
+                            <div class="tl-header">
+                                <span class="tl-title"><i class="fas fa-clock tl-status-icon" style="color: #ffa500;"></i> Permohonan Kelulusan Komersial</span>
+                                <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> Julai - Ogos 2026</span>
+                            </div>
+                            <div class="tl-desc">Permohonan kelulusan komersial produk Jantan Spike melalui saluran yang ditetapkan</div>
+                        </div>
+                        
+                        <!-- Item 5 - Akan datang -->
+                        <div class="timeline-item upcoming">
+                            <div class="tl-header">
+                                <span class="tl-title"><i class="fas fa-clock tl-status-icon" style="color: #ffa500;"></i> Perolehan Bekalan Bahan Asas</span>
+                                <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> September - Oktober 2026</span>
+                            </div>
+                            <div class="tl-desc">Perolehan bekalan bahan asas untuk proses pembuatan produk Jantan Spike</div>
+                        </div>
+                        
+                        <!-- Item 6 - Akan datang -->
+                        <div class="timeline-item upcoming">
+                            <div class="tl-header">
+                                <span class="tl-title"><i class="fas fa-clock tl-status-icon" style="color: #ffa500;"></i> Proses Pembuatan</span>
+                                <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> Oktober - November 2026</span>
+                            </div>
+                            <div class="tl-desc">Proses pembuatan produk Jantan Spike secara komersial</div>
+                        </div>
+                        
+                        <!-- Item 7 - Akan datang -->
+                        <div class="timeline-item upcoming">
+                            <div class="tl-header">
+                                <span class="tl-title"><i class="fas fa-clock tl-status-icon" style="color: #ffa500;"></i> Serahan Produk ke Wilayah</span>
+                                <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> Selepas November 2026</span>
+                            </div>
+                            <div class="tl-desc">Serahan produk Jantan Spike siap ke Wilayah untuk kegunaan operasi</div>
+                        </div>
+                    </div>
+                    
+                    <div class="commercial-footer">
+                        <div class="commercial-footer-item">
+                            <span class="dot-completed"></span>
+                            <span class="label">Selesai</span>
+                        </div>
+                        <div class="commercial-footer-item">
+                            <span class="dot-upcoming"></span>
+                            <span class="label">Dalam Perancangan / Akan Datang</span>
+                        </div>
+                        <div class="commercial-footer-item">
+                            <span style="color: var(--cyan);"><i class="fas fa-info-circle"></i></span>
+                            <span class="label">Klik untuk expand/collapse</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Table - JADUAL DIBETULKAN SEPENUHNYA -->
             <div class="table-responsive">
                 <table>
@@ -455,7 +814,7 @@
                         <!-- Besout Digital Cencus (BDC) -->
                         <tr>
                             <td>3</td>
-                            <td><strong>Besout Digital Cencus - Wialayah Trolak</strong></td>
+                            <td><strong>Besout Digital Cencus - Wilayah Trolak</strong></td>
                             <td><em>Akan dikemaskini</em></td>
                             <td class="patent-number">PA/99/0079</td>
                             <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete / Patent Pending</span></td>
@@ -507,6 +866,17 @@
             }, 100);
         }
     }
+
+    // ========== COMMERCIAL TOGGLE FUNCTION ==========
+    function toggleCommercial() {
+        const body = document.getElementById('commercialBody');
+        const toggle = document.getElementById('commercialToggle');
+        body.classList.toggle('open');
+        toggle.classList.toggle('open');
+    }
+
+    // ========== SET DEFAULT OPEN ==========
+    // Commercial section is open by default (class="open" already set)
 </script>
 </body>
 </html>
