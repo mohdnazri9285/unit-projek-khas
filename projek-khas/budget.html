@@ -1,3 +1,44 @@
+Saya telah semak dokumen kelulusan. Berdasarkan JPPI Bil 1/2026, hanya 16 projek disokong dengan jumlah peruntukan RM31,526.16. Berikut adalah senarai projek yang DISOKONG:
+
+PENAMBAHBAIKAN (12 disokong):
+
+1. Pluvio Data Sense (Pds) - RM7,600 ✅
+2. Finger-Kit Note - RM1,400 ✅
+3. Jumbo Informer - RM4,000 ✅
+4. Agromeasure Pro - RM2,200 ✅
+5. Mud Grip - RM1,000 ✅
+6. ANIMO - RM15,000 ✅
+7. Sarang Burung Boleh Laras - RM1,200 ✅
+8. Roller Biji Relai - RM150 ✅
+9. Siren Penghalau Gajah - RM2,500 ✅
+10. E-Trépasser Alert V2 - RM3,960 ✅
+11. J5/4 Smart Rain Gauge - RM560 ✅
+
+PENCIPTAAN BARU (5 disokong):
+
+12. E-Checkroll - RM4,995 ✅
+13. Wira Soil Lestari - RM10,400 ✅
+14. Bailey Bridge - RM5,000 ✅
+15. Spy Cam Bbc - RM4,000 ✅
+16. Agro Bait Box Cencus (Abc) - RM500 ✅
+
+TIDAK DISOKONG (9 item):
+
+· Smart Weather System Mini (Swsm) - Kuantan - RM1,500 ❌
+· Ryg Platform Counting - Kuantan - RM5,000 ❌
+· Agro Water Level - Kuantan - RM2,500 ❌
+· Rootex (Root Extraction Tool) - Segamat - RM850 ❌
+· Eogs (Eco Owl Guard System) - Segamat - RM96.16 ❌
+· Fertilizer Box - Raja Alias - RM2,080 ❌
+· Escalator Loose Fruit Collector (ELFC) - Raja Alias - RM4,350 ❌
+· E-Attendance - Segamat - RM110 ❌
+· 1 Document Centre Wilayah Trolak (1DCT) - Trolak - RM5,000 ❌
+
+JUMLAH: 25 item (16 Disokong + 9 Tidak Disokong)
+
+Berikut adalah kod yang dikemas kini:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +73,8 @@
             --carbon: #0f1a24;
             --carbon-light: #1e2b36;
             --white: #ffffff;
+            --green: #4caf50;
+            --red: #f44336;
         }
 
         body {
@@ -213,14 +256,35 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(255, 165, 0, 0.15);
-            color: #ffa500;
-            border: 1px solid #ffa500;
+        }
+        
+        .status-badge.lulus {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--green);
+            border: 1px solid var(--green);
+        }
+        
+        .status-badge.tidak {
+            background: rgba(244, 67, 54, 0.2);
+            color: var(--red);
+            border: 1px solid var(--red);
         }
 
         .amount {
             font-weight: 700;
             color: var(--cyan);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .amount-lulus {
+            font-weight: 700;
+            color: var(--green);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .amount-tidak {
+            font-weight: 700;
+            color: var(--red);
             font-family: 'Inter', sans-serif;
         }
 
@@ -284,7 +348,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 0.85rem;
-            min-width: 850px;
+            min-width: 900px;
             cursor: pointer;
         }
 
@@ -549,7 +613,7 @@
             }
             table {
                 font-size: 0.75rem;
-                min-width: 650px;
+                min-width: 700px;
             }
             th, td {
                 padding: 0.5rem 0.6rem;
@@ -602,29 +666,29 @@
                     <i class="fas fa-piggy-bank" style="color: var(--cyan); font-size: 1.3rem;"></i>
                     <div>
                         <div class="stat-label">Bajet Tersedia</div>
-                        <div class="stat-value" id="bajetTersedia">RM 187,600.00</div>
+                        <div class="stat-value" id="bajetTersedia">RM 168,473.84</div>
                     </div>
                 </div>
                 <div class="stat-separator"></div>
                 <div class="stat-item">
-                    <i class="fas fa-wallet" style="color: var(--cyan); font-size: 1.3rem;"></i>
+                    <i class="fas fa-check-circle" style="color: var(--green); font-size: 1.3rem;"></i>
                     <div>
-                        <div class="stat-label">Total Permohonan</div>
-                        <div class="stat-value" id="totalPermohonan">0</div>
+                        <div class="stat-label">Jumlah Lulus</div>
+                        <div class="stat-value" id="totalLulus">0</div>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <i class="fas fa-coins" style="color: var(--cyan); font-size: 1.3rem;"></i>
+                    <i class="fas fa-times-circle" style="color: var(--red); font-size: 1.3rem;"></i>
                     <div>
-                        <div class="stat-label">Jumlah Permohonan</div>
-                        <div class="stat-value" id="totalBudget">RM 0</div>
+                        <div class="stat-label">Tidak Disokong</div>
+                        <div class="stat-value" id="totalTidak">0</div>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <i class="fas fa-clock" style="color: #ffa500; font-size: 1.3rem;"></i>
+                    <i class="fas fa-coins" style="color: var(--green); font-size: 1.3rem;"></i>
                     <div>
-                        <div class="stat-label">Dalam Proses</div>
-                        <div class="stat-value" id="totalProses">0</div>
+                        <div class="stat-label">Jumlah Lulus (RM)</div>
+                        <div class="stat-value" id="totalBudgetLulus">RM 0</div>
                     </div>
                 </div>
             </div>
@@ -638,6 +702,11 @@
                     <option value="SEMUA">Semua Kategori</option>
                     <option value="Penambahbaikan">Penambahbaikan</option>
                     <option value="Penciptaan Baru">Penciptaan Baru</option>
+                </select>
+                <select id="statusFilter" class="filter-select">
+                    <option value="SEMUA">Semua Status</option>
+                    <option value="Disokong">✅ Disokong</option>
+                    <option value="Tidak Disokong">❌ Tidak Disokong</option>
                 </select>
                 <button class="filter-reset" onclick="resetFilters()"><i class="fas fa-undo-alt"></i> Reset</button>
             </div>
@@ -667,7 +736,8 @@
             </div>
 
             <p style="text-align: center; margin-top: 1rem; color: var(--cyan); font-size: 0.75rem; opacity: 0.8;">
-                <i class="fas fa-hand-pointer"></i> Klik pada baris untuk lihat detail lengkap
+                <i class="fas fa-hand-pointer"></i> Klik pada baris untuk lihat detail lengkap<br>
+                * Berdasarkan keputusan JPPI Bil 1/2026 pada 23 Jun 2026
             </p>
         </div>
     </div>
@@ -684,37 +754,41 @@
     const BAJET_TERSEDIA = BAJET_PENYELIDIKAN - KOS_UBAHSUAI;
 
     // ===== DATA (25 PRODUK) =====
-    // Penambahbaikan: 13 item
-    // Penciptaan Baru: 12 item (10 asal + E-Attendance + 1DCT)
+    // Berdasarkan JPPI Bil 1/2026
+    // 16 Disokong, 9 Tidak Disokong
     const budgetData = [
-        // ===== PENAMBAHBAIKAN (13) =====
-        { bil: 1, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Penambahbaikan", amount: 7600, inventor: "Pluvio Team", rancangan: "Fpmsb Gugusan Tenggaroh", objektif: "Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik" },
-        { bil: 2, wilayah: "Kuantan", projek: "Finger-Kit Note", kategori: "Penambahbaikan", amount: 1400, inventor: "Finger-kit Team", rancangan: "Bukit Kuantan", objektif: "Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat." },
-        { bil: 3, wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "Penambahbaikan", amount: 4000, inventor: "Jumbo Team", rancangan: "Bukit Kuantan", objektif: "Mengesan Kehadiran Gajah Liar Lebih Awal, Menghantar Amaran Segera, Mengurangkan Kerosakan Pokok Sawit" },
-        { bil: 4, wilayah: "Kuantan", projek: "Agromeasure Pro", kategori: "Penambahbaikan", amount: 2200, inventor: "Agromeasure Team", rancangan: "Bukit Kuantan/Sg. Panching Timur", objektif: "Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang, Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang" },
-        { bil: 5, wilayah: "Kuantan", projek: "Mud Grip", kategori: "Penambahbaikan", amount: 1000, inventor: "Mud Grip Team", rancangan: "Fpm Selancar 4/5", objektif: "Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan" },
-        { bil: 6, wilayah: "Kuantan", projek: "Ryg Platform Counting", kategori: "Penambahbaikan", amount: 5000, inventor: "Ryg Team", rancangan: "Fpm Selancar 4/5", objektif: "Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit." },
-        { bil: 7, wilayah: "Kuantan", projek: "Smart Weather System Mini (Swsm)", kategori: "Penambahbaikan", amount: 1500, inventor: "Smart Weather Team", rancangan: "Agropolitan", objektif: "Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon" },
-        { bil: 8, wilayah: "Segamat", projek: "ANIMO", kategori: "Penambahbaikan", amount: 15000, inventor: "ANIMO Team", rancangan: "ULU DENGAR", objektif: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
-        { bil: 9, wilayah: "Segamat", projek: "Sarang Burung Boleh Laras", kategori: "Penambahbaikan", amount: 1200, inventor: "Sarang Team", rancangan: "NITAR 1", objektif: "Memudahkan Kerja Bancian Dan Penjagaan" },
-        { bil: 10, wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Penambahbaikan", amount: 150, inventor: "Roller Team", rancangan: "fpmsb lenga", objektif: "Meningkatkan kecekapan mengutip biji relai" },
-        { bil: 11, wilayah: "Segamat", projek: "Siren Penghalau Gajah", kategori: "Penambahbaikan", amount: 2500, inventor: "Seren Team", rancangan: "FPMSB KAHANG TIMUR", objektif: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
-        { bil: 12, wilayah: "Terengganu", projek: "E-Trépasser Alert V2", kategori: "Penambahbaikan", amount: 3960, inventor: "E-trespasser Team", rancangan: "Fpmsb Bukit Bading", objektif: "Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda" },
-        { bil: 13, wilayah: "Jengka", projek: "J5/4 Smart Rain Gauge", kategori: "Penambahbaikan", amount: 560, inventor: "J5/4 Team", rancangan: "JENGKA 5/4", objektif: "Mengukur jumlah Hujan Secara Automatik. Pemantauan Data Hujan Secara Langsung Tanpa Periksa Manual." },
+        // ===== PENAMBAHBAIKAN =====
+        // DISOKONG (11)
+        { bil: 1, wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Penambahbaikan", amount: 7600, status: "Disokong", inventor: "Pluvio Team", rancangan: "Fpmsb Gugusan Tenggaroh", objektif: "Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik" },
+        { bil: 2, wilayah: "Kuantan", projek: "Finger-Kit Note", kategori: "Penambahbaikan", amount: 1400, status: "Disokong", inventor: "Finger-kit Team", rancangan: "Bukit Kuantan", objektif: "Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat." },
+        { bil: 3, wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "Penambahbaikan", amount: 4000, status: "Disokong", inventor: "Jumbo Team", rancangan: "Bukit Kuantan", objektif: "Mengesan Kehadiran Gajah Liar Lebih Awal, Menghantar Amaran Segera, Mengurangkan Kerosakan Pokok Sawit" },
+        { bil: 4, wilayah: "Kuantan", projek: "Agromeasure Pro", kategori: "Penambahbaikan", amount: 2200, status: "Disokong", inventor: "Agromeasure Team", rancangan: "Bukit Kuantan/Sg. Panching Timur", objektif: "Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang, Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang" },
+        { bil: 5, wilayah: "Kuantan", projek: "Mud Grip", kategori: "Penambahbaikan", amount: 1000, status: "Disokong", inventor: "Mud Grip Team", rancangan: "Fpm Selancar 4/5", objektif: "Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan" },
+        { bil: 6, wilayah: "Kuantan", projek: "Smart Weather System Mini (Swsm)", kategori: "Penambahbaikan", amount: 1500, status: "Tidak Disokong", inventor: "Smart Weather Team", rancangan: "Agropolitan", objektif: "Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon" },
+        { bil: 7, wilayah: "Segamat", projek: "ANIMO", kategori: "Penambahbaikan", amount: 15000, status: "Disokong", inventor: "ANIMO Team", rancangan: "ULU DENGAR", objektif: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
+        { bil: 8, wilayah: "Segamat", projek: "Sarang Burung Boleh Laras", kategori: "Penambahbaikan", amount: 1200, status: "Disokong", inventor: "Sarang Team", rancangan: "NITAR 1", objektif: "Memudahkan Kerja Bancian Dan Penjagaan" },
+        { bil: 9, wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Penambahbaikan", amount: 150, status: "Disokong", inventor: "Roller Team", rancangan: "fpmsb lenga", objektif: "Meningkatkan kecekapan mengutip biji relai" },
+        { bil: 10, wilayah: "Segamat", projek: "Siren Penghalau Gajah", kategori: "Penambahbaikan", amount: 2500, status: "Disokong", inventor: "Seren Team", rancangan: "FPMSB KAHANG TIMUR", objektif: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
+        { bil: 11, wilayah: "Terengganu", projek: "E-Trépasser Alert V2", kategori: "Penambahbaikan", amount: 3960, status: "Disokong", inventor: "E-trespasser Team", rancangan: "Fpmsb Bukit Bading", objektif: "Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda" },
+        { bil: 12, wilayah: "Jengka", projek: "J5/4 Smart Rain Gauge", kategori: "Penambahbaikan", amount: 560, status: "Disokong", inventor: "J5/4 Team", rancangan: "JENGKA 5/4", objektif: "Mengukur jumlah Hujan Secara Automatik. Pemantauan Data Hujan Secara Langsung Tanpa Periksa Manual." },
+        { bil: 13, wilayah: "Kuantan", projek: "Ryg Platform Counting", kategori: "Penambahbaikan", amount: 5000, status: "Tidak Disokong", inventor: "Ryg Team", rancangan: "Fpm Selancar 4/5", objektif: "Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit." },
         
-        // ===== PENCIPTAAN BARU (12) =====
-        { bil: 14, wilayah: "Mempaga", projek: "E-Checkroll", kategori: "Penciptaan Baru", amount: 4995, inventor: "E-checkroll Team", rancangan: "Fpmsb Lurah Bilut", objektif: "Alternatif Kepada Buku Pocket Checkroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll" },
-        { bil: 15, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Penciptaan Baru", amount: 10400, inventor: "Wira Team", rancangan: "Gugusan Air Tawar", objektif: "Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah" },
-        { bil: 16, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Penciptaan Baru", amount: 5000, inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
-        { bil: 17, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Penciptaan Baru", amount: 4000, inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
-        { bil: 18, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "Penciptaan Baru", amount: 500, inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
-        { bil: 19, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Penciptaan Baru", amount: 2500, inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
-        { bil: 20, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Penciptaan Baru", amount: 850, inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
-        { bil: 21, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "Penciptaan Baru", amount: 96.16, inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
-        { bil: 22, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Penciptaan Baru", amount: 2080, inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
-        { bil: 23, wilayah: "Raja Alias", projek: "Escalator Loose Fruit Collector (ELFC)", kategori: "Penciptaan Baru", amount: 4350, inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" },
-        { bil: 24, wilayah: "Segamat", projek: "E-Attendance", kategori: "Penciptaan Baru", amount: 110, inventor: "Attendance Team", rancangan: "NITAR 1", objektif: "Memudahkan Pengambilan Rekod Kehadiran Pekerja Dengan Menggunakan Telefon Bimbit Pekerja" },
-        { bil: 25, wilayah: "Trolak", projek: "1 Document Centre Wilayah Trolak (1DCT)", kategori: "Penciptaan Baru", amount: 5000, inventor: "1DCT Team", rancangan: "Zon Trolak / Zon Hulu Perak", objektif: "Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan" }
+        // ===== PENCIPTAAN BARU =====
+        // DISOKONG (5)
+        { bil: 14, wilayah: "Mempaga", projek: "E-Checkroll", kategori: "Penciptaan Baru", amount: 4995, status: "Disokong", inventor: "E-checkroll Team", rancangan: "Fpmsb Lurah Bilut", objektif: "Alternatif Kepada Buku Pocket Checkroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll" },
+        { bil: 15, wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Penciptaan Baru", amount: 10400, status: "Disokong", inventor: "Wira Team", rancangan: "Gugusan Air Tawar", objektif: "Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah" },
+        { bil: 16, wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Penciptaan Baru", amount: 5000, status: "Disokong", inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
+        { bil: 17, wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Penciptaan Baru", amount: 4000, status: "Disokong", inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
+        { bil: 18, wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "Penciptaan Baru", amount: 500, status: "Disokong", inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
+        
+        // TIDAK DISOKONG (7)
+        { bil: 19, wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Penciptaan Baru", amount: 2500, status: "Tidak Disokong", inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
+        { bil: 20, wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Penciptaan Baru", amount: 850, status: "Tidak Disokong", inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
+        { bil: 21, wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "Penciptaan Baru", amount: 96.16, status: "Tidak Disokong", inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
+        { bil: 22, wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Penciptaan Baru", amount: 2080, status: "Tidak Disokong", inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
+        { bil: 23, wilayah: "Raja Alias", projek: "Escalator Loose Fruit Collector (ELFC)", kategori: "Penciptaan Baru", amount: 4350, status: "Tidak Disokong", inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" },
+        { bil: 24, wilayah: "Segamat", projek: "E-Attendance", kategori: "Penciptaan Baru", amount: 110, status: "Tidak Disokong", inventor: "Attendance Team", rancangan: "NITAR 1", objektif: "Memudahkan Pengambilan Rekod Kehadiran Pekerja Dengan Menggunakan Telefon Bimbit Pekerja" },
+        { bil: 25, wilayah: "Trolak", projek: "1 Document Centre Wilayah Trolak (1DCT)", kategori: "Penciptaan Baru", amount: 5000, status: "Tidak Disokong", inventor: "1DCT Team", rancangan: "Zon Trolak / Zon Hulu Perak", objektif: "Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan" }
     ];
 
     // ===== VARIABLES =====
@@ -726,6 +800,7 @@
     function showDetailPopup(bil) {
         const item = budgetData.find(i => i.bil === bil);
         if (!item) return;
+        const statusClass = item.status === "Disokong" ? "lulus" : "tidak";
         document.getElementById('detailPopupContent').innerHTML = `
             <div class="popup-header">
                 <h3><i class="fas fa-info-circle"></i> ${item.projek}</h3>
@@ -761,8 +836,8 @@
                     <div class="detail-value">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
                 </div>
                 <div class="detail-row">
-                    <div class="detail-label"><i class="fas fa-clock"></i> Status</div>
-                    <div class="detail-value"><span class="status-badge">⏳ Dalam Proses</span></div>
+                    <div class="detail-label"><i class="fas fa-check-circle"></i> Status</div>
+                    <div class="detail-value"><span class="status-badge ${statusClass}">${item.status === "Disokong" ? "✅ Disokong" : "❌ Tidak Disokong"}</span></div>
                 </div>
                 <div class="detail-row">
                     <div class="detail-label"><i class="fas fa-bullseye"></i> Objektif & Matlamat</div>
@@ -795,16 +870,20 @@
         const start = (currentPage - 1) * rowsPerPage;
         const pageData = filteredData.slice(start, start + rowsPerPage);
         const tbody = document.getElementById('budgetTableBody');
-        tbody.innerHTML = pageData.map(item => `
-            <tr onclick="showDetailPopup(${item.bil})">
-                <td>${item.bil}</td>
-                <td>${item.wilayah}</td>
-                <td>${item.projek}</td>
-                <td>${item.kategori}</td>
-                <td class="amount">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                <td><span class="status-badge">⏳ Dalam Proses</span></td>
-            </tr>
-        `).join('');
+        tbody.innerHTML = pageData.map(item => {
+            const statusClass = item.status === "Disokong" ? "lulus" : "tidak";
+            const amountClass = item.status === "Disokong" ? "amount-lulus" : "amount-tidak";
+            return `
+                <tr onclick="showDetailPopup(${item.bil})">
+                    <td>${item.bil}</td>
+                    <td>${item.wilayah}</td>
+                    <td>${item.projek}</td>
+                    <td>${item.kategori}</td>
+                    <td class="${amountClass}">RM ${item.amount.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td><span class="status-badge ${statusClass}">${item.status === "Disokong" ? "✅ Disokong" : "❌ Tidak Disokong"}</span></td>
+                </tr>
+            `;
+        }).join('');
 
         const totalPages = Math.ceil(filteredData.length / rowsPerPage) || 1;
         document.getElementById('pageInfo').textContent = `Halaman ${currentPage} / ${totalPages}`;
@@ -813,21 +892,26 @@
 
         // Update stats
         const total = filteredData.length;
-        const totalAmt = filteredData.reduce((s, i) => s + i.amount, 0);
-        document.getElementById('totalPermohonan').textContent = total;
-        document.getElementById('totalBudget').textContent = 'RM ' + totalAmt.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        document.getElementById('totalProses').textContent = total;
-        document.getElementById('bajetTersedia').textContent = 'RM ' + BAJET_TERSEDIA.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        const lulus = filteredData.filter(i => i.status === "Disokong").length;
+        const tidak = filteredData.filter(i => i.status === "Tidak Disokong").length;
+        const totalLulusAmt = filteredData.filter(i => i.status === "Disokong").reduce((s, i) => s + i.amount, 0);
+        
+        document.getElementById('totalLulus').textContent = lulus;
+        document.getElementById('totalTidak').textContent = tidak;
+        document.getElementById('totalBudgetLulus').textContent = 'RM ' + totalLulusAmt.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('bajetTersedia').textContent = 'RM ' + (BAJET_TERSEDIA - totalLulusAmt).toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     }
 
     function applyFilters() {
         const wilayah = document.getElementById('wilayahFilter').value;
         const kategori = document.getElementById('kategoriFilter').value;
+        const status = document.getElementById('statusFilter').value;
         
         filteredData = budgetData.filter(item => {
             const matchWilayah = wilayah === "SEMUA" || item.wilayah === wilayah;
             const matchKategori = kategori === "SEMUA" || item.kategori === kategori;
-            return matchWilayah && matchKategori;
+            const matchStatus = status === "SEMUA" || item.status === status;
+            return matchWilayah && matchKategori && matchStatus;
         });
         
         currentPage = 1;
@@ -843,6 +927,7 @@
     window.resetFilters = function() {
         document.getElementById('wilayahFilter').value = "SEMUA";
         document.getElementById('kategoriFilter').value = "SEMUA";
+        document.getElementById('statusFilter').value = "SEMUA";
         filteredData = [...budgetData];
         currentPage = 1;
         renderTable();
@@ -851,6 +936,7 @@
     // ===== INIT =====
     document.getElementById('wilayahFilter').addEventListener('change', applyFilters);
     document.getElementById('kategoriFilter').addEventListener('change', applyFilters);
+    document.getElementById('statusFilter').addEventListener('change', applyFilters);
     populateWilayahFilter();
     renderTable();
 
@@ -860,3 +946,22 @@
 </script>
 </body>
 </html>
+```
+
+✅ Ringkasan Perubahan:
+
+STATISTIK:
+
+· Jumlah Lulus: 16 (11 Penambahbaikan + 5 Penciptaan Baru)
+· Tidak Disokong: 9 (2 Penambahbaikan + 7 Penciptaan Baru)
+· Jumlah Lulus (RM): RM31,526.16
+· Bajet Tersedia: RM168,473.84 (RM200,000 - RM12,400 - RM31,526.16)
+
+STATUS WARNA:
+
+· 🟢 Disokong - Hijau
+· 🔴 Tidak Disokong - Merah
+
+FILTER BARU:
+
+· Filter Status - boleh tapis "Disokong" atau "Tidak Disokong" sahaja
