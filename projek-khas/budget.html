@@ -479,6 +479,146 @@
             color: #8aa8b9;
         }
 
+        /* ===== POPUP DETAIL ===== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .popup-card {
+            background: linear-gradient(145deg, #0b2635, #123645);
+            border: 2px solid var(--cyan);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 50px rgba(0, 188, 212, 0.25);
+            position: relative;
+        }
+
+        .popup-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(145deg, #0b2635, #123645);
+            padding: 1.2rem 1.5rem;
+            border-bottom: 2px solid var(--cyan);
+            border-radius: 28px 28px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .popup-header h3 {
+            color: var(--cyan);
+            font-size: 1.2rem;
+            margin: 0;
+            padding-right: 2rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .popup-close {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            line-height: 1;
+            padding: 0.3rem;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-close:hover {
+            color: var(--cyan);
+            background: rgba(0, 188, 212, 0.1);
+            transform: scale(1.05);
+        }
+
+        .popup-body {
+            padding: 1.5rem;
+        }
+
+        .detail-row {
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #1c5568;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #e0edf5;
+        }
+
+        .btn-popup-tutup {
+            background: var(--cyan);
+            color: #0b141c;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            transition: 0.2s;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-popup-tutup:hover {
+            background: transparent;
+            color: var(--cyan);
+            border: 2px solid var(--cyan);
+        }
+
+        .popup-card::-webkit-scrollbar {
+            width: 6px;
+        }
+        .popup-card::-webkit-scrollbar-track {
+            background: #1a2833;
+            border-radius: 10px;
+        }
+        .popup-card::-webkit-scrollbar-thumb {
+            background: var(--cyan);
+            border-radius: 10px;
+        }
+
         /* ===== FOOTER ===== */
         footer {
             text-align: center;
@@ -569,6 +709,10 @@
                 gap: 0.5rem;
                 align-items: flex-end;
                 padding: 0.5rem 0.5rem 0;
+            }
+            .popup-card {
+                max-width: 95%;
+                margin: 0.5rem;
             }
         }
     </style>
@@ -719,191 +863,45 @@
         </div>
     </div>
 
-    <!-- ===== POPUP DETAIL ===== -->
-    <div id="detailPopup" class="popup-overlay" style="display:none;">
-        <div class="popup-card" id="detailPopupContent"></div>
-    </div>
-
     <footer>
         <i class="fas fa-copyright"></i> Unit Projek Khas · #InovasiLestari
     </footer>
 </div>
 
-<style>
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(5px);
-        z-index: 2000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-    }
-
-    .popup-card {
-        background: linear-gradient(145deg, #0b2635, #123645);
-        border: 2px solid var(--cyan);
-        border-radius: 30px;
-        width: 100%;
-        max-width: 550px;
-        max-height: 85vh;
-        overflow-y: auto;
-        box-shadow: 0 30px 50px rgba(0, 188, 212, 0.25);
-        position: relative;
-    }
-
-    .popup-header {
-        position: sticky;
-        top: 0;
-        background: linear-gradient(145deg, #0b2635, #123645);
-        padding: 1.2rem 1.5rem;
-        border-bottom: 2px solid var(--cyan);
-        border-radius: 28px 28px 0 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 10;
-    }
-
-    .popup-header h3 {
-        color: var(--cyan);
-        font-size: 1.2rem;
-        margin: 0;
-        padding-right: 2rem;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .popup-close {
-        background: transparent;
-        border: none;
-        color: #fff;
-        font-size: 1.8rem;
-        cursor: pointer;
-        transition: 0.2s;
-        line-height: 1;
-        padding: 0.3rem;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .popup-close:hover {
-        color: var(--cyan);
-        background: rgba(0, 188, 212, 0.1);
-        transform: scale(1.05);
-    }
-
-    .popup-body {
-        padding: 1.5rem;
-    }
-
-    .detail-row {
-        margin-bottom: 1rem;
-        padding-bottom: 0.8rem;
-        border-bottom: 1px solid #1c5568;
-    }
-
-    .detail-row:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-
-    .detail-label {
-        font-size: 0.7rem;
-        color: var(--cyan);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 0.3rem;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-weight: 600;
-    }
-
-    .detail-value {
-        font-weight: 500;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: #e0edf5;
-    }
-
-    .btn-popup-tutup {
-        background: var(--cyan);
-        color: #0b141c;
-        border: none;
-        padding: 0.7rem 2rem;
-        border-radius: 40px;
-        font-weight: 700;
-        cursor: pointer;
-        margin-top: 1rem;
-        width: 100%;
-        transition: 0.2s;
-        font-size: 0.95rem;
-        font-family: 'Inter', sans-serif;
-    }
-
-    .btn-popup-tutup:hover {
-        background: transparent;
-        color: var(--cyan);
-        border: 2px solid var(--cyan);
-    }
-
-    .popup-card::-webkit-scrollbar {
-        width: 6px;
-    }
-    .popup-card::-webkit-scrollbar-track {
-        background: #1a2833;
-        border-radius: 10px;
-    }
-    .popup-card::-webkit-scrollbar-thumb {
-        background: var(--cyan);
-        border-radius: 10px;
-    }
-</style>
-
 <script>
-    // ===== DATA Q1 (26 PRODUK) - SUSUNAN BETUL MENGIKUT LAPORAN =====
+    // ===== DATA Q1 (26 PRODUK) =====
     const q1Data = [
         // ===== PENCIPTAAN BARU (11) =====
-        { bil: 1, kategori: "Penciptaan Baru", projek: "Wira Soil Lestari", wilayah: "Johor Bahru", kosDipohon: 10400.00, kosDiluluskan: 3000.00, ulasan: "Disokong untuk pembangunan, perbanyakkan data", status: "Disokong" },
-        { bil: 2, kategori: "Penciptaan Baru", projek: "Bailey Bridge", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: 5000.00, ulasan: "Tambahbaik objektif - bagi tujuan laluan yang dikhaskan", status: "Disokong" },
-        { bil: 3, kategori: "Penciptaan Baru", projek: "Spy Cam Bbc", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
-        { bil: 4, kategori: "Penciptaan Baru", projek: "Agro Bait Box Cencus (Abc)", wilayah: "Kuantan", kosDipohon: 500.00, kosDiluluskan: 500.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 5, kategori: "Penciptaan Baru", projek: "Agro Water Level", wilayah: "Kuantan", kosDipohon: 2500.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
-        { bil: 6, kategori: "Penciptaan Baru", projek: "Rootex (Root Extraction Tool)", wilayah: "Segamat", kosDipohon: 850.00, kosDiluluskan: 850.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 7, kategori: "Penciptaan Baru", projek: "Eogs (Eco Owl Guard System)", wilayah: "Segamat", kosDipohon: 96.16, kosDiluluskan: 96.16, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 8, kategori: "Penciptaan Baru", projek: "Fertilizer Box", wilayah: "Raja Alias", kosDipohon: 2080.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 9, kategori: "Penciptaan Baru", projek: "Escalator Loose Fruit Collector (ELFC)", wilayah: "Raja Alias", kosDipohon: 4350.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 10, kategori: "Penciptaan Baru", projek: "E-Attendance", wilayah: "Segamat", kosDipohon: 110.00, kosDiluluskan: 110.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 11, kategori: "Penciptaan Baru", projek: "1 Document Centre Wilayah Trolak (1DCT)", wilayah: "Trolak", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 1, kategori: "Penciptaan Baru", projek: "Wira Soil Lestari", wilayah: "Johor Bahru", kosDipohon: 10400.00, kosDiluluskan: 3000.00, ulasan: "Disokong untuk pembangunan, perbanyakkan data", status: "Disokong", inventor: "Wira Team", rancangan: "Gugusan Air Tawar", objektif: "Menentukan Siri Tanah Di Ladang Bagi Penetapan Syp. - Menentukan Ph Tanah. - Elemen Kandungan Tanah - Pengurusan Tanah. - Kelas Tanah" },
+        { bil: 2, kategori: "Penciptaan Baru", projek: "Bailey Bridge", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: 5000.00, ulasan: "Tambahbaik objektif - bagi tujuan laluan yang dikhaskan", status: "Disokong", inventor: "Bailey Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Kelancaran Operasi, Keselamatan Pengguna Laluan, Serta Keberkesanan Pengurusan Logistik Ladang" },
+        { bil: 3, kategori: "Penciptaan Baru", projek: "Spy Cam Bbc", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV", inventor: "Spy Cam Team", rancangan: "Fpm Selancar 4/5", objektif: "Meningkatkan Ketepatan, Kecekapan Dan Kebolehpercayaan Proses Bancian Tandan Hitam Buah Sawit" },
+        { bil: 4, kategori: "Penciptaan Baru", projek: "Agro Bait Box Cencus (Abc)", wilayah: "Kuantan", kosDipohon: 500.00, kosDiluluskan: 500.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Agro Team", rancangan: "Agropolitan", objektif: "Mengenalpasti Jenis, Saiz, Populasi Dan Membasmi Tikus Di Ladang" },
+        { bil: 5, kategori: "Penciptaan Baru", projek: "Agro Water Level", wilayah: "Kuantan", kosDipohon: 2500.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV", inventor: "Agro Water Team", rancangan: "Fpmsb Agropolitan Tg. Batu", objektif: "Memantau Dan Mengawal Paras Air Serta Ph Air Secara Berterusan Dan Meningkatkan Hasil Ladang" },
+        { bil: 6, kategori: "Penciptaan Baru", projek: "Rootex (Root Extraction Tool)", wilayah: "Segamat", kosDipohon: 850.00, kosDiluluskan: 850.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Rootex Team", rancangan: "Fpmsb Maokil 1", objektif: "Jimat Dan Mudah - Alat Mesra Pengguna - Alternatif Murah Dan Tahan Lama - Mengurangan Kebergantungan Pada Racun Rumpai" },
+        { bil: 7, kategori: "Penciptaan Baru", projek: "Eogs (Eco Owl Guard System)", wilayah: "Segamat", kosDipohon: 96.16, kosDiluluskan: 96.16, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Eogs Team", rancangan: "Fpmsb Medoi", objektif: "Menggunakan Alatan Recording Sound Sistem Untuk Memikat Burung Pungguk Menginap Di Sarang." },
+        { bil: 8, kategori: "Penciptaan Baru", projek: "Fertilizer Box", wilayah: "Raja Alias", kosDipohon: 2080.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong", inventor: "Fertilizer Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Membaja Yang Menggunakan Kaedah Manual" },
+        { bil: 9, kategori: "Penciptaan Baru", projek: "Escalator Loose Fruit Collector (ELFC)", wilayah: "Raja Alias", kosDipohon: 4350.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong", inventor: "ELFC Team", rancangan: "Fpmsb Serting Hilir 1,2,3", objektif: "Memudahkan Kerja Mengangkut Biji Relai Dari Pentas Tuai Ke Atas Lori" },
+        { bil: 10, kategori: "Penciptaan Baru", projek: "E-Attendance", wilayah: "Segamat", kosDipohon: 110.00, kosDiluluskan: 110.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Attendance Team", rancangan: "NITAR 1", objektif: "Memudahkan Pengambilan Rekod Kehadiran Pekerja Dengan Menggunakan Telefon Bimbit Pekerja" },
+        { bil: 11, kategori: "Penciptaan Baru", projek: "1 Document Centre Wilayah Trolak (1DCT)", wilayah: "Trolak", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong", inventor: "1DCT Team", rancangan: "Zon Trolak / Zon Hulu Perak", objektif: "Pendigitalan Semua Rekod Kerja Harian Di Rancangan, Pemantauan Ketulusan Data Dari Rancangan" },
         
         // ===== PENCIPTAAN BARU (TAMBAHAN - ITEM 25 & 26) =====
-        { bil: 25, kategori: "Penciptaan Baru", projek: "E-Checkroll", wilayah: "Mempaga", kosDipohon: 4995.00, kosDiluluskan: 4995.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 26, kategori: "Penciptaan Baru", projek: "Tunggal Piezometer", wilayah: "Johor Bahru", kosDipohon: 8200.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 25, kategori: "Penciptaan Baru", projek: "E-Checkroll", wilayah: "Mempaga", kosDipohon: 4995.00, kosDiluluskan: 4995.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "E-checkroll Team", rancangan: "Fpmsb Lurah Bilut", objektif: "Alternatif Kepada Buku Pocket Checkroll - Paperless - Pengisian & Semakan Masa Nyata (Online) - Atas Talian - Penjimatan Kos Cetakan Buku Pocket Checkroll" },
+        { bil: 26, kategori: "Penciptaan Baru", projek: "Tunggal Piezometer", wilayah: "Johor Bahru", kosDipohon: 8200.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong", inventor: "Tunggal Team", rancangan: "Fpmsb Johor Bahru", objektif: "Meningkatkan Kecekapan Pengurusan Memantau Paras Air Dalam Tanah" },
         
         // ===== PENAMBAHBAIKAN (13) =====
-        { bil: 12, kategori: "Penambahbaikan", projek: "Pluvio Data Sense (PDS)", wilayah: "Johor Bahru", kosDipohon: 7600.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 13, kategori: "Penambahbaikan", projek: "Finger-Kit Note", wilayah: "Kuantan", kosDipohon: 1400.00, kosDiluluskan: 1400.00, ulasan: "Perlu penambahbaikan - masukkan nota kedalam apps yang bersesuaian", status: "Disokong" },
-        { bil: 14, kategori: "Penambahbaikan", projek: "Jumbo Informer", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: 4000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 15, kategori: "Penambahbaikan", projek: "Agromeasure Pro", wilayah: "Kuantan", kosDipohon: 2200.00, kosDiluluskan: 2200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 16, kategori: "Penambahbaikan", projek: "Mud Grip", wilayah: "Kuantan", kosDipohon: 1000.00, kosDiluluskan: 1000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 17, kategori: "Penambahbaikan", projek: "Ryg Platform Counting", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 18, kategori: "Penambahbaikan", projek: "Smart Weather System Mini (Swsm)", wilayah: "Kuantan", kosDipohon: 1500.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 19, kategori: "Penambahbaikan", projek: "ANIMO", wilayah: "Segamat", kosDipohon: 15000.00, kosDiluluskan: 5000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 20, kategori: "Penambahbaikan", projek: "Sarang Burung Boleh Laras", wilayah: "Segamat", kosDipohon: 1200.00, kosDiluluskan: 1200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 21, kategori: "Penambahbaikan", projek: "Roller Biji Relai", wilayah: "Segamat", kosDipohon: 150.00, kosDiluluskan: 150.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 22, kategori: "Penambahbaikan", projek: "Siren Penghalau Gajah", wilayah: "Segamat", kosDipohon: 2500.00, kosDiluluskan: 2500.00, ulasan: "Gabungkan fungsi dengan produk 'Jumbo Informer'", status: "Disokong" },
-        { bil: 23, kategori: "Penambahbaikan", projek: "E-Trespasser Alert V2", wilayah: "Terengganu", kosDipohon: 3960.00, kosDiluluskan: 3960.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 24, kategori: "Penambahbaikan", projek: "J5/4 Smart Rain Gauge", wilayah: "Jengka", kosDipohon: 560.00, kosDiluluskan: 560.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" }
+        { bil: 12, kategori: "Penambahbaikan", projek: "Pluvio Data Sense (PDS)", wilayah: "Johor Bahru", kosDipohon: 7600.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong", inventor: "Pluvio Team", rancangan: "Fpmsb Gugusan Tenggaroh", objektif: "Meningkatkan Kecekapan Pengurusan - Memantau Paras Air Hujan Secara Automatik - Merekod Secara Automatik Dan Sensor Alarm Automatik" },
+        { bil: 13, kategori: "Penambahbaikan", projek: "Finger-Kit Note", wilayah: "Kuantan", kosDipohon: 1400.00, kosDiluluskan: 1400.00, ulasan: "Perlu penambahbaikan - masukkan nota kedalam apps yang bersesuaian", status: "Disokong", inventor: "Finger-kit Team", rancangan: "Bukit Kuantan", objektif: "Menambah Nilai Penyelia Ladang Dari Sudut Pandang Masyarakat Sekaligus Meninggikan Imej Syarikat." },
+        { bil: 14, kategori: "Penambahbaikan", projek: "Jumbo Informer", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: 4000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Jumbo Team", rancangan: "Bukit Kuantan", objektif: "Mengesan Kehadiran Gajah Liar Lebih Awal, Menghantar Amaran Segera, Mengurangkan Kerosakan Pokok Sawit" },
+        { bil: 15, kategori: "Penambahbaikan", projek: "Agromeasure Pro", wilayah: "Kuantan", kosDipohon: 2200.00, kosDiluluskan: 2200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Agromeasure Team", rancangan: "Bukit Kuantan/Sg. Panching Timur", objektif: "Alat Pengukuran Pelbagai Fungsi untuk Kegunaan Operasi Ladang, Menyeragamkan Kaedah Semakan Kerja Infrastruktur Ladang" },
+        { bil: 16, kategori: "Penambahbaikan", projek: "Mud Grip", wilayah: "Kuantan", kosDipohon: 1000.00, kosDiluluskan: 1000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Mud Grip Team", rancangan: "Fpm Selancar 4/5", objektif: "Penyelesaian Praktikal Dan Kos Efektif Bagi Meningkatkan Kelancaran Operasi Pengangkutan" },
+        { bil: 17, kategori: "Penambahbaikan", projek: "Ryg Platform Counting", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong", inventor: "Ryg Team", rancangan: "Fpm Selancar 4/5", objektif: "Transformasi Digital Bagi Meningkatkan Kecekapan, Ketepatan Dan Ketelusan Pengurusan Hasil Tuaian Ladang Kelapa Sawit." },
+        { bil: 18, kategori: "Penambahbaikan", projek: "Smart Weather System Mini (Swsm)", wilayah: "Kuantan", kosDipohon: 1500.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong", inventor: "Smart Weather Team", rancangan: "Agropolitan", objektif: "Mewujudkan Sistem Pemantauan Cuaca Di Ladang Secara Lebih Sistematik Dan Automatik Serta Informasi Terus Ke Telefon" },
+        { bil: 19, kategori: "Penambahbaikan", projek: "ANIMO", wilayah: "Segamat", kosDipohon: 15000.00, kosDiluluskan: 5000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "ANIMO Team", rancangan: "ULU DENGAR", objektif: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
+        { bil: 20, kategori: "Penambahbaikan", projek: "Sarang Burung Boleh Laras", wilayah: "Segamat", kosDipohon: 1200.00, kosDiluluskan: 1200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Sarang Team", rancangan: "NITAR 1", objektif: "Memudahkan Kerja Bancian Dan Penjagaan" },
+        { bil: 21, kategori: "Penambahbaikan", projek: "Roller Biji Relai", wilayah: "Segamat", kosDipohon: 150.00, kosDiluluskan: 150.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "Roller Team", rancangan: "fpmsb lenga", objektif: "Meningkatkan kecekapan mengutip biji relai" },
+        { bil: 22, kategori: "Penambahbaikan", projek: "Siren Penghalau Gajah", wilayah: "Segamat", kosDipohon: 2500.00, kosDiluluskan: 2500.00, ulasan: "Gabungkan fungsi dengan produk 'Jumbo Informer'", status: "Disokong", inventor: "Seren Team", rancangan: "FPMSB KAHANG TIMUR", objektif: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
+        { bil: 23, kategori: "Penambahbaikan", projek: "E-Trespasser Alert V2", wilayah: "Terengganu", kosDipohon: 3960.00, kosDiluluskan: 3960.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "E-trespasser Team", rancangan: "Fpmsb Bukit Bading", objektif: "Meningkatkan Keselamatan Dan Mengurangkan Risiko Kehilangan Hasil Sawit Di Dalam Kawasan Ladang Felda" },
+        { bil: 24, kategori: "Penambahbaikan", projek: "J5/4 Smart Rain Gauge", wilayah: "Jengka", kosDipohon: 560.00, kosDiluluskan: 560.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong", inventor: "J5/4 Team", rancangan: "JENGKA 5/4", objektif: "Mengukur jumlah Hujan Secara Automatik. Pemantauan Data Hujan Secara Langsung Tanpa Periksa Manual." }
     ];
 
     // ===== Q2 DATA (Empty for now) =====
@@ -935,6 +933,7 @@
         
         const statusClass = item.status === "Disokong" ? "lulus" : item.status === "KIV" ? "kiv" : "tidak";
         const kosDiluluskan = item.kosDiluluskan !== null ? 'RM ' + item.kosDiluluskan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '-';
+        const kosDipohon = 'RM ' + item.kosDipohon.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         
         document.getElementById('detailPopupContent').innerHTML = `
             <div class="popup-header">
@@ -955,12 +954,20 @@
                     <div class="detail-value">${item.bil}</div>
                 </div>
                 <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-building"></i> Rancangan</div>
+                    <div class="detail-value">${item.rancangan || "Tiada maklumat"}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-user"></i> Inventor / Pencipta</div>
+                    <div class="detail-value">${item.inventor || "Tiada maklumat"}</div>
+                </div>
+                <div class="detail-row">
                     <div class="detail-label"><i class="fas fa-tags"></i> Kategori</div>
                     <div class="detail-value">${item.kategori}</div>
                 </div>
                 <div class="detail-row">
                     <div class="detail-label"><i class="fas fa-coins"></i> Kos Dipohon</div>
-                    <div class="detail-value">RM ${item.kosDipohon.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                    <div class="detail-value">${kosDipohon}</div>
                 </div>
                 <div class="detail-row">
                     <div class="detail-label"><i class="fas fa-check-circle"></i> Kos Diluluskan</div>
@@ -973,6 +980,10 @@
                 <div class="detail-row">
                     <div class="detail-label"><i class="fas fa-check-circle"></i> Status</div>
                     <div class="detail-value"><span class="status-badge ${statusClass}">${item.status}</span></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label"><i class="fas fa-bullseye"></i> Objektif & Matlamat</div>
+                    <div class="detail-value">${item.objektif || "Tiada keterangan"}</div>
                 </div>
                 <button class="btn-popup-tutup" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i> Tutup</button>
             </div>
@@ -997,10 +1008,6 @@
             opt.textContent = w;
             q1Select.appendChild(opt);
         });
-        
-        // Q2 Filter (empty for now)
-        const q2Select = document.getElementById('q2WilayahFilter');
-        // Add default option only
     }
 
     // ===== FILTER Q1 =====
@@ -1023,7 +1030,6 @@
 
     // ===== FILTER Q2 =====
     function filterQ2() {
-        // Q2 empty for now
         renderQ2();
     }
 
@@ -1075,7 +1081,6 @@
 
     // ===== RENDER Q2 =====
     function renderQ2() {
-        // Q2 empty for now
         document.getElementById('q2FilterCount').textContent = '0';
     }
 
