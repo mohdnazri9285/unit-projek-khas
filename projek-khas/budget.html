@@ -208,13 +208,6 @@
             background: #1b5e7a;
         }
 
-        .stat-separator-vertical {
-            width: 100%;
-            height: 2px;
-            background: #1b5e7a;
-            margin: 0.5rem 0;
-        }
-
         /* ===== Q SECTION ===== */
         .q-section {
             background: #0a1a26;
@@ -307,7 +300,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 0.82rem;
-            min-width: 800px;
+            min-width: 900px;
         }
 
         .q-body th {
@@ -372,11 +365,6 @@
         .amount-kosong {
             color: #666;
         }
-        .amount-diluluskan {
-            font-weight: 700;
-            color: var(--green);
-        }
-
         .kos-dipohon {
             color: #ffa500;
         }
@@ -489,7 +477,7 @@
             }
             .q-body table {
                 font-size: 0.7rem;
-                min-width: 600px;
+                min-width: 650px;
             }
             .q-body th, .q-body td {
                 padding: 0.4rem 0.5rem;
@@ -541,14 +529,6 @@
                         <div class="stat-value">RM 175,000.00</div>
                     </div>
                 </div>
-                <div class="stat-separator"></div>
-                <div class="stat-item">
-                    <i class="fas fa-info-circle" style="color: var(--orange); font-size: 1.3rem;"></i>
-                    <div>
-                        <div class="stat-label">Nota</div>
-                        <div class="stat-value" style="font-size:0.9rem; color:var(--orange);">Tolak Bangunan Inovasi RM25,000.00</div>
-                    </div>
-                </div>
             </div>
 
             <!-- ===== Q1 - PERMOHONAN INOVASI 2026 ===== -->
@@ -565,7 +545,7 @@
                         </div>
                         <div class="q-stat">
                             <span class="q-stat-label">Jumlah Diluluskan</span>
-                            <span class="q-stat-value green">RM 31,526.16</span>
+                            <span class="q-stat-value green">RM 36,521.16</span>
                         </div>
                     </div>
                 </div>
@@ -594,7 +574,7 @@
                         </div>
                         <div class="q-footer-item">
                             <span class="q-footer-label">Jumlah Diluluskan</span>
-                            <span class="q-footer-value green">RM 31,526.16</span>
+                            <span class="q-footer-value green">RM 36,521.16</span>
                         </div>
                     </div>
                 </div>
@@ -786,36 +766,44 @@
 </style>
 
 <script>
-    // ===== DATA Q1 (24 PRODUK) =====
+    // ===== DATA Q1 (26 PRODUK) =====
+    // Jumlah Permohonan: RM80,956.16 (TIDAK termasuk E-Checkroll)
     const q1Data = [
-        // Penciptaan Baru (11)
-        { bil: 1, kategori: "Penciptaan Baru", projek: "Wira Soil Lestari", wilayah: "Johor Bahru", kosDipohon: 10400.00, kosDiluluskan: 3000.00, ulasan: "Disokong untuk pembangunan, perbanyakkan data", status: "Disokong" },
-        { bil: 2, kategori: "Penciptaan Baru", projek: "Bailey Bridge", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: 5000.00, ulasan: "Tambahbaik objektif - bagi tujuan laluan yang dikhaskan", status: "Disokong" },
-        { bil: 3, kategori: "Penciptaan Baru", projek: "Spy Cam Bbc", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
-        { bil: 4, kategori: "Penciptaan Baru", projek: "Agro Bait Box Cencus (Abc)", wilayah: "Kuantan", kosDipohon: 500.00, kosDiluluskan: 500.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 5, kategori: "Penciptaan Baru", projek: "Agro Water Level", wilayah: "Kuantan", kosDipohon: 2500.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
-        { bil: 6, kategori: "Penciptaan Baru", projek: "Rootex (Root Extraction Tool)", wilayah: "Segamat", kosDipohon: 850.00, kosDiluluskan: 850.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 7, kategori: "Penciptaan Baru", projek: "Eogs (Eco Owl Guard System)", wilayah: "Segamat", kosDipohon: 96.16, kosDiluluskan: 96.16, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 8, kategori: "Penciptaan Baru", projek: "Fertilizer Box", wilayah: "Raja Alias", kosDipohon: 2080.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 9, kategori: "Penciptaan Baru", projek: "Escalator Loose Fruit Collector (ELFC)", wilayah: "Raja Alias", kosDipohon: 4350.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 10, kategori: "Penciptaan Baru", projek: "E-Attendance", wilayah: "Segamat", kosDipohon: 110.00, kosDiluluskan: 110.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 11, kategori: "Penciptaan Baru", projek: "1 Document Centre Wilayah Trolak (1DCT)", wilayah: "Trolak", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        // Penciptaan Baru (13)
+        { bil: 1, kategori: "Penciptaan Baru", projek: "E-Checkroll", wilayah: "Mempaga", kosDipohon: 4995.00, kosDiluluskan: 4995.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 2, kategori: "Penciptaan Baru", projek: "Wira Soil Lestari", wilayah: "Johor Bahru", kosDipohon: 10400.00, kosDiluluskan: 3000.00, ulasan: "Disokong untuk pembangunan, perbanyakkan data", status: "Disokong" },
+        { bil: 3, kategori: "Penciptaan Baru", projek: "Bailey Bridge", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: 5000.00, ulasan: "Tambahbaik objektif - bagi tujuan laluan yang dikhaskan", status: "Disokong" },
+        { bil: 4, kategori: "Penciptaan Baru", projek: "Spy Cam Bbc", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
+        { bil: 5, kategori: "Penciptaan Baru", projek: "Agro Bait Box Cencus (Abc)", wilayah: "Kuantan", kosDipohon: 500.00, kosDiluluskan: 500.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 6, kategori: "Penciptaan Baru", projek: "Agro Water Level", wilayah: "Kuantan", kosDipohon: 2500.00, kosDiluluskan: null, ulasan: "KIV", status: "KIV" },
+        { bil: 7, kategori: "Penciptaan Baru", projek: "Rootex (Root Extraction Tool)", wilayah: "Segamat", kosDipohon: 850.00, kosDiluluskan: 850.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 8, kategori: "Penciptaan Baru", projek: "Eogs (Eco Owl Guard System)", wilayah: "Segamat", kosDipohon: 96.16, kosDiluluskan: 96.16, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 9, kategori: "Penciptaan Baru", projek: "Fertilizer Box", wilayah: "Raja Alias", kosDipohon: 2080.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 10, kategori: "Penciptaan Baru", projek: "Escalator Loose Fruit Collector (ELFC)", wilayah: "Raja Alias", kosDipohon: 4350.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 11, kategori: "Penciptaan Baru", projek: "E-Attendance", wilayah: "Segamat", kosDipohon: 110.00, kosDiluluskan: 110.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 12, kategori: "Penciptaan Baru", projek: "1 Document Centre Wilayah Trolak (1DCT)", wilayah: "Trolak", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 13, kategori: "Penciptaan Baru", projek: "Tunggal Piezometer", wilayah: "Johor Bahru", kosDipohon: 8200.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
         
         // Penambahbaikan (13)
-        { bil: 12, kategori: "Penambahbaikan", projek: "Pluvio Data Sense (PDS)", wilayah: "Johor Bahru", kosDipohon: 7600.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 13, kategori: "Penambahbaikan", projek: "Finger-Kit Note", wilayah: "Kuantan", kosDipohon: 1400.00, kosDiluluskan: 1400.00, ulasan: "Perlu penambahbaikan - masukkan nota kedalam apps yang bersesuaian", status: "Disokong" },
-        { bil: 14, kategori: "Penambahbaikan", projek: "Jumbo Informer", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: 4000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 15, kategori: "Penambahbaikan", projek: "Agromeasure Pro", wilayah: "Kuantan", kosDipohon: 2200.00, kosDiluluskan: 2200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 16, kategori: "Penambahbaikan", projek: "Mud Grip", wilayah: "Kuantan", kosDipohon: 1000.00, kosDiluluskan: 1000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 17, kategori: "Penambahbaikan", projek: "Ryg Platform Counting", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 18, kategori: "Penambahbaikan", projek: "Smart Weather System Mini (Swsm)", wilayah: "Kuantan", kosDipohon: 1500.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
-        { bil: 19, kategori: "Penambahbaikan", projek: "ANIMO", wilayah: "Segamat", kosDipohon: 15000.00, kosDiluluskan: 5000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 20, kategori: "Penambahbaikan", projek: "Sarang Burung Boleh Laras", wilayah: "Segamat", kosDipohon: 1200.00, kosDiluluskan: 1200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 21, kategori: "Penambahbaikan", projek: "Roller Biji Relai", wilayah: "Segamat", kosDipohon: 150.00, kosDiluluskan: 150.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 22, kategori: "Penambahbaikan", projek: "Siren Penghalau Gajah", wilayah: "Segamat", kosDipohon: 2500.00, kosDiluluskan: 2500.00, ulasan: "Gabungkan fungsi dengan produk 'Jumbo Informer'", status: "Disokong" },
-        { bil: 23, kategori: "Penambahbaikan", projek: "E-Trespasser Alert V2", wilayah: "Terengganu", kosDipohon: 3960.00, kosDiluluskan: 3960.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
-        { bil: 24, kategori: "Penambahbaikan", projek: "J5/4 Smart Rain Gauge", wilayah: "Jengka", kosDipohon: 560.00, kosDiluluskan: 56.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" }
+        { bil: 14, kategori: "Penambahbaikan", projek: "Pluvio Data Sense (PDS)", wilayah: "Johor Bahru", kosDipohon: 7600.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 15, kategori: "Penambahbaikan", projek: "Finger-Kit Note", wilayah: "Kuantan", kosDipohon: 1400.00, kosDiluluskan: 1400.00, ulasan: "Perlu penambahbaikan - masukkan nota kedalam apps yang bersesuaian", status: "Disokong" },
+        { bil: 16, kategori: "Penambahbaikan", projek: "Jumbo Informer", wilayah: "Kuantan", kosDipohon: 4000.00, kosDiluluskan: 4000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 17, kategori: "Penambahbaikan", projek: "Agromeasure Pro", wilayah: "Kuantan", kosDipohon: 2200.00, kosDiluluskan: 2200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 18, kategori: "Penambahbaikan", projek: "Mud Grip", wilayah: "Kuantan", kosDipohon: 1000.00, kosDiluluskan: 1000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 19, kategori: "Penambahbaikan", projek: "Ryg Platform Counting", wilayah: "Kuantan", kosDipohon: 5000.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 20, kategori: "Penambahbaikan", projek: "Smart Weather System Mini (Swsm)", wilayah: "Kuantan", kosDipohon: 1500.00, kosDiluluskan: null, ulasan: "Tidak memenuhi pertimbangan jawatankuasa", status: "Tidak Disokong" },
+        { bil: 21, kategori: "Penambahbaikan", projek: "ANIMO", wilayah: "Segamat", kosDipohon: 15000.00, kosDiluluskan: 5000.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 22, kategori: "Penambahbaikan", projek: "Sarang Burung Boleh Laras", wilayah: "Segamat", kosDipohon: 1200.00, kosDiluluskan: 1200.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 23, kategori: "Penambahbaikan", projek: "Roller Biji Relai", wilayah: "Segamat", kosDipohon: 150.00, kosDiluluskan: 150.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 24, kategori: "Penambahbaikan", projek: "Siren Penghalau Gajah", wilayah: "Segamat", kosDipohon: 2500.00, kosDiluluskan: 2500.00, ulasan: "Gabungkan fungsi dengan produk 'Jumbo Informer'", status: "Disokong" },
+        { bil: 25, kategori: "Penambahbaikan", projek: "E-Trespasser Alert V2", wilayah: "Terengganu", kosDipohon: 3960.00, kosDiluluskan: 3960.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" },
+        { bil: 26, kategori: "Penambahbaikan", projek: "J5/4 Smart Rain Gauge", wilayah: "Jengka", kosDipohon: 560.00, kosDiluluskan: 560.00, ulasan: "Praktikal dan boleh dibangunkan", status: "Disokong" }
     ];
+
+    // Kira jumlah diluluskan
+    const totalDiluluskan = q1Data
+        .filter(item => item.kosDiluluskan !== null)
+        .reduce((sum, item) => sum + item.kosDiluluskan, 0);
 
     // ===== FUNGSI TOGGLE Q1 =====
     function toggleQ1() {
@@ -909,6 +897,11 @@
                 </tr>
             `;
         }).join('');
+
+        // Update footer totals
+        const totalPermohonan = q1Data.reduce((sum, item) => sum + item.kosDipohon, 0);
+        document.querySelector('.q-footer .orange').textContent = 'RM ' + totalPermohonan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.querySelector('.q-footer .green').textContent = 'RM ' + totalDiluluskan.toLocaleString('ms-MY', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     }
 
     // ===== INIT =====
