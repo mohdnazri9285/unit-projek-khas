@@ -409,7 +409,7 @@
         .popup-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Tukar ke contain supaya gambar tak terpotong */
+            object-fit: contain; 
             background: #1e293b;
             transition: opacity 0.3s;
         }
@@ -618,90 +618,90 @@
         document.addEventListener('mouseleave', () => { aura.style.opacity = '0'; });
         document.addEventListener('mouseenter', () => { aura.style.opacity = '1'; });
 
-        // Data Jentera (Path Dikemaskini ke projek-khas/image/mechanize/)
+        // Data Jentera (Path Dikemaskini tepat mengikut struktur GitHub)
         const machines = [
             // MAIC
             { id: 'lion', category: 'MAIC', type: '4-Wheeler', name: 'Lion', 
-              image: 'projek-khas/image/mechanize/lion.png', 
+              image: 'image/mechanize/lion.jpg', 
               short_desc: 'Kenderaan empat roda (4WD) lasak untuk pengangkutan ladang.',
               desc: 'Kenderaan empat roda yang lasak dan berkuasa tinggi. Ia direka untuk membawa muatan berat seperti hasil tuaian (TBS) atau input pertanian merentasi pelbagai rupa bumi ladang yang mencabar.', 
               usage: 'Laluan tanah keras, kawasan rata, pengangkutan logistik utama.' },
               
             { id: 'mini-traktor', category: 'MAIC', type: '4-Wheeler', name: 'Mini Traktor', 
-              image: 'projek-khas/image/mechanize/mini traktor.png', 
+              image: 'image/mechanize/minitractor.jpg', 
               short_desc: 'Traktor bersaiz kompak dan serba boleh.',
               desc: 'Traktor bersaiz kompak yang serba boleh untuk pelbagai tugasan. Boleh dipasang dengan pelbagai implemen tambahan (seperti trailer, plow, atau sprayer) menjadikannya aset penting untuk operasi ladang harian.', 
               usage: 'Kawasan rata, lorong tuai, kerja-kerja am ladang.' },
 
-            { id: 'mini-grader', category: 'MAIC', type: 'Alat Jalan', name: 'Mini Grader', 
-              image: 'projek-khas/image/mechanize/mini grader.png', 
+            { id: 'mmg', category: 'MAIC', type: 'Alat Jalan', name: 'Mid-Mount Grader (MMG)', 
+              image: 'image/mechanize/mmg.png', 
               short_desc: 'Traktor dilengkapi bilah perata untuk membaik pulih jalan.',
               desc: 'Jentera traktor yang dipasang dengan bilah perata (grader blade) di hadapan atau tengah. Digunakan secara khusus untuk menyelenggara dan meratakan jalan pertanian supaya laluan traktor dan lori tidak rosak teruk.', 
               usage: 'Jalan pertanian, laluan utama ladang yang berlubang atau tidak rata.' },
 
             { id: 'crawler', category: 'MAIC', type: 'Crawler', name: 'Land Surf / Crawler', 
-              image: 'projek-khas/image/mechanize/land surf.png', 
+              image: 'image/mechanize/landsurf.jpeg', 
               short_desc: 'Jentera berantai untuk kawasan berlumpur dan cerun.',
               desc: 'Kenderaan pelbagai guna berantai (tracked). Mampu merentasi kawasan berlumpur, tanah gambut, cerun curam, dan tanah lembut tanpa tenggelam. Sangat sesuai untuk ladang yang mempunyai saliran mencabar.', 
               usage: 'Kawasan berlumpur, tanah gambut, cerun curam, operasi evakuasi TBS.' },
 
             { id: 'komodo', category: 'MAIC', type: 'Crawler', name: 'Komodo', 
-              image: 'projek-khas/image/mechanize/komodo.png', 
+              image: 'image/mechanize/komodo.jpg', 
               short_desc: 'Jentera berantai tugas berat dengan pemunggah hidraulik.',
               desc: 'Jentera berantai tugas berat yang dilengkapi dengan cengkaman hidraulik (grabber) dan bak pemunggah. Digunakan secara meluas di FELDA untuk mengangkut dan memunggah hasil tuaian di kawasan berbukit dan berair.', 
               usage: 'Kawasan berbukit, tanah lembut, operasi evakuasi TBS.' },
 
             { id: 'gingga', category: 'MAIC', type: '3-Wheeler', name: 'Gingga', 
-              image: 'projek-khas/image/mechanize/gingga.png', 
+              image: 'image/mechanize/gingga.png', 
               short_desc: 'Mesin tiga roda dengan tangki penyebar baja.',
               desc: 'Mesin tiga roda yang dilengkapi tangki dan penyembur/penyebar untuk aplikasi baja atau racun secara mekanikal. Ia memastikan taburan lebih sekata dan mempercepatkan proses kerja.', 
               usage: 'Kawasan ladang yang memerlukan pembajaan sekata, sesuai untuk tanah rata.' },
 
             { id: 'spreader-maic', category: 'MAIC', type: 'Alat Pembajaan', name: 'Spreader / Traktor Spreader', 
-              image: 'projek-khas/image/mechanize/spreader.png', 
+              image: 'image/mechanize/spreader.png', 
               short_desc: 'Penyebar baja mudah alih dan dipasang pada traktor.',
               desc: 'Alat penyebar baja butiran. Terdapat versi mudah alih (digalas) dan versi yang dipasang pada traktor. Digunakan untuk menabur baja secara sekata di sekeliling pangkal pokok, memastikan pengagihan nutrien yang optimum.', 
               usage: 'Kawasan rata, kawasan yang memerlukan pembajaan tepat dan pantas.' },
 
             { id: 'badang', category: 'MAIC', type: '3-Wheeler', name: 'Badang', 
-              image: 'projek-khas/image/mechanize/badang.png', 
+              image: 'image/mechanize/badang.png', 
               short_desc: 'Kenderaan tiga roda untuk mengutip dan mengangkut TBS.',
               desc: 'Kenderaan tiga roda yang direka khas untuk mengutip dan mengangkut Tandan Buah Segar (TBS) kelapa sawit dari lorong tuai ke tempat pengumpulan. Ia sangat berkesan untuk mengurangkan kebergantungan kepada tenaga kerja manual.', 
               usage: 'Kawasan rata hingga beralun, lorong tuai yang lebar.' },
               
             { id: 'tough-far', category: 'MAIC', type: '3-Wheeler', name: 'Tough Far', 
-              image: 'projek-khas/image/mechanize/tough far.png', 
+              image: 'image/mechanize/tough far.png', // Pastikan anda upload fail ini atau tukar nama
               short_desc: 'Kenderaan tiga roda tugas berat untuk muatan besar.',
               desc: 'Kenderaan tiga roda tugas berat (heavy-duty) yang mampu membawa muatan besar merentasi rupa bumi yang mencabar. Sesuai untuk mengangkut hasil dan input pertanian.', 
               usage: 'Kawasan ladang yang mencabar, laluan berbukit.' },
 
             { id: 'bin-system', category: 'MAIC', type: 'Evakuasi BTS', name: 'Bin System', 
-              image: 'projek-khas/image/mechanize/bin system.png', 
+              image: 'image/mechanize/bin.png', 
               short_desc: 'Lori dengan sistem bin khas untuk mengangkut TBS.',
               desc: 'Lori yang dilengkapi dengan sistem bin (tong) khas untuk mengangkut TBS dari ladang ke kilang. Bin membantu mengelakkan kerosakan buah dan memudahkan proses pemunggahan.', 
               usage: 'Laluan utama ladang ke kilang.' },
 
             // ALATAN
             { id: 'palm-cutter', category: 'Alatan', type: 'Penuaian', name: 'Palm Cutter', 
-              image: 'projek-khas/image/mechanize/palm cutter.png', 
+              image: 'image/mechanize/palmcutter.jpeg', 
               short_desc: 'Pemotong sawit bermotor yang ringan.',
               desc: 'Pemotong sawit bermotor (motorized cutter) yang ringan. Menggantikan penggunaan sabit tradisional, mempercepatkan proses penuaian dan mengurangkan keletihan pekerja.', 
               usage: 'Semua kawasan penuaian, terutamanya pokok rendah hingga sederhana.' },
               
             { id: 'pam-cda', category: 'Alatan', type: 'Meracun', name: 'Pam CDA', 
-              image: 'projek-khas/image/mechanize/pam cda.png', 
+              image: 'image/mechanize/cda.jpeg', 
               short_desc: 'Penyembur racun (titisan halus) cekap.',
               desc: 'Pam penyembur racun rumpai (Controlled Droplet Applicator) yang menggunakan titisan halus terkawal. Sangat cekap dalam penggunaan racun dan mesra alam.', 
               usage: 'Kawasan merumpai, lorong tuai, kawalan rumpai.' },
               
             { id: 'grass-cutter', category: 'Alatan', type: 'Meracun', name: 'Grass Cutter', 
-              image: 'projek-khas/image/mechanize/grass cutter.png', 
+              image: 'image/mechanize/grasscutter.jpg', 
               short_desc: 'Mesin pemotong rumput mudah alih.',
               desc: 'Mesin pemotong rumput mudah alih. Digunakan untuk membersihkan kawasan semak, tepi jalan ladang, dan bawah pokok.', 
               usage: 'Kawasan semak, tepi jalan, bawah pokok.' },
               
             { id: 'sprayer', category: 'Alatan', type: 'Meracun', name: 'Sprayer', 
-              image: 'projek-khas/image/mechanize/sprayer.png', 
+              image: 'image/mechanize/sprayer.jpg', 
               short_desc: 'Penyembur kabus untuk racun rumpai.',
               desc: 'Penyembur kabus atau cecair yang digunakan khusus untuk aplikasi racun rumpai (herbicide) bagi tujuan kawalan rumpai di ladang. Memastikan liputan yang baik pada sasaran.', 
               usage: 'Kawalan rumpai (Herbicide weeding), lorong tuai, bawah pokok.' }
