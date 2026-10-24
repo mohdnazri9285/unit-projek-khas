@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Produk Inovasi · Bahagian Mekanisasi & Projek Khas</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+    <style>
+        /* ========== RESET & VARIABLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-base: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --sapphire: #2563eb;
+            --ruby: #e11d48;
+            --platinum: #cbd5e1;
+            --cyan: #00e5ff;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            
+            /* Kursor Mentol Inovasi (Biru Sapphire) */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path d="M18 2C11.5 2 6.5 7 6.5 13.5C6.5 17.5 9 20.5 11 23V27H25V23C27 20.5 29.5 17.5 29.5 13.5C29.5 7 24.5 2 18 2Z" fill="%232563eb" stroke="%23cbd5e1" stroke-width="1.5"/><path d="M12 28H24V31C24 32.5 22.5 34 21 34H15C13.5 34 12 32.5 12 31V28Z" fill="%23cbd5e1" stroke="%23cbd5e1" stroke-width="1"/><path d="M18 9V17 M15 12L18 17 L21 12" stroke="%2300e5ff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="18" cy="17" r="1.5" fill="%2300e5ff"/></svg>') 18 18, auto;
+            
+            /* Efek Carbon Fibre */
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.15) 0%, transparent 70%),
+                linear-gradient(27deg, #1e293b 5px, transparent 5px),
+                linear-gradient(207deg, #1e293b 5px, transparent 5px),
+                linear-gradient(27deg, #0f172a 5px, transparent 5px),
+                linear-gradient(207deg, #0f172a 5px, transparent 5px),
+                linear-gradient(90deg, #111827 10px, transparent 10px),
+                linear-gradient(90deg, #111827 10px, transparent 10px);
+            background-size: 100% 100%, 20px 20px, 20px 20px, 20px 20px, 20px 20px, 20px 20px, 20px 20px;
+            background-position: 0 0, 0 0, 10px 10px, 10px 10px, 20px 20px, 0 0, 10px 10px;
+        }
+
+        /* Kursor Mentol (Merah Ruby) untuk hover */
+        a, button, .accordion-header, select, tr {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path d="M18 2C11.5 2 6.5 7 6.5 13.5C6.5 17.5 9 20.5 11 23V27H25V23C27 20.5 29.5 17.5 29.5 13.5C29.5 7 24.5 2 18 2Z" fill="%23e11d48" stroke="%23cbd5e1" stroke-width="1.5"/><path d="M12 28H24V31C24 32.5 22.5 34 21 34H15C13.5 34 12 32.5 12 31V28Z" fill="%23cbd5e1" stroke="%23cbd5e1" stroke-width="1"/><path d="M18 9V17 M15 12L18 17 L21 12" stroke="%23ffffff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="18" cy="17" r="1.5" fill="%23ffffff"/></svg>') 18 18, pointer !important;
+        }
+
+        /* Efek Glow Pulse (Aura Kursor) */
+        #cursor-aura {
+            position: fixed;
+            top: 0; left: 0;
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.4) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            animation: pulseAura 1.5s infinite alternate;
+            mix-blend-mode: screen;
+            transition: width 0.2s, height 0.2s, background 0.2s;
+        }
+        body:has(a:hover) #cursor-aura, body:has(button:hover) #cursor-aura, body:has(tr:hover) #cursor-aura {
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.5) 0%, transparent 60%);
+        }
+        @keyframes pulseAura {
+            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--sapphire); }
+
+        /* =========================================
+           HEADER NAVIGASI (SMART HUD)
+           ========================================= */
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            background: var(--bg-base); 
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.9));
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .svg-wrapper {
+            position: relative;
+            z-index: 2; 
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .header-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            overflow: visible;
+        }
+
+        .block-blue { fill: url(#gradSapphire); stroke: #1e3a8a; stroke-width: 1; stroke-linejoin: round; transition: 0.3s; }
+        .block-red { fill: url(#gradRuby); stroke: #881337; stroke-width: 1; stroke-linejoin: round; transition: 0.3s; }
+        
+        .nav-text {
+            fill: #ffffff; stroke: #0f172a; stroke-width: 0.5px; paint-order: stroke fill;
+            font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800;
+            text-anchor: middle; dominant-baseline: middle; pointer-events: none; letter-spacing: 0.5px;
+        }
+        .nav-text-center {
+            fill: #ffffff; stroke: #0f172a; stroke-width: 0.5px; paint-order: stroke fill;
+            font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 800;
+            text-anchor: middle; dominant-baseline: middle; pointer-events: none; letter-spacing: 0.5px;
+        }
+
+        .nav-group { transition: 0.3s; }
+        .nav-group:hover .block-blue { fill: #3b82f6; filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.5)); }
+        .nav-group:hover .block-red { fill: #f43f5e; filter: drop-shadow(0 0 8px rgba(225, 29, 72, 0.5)); }
+        .nav-group:hover .nav-text { fill: #fff; stroke: none; }
+
+        .neon-line {
+            fill: none; stroke: var(--platinum); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+            stroke-dasharray: 1000; stroke-dashoffset: 1000;
+            filter: drop-shadow(0 0 4px #ffffff);
+            pointer-events: none; animation: expandFromCenter 4s linear infinite;
+        }
+        @keyframes expandFromCenter {
+            0% { stroke-dashoffset: 1000; opacity: 1; }
+            70% { stroke-dashoffset: 0; opacity: 1; }
+            100% { stroke-dashoffset: 0; opacity: 0; }
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .main-container {
+            flex: 1;
+            padding: 3rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* ========== GRID UNTUK 2 GRAF ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 1.5rem;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 6px; 
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .card::before, .card::after {
+            content: ''; position: absolute; width: 30px; height: 2px; background: var(--platinum);
+        }
+        .card::before { top: -1px; left: -1px; }
+        .card::after { bottom: -1px; right: -1px; }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.8rem;
+        }
+        .card-title i { color: var(--platinum); font-size: 1.1rem; }
+
+        /* ========== CHART CONTAINER ========== */
+        .chart-container {
+            position: relative;
+            height: 320px; 
+            width: 100%;
+        }
+
+        /* ========== FILTERS ========== */
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .filter-select {
+            background: #1e293b;
+            border: 1px solid var(--sapphire);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: 'Roboto', sans-serif;
+            outline: none;
+            min-width: 180px;
+            transition: 0.3s;
+        }
+        .filter-select:focus, .filter-select:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        }
+
+        .filter-badge {
+            background: rgba(37, 99, 235, 0.2);
+            color: var(--cyan);
+            border: 1px solid var(--sapphire);
+            border-radius: 4px;
+            padding: 0.6rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .filter-reset {
+            background: transparent;
+            border: 1px solid var(--ruby);
+            color: var(--ruby);
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .filter-reset:hover {
+            background: var(--ruby);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(225, 29, 72, 0.4);
+        }
+
+        /* ========== JADUAL ========== */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 900px;
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--platinum);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+        }
+
+        tr { transition: 0.2s; }
+        tr:hover td { background: rgba(37, 99, 235, 0.1); color: #fff; }
+
+        /* ========== PAGINATION ========== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination-btn {
+            background: transparent;
+            border: 1px solid var(--platinum);
+            color: var(--platinum);
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--platinum);
+            color: var(--bg-base);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: var(--border-color);
+        }
+
+        .pagination-info {
+            color: var(--platinum);
+            font-weight: 500;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        /* ========== POPUP HUD STYLE ========== */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(2, 6, 23, 0.9); backdrop-filter: blur(8px);
+            z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem;
+        }
+        
+        .popup-card {
+            background: #0f172a; border: 1px solid var(--cyan);
+            width: 100%; max-width: 550px; padding: 2.5rem; 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 229, 255, 0.05);
+            position: relative; overflow: hidden;
+        }
+
+        .popup-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.03) 2px, rgba(0, 229, 255, 0.03) 4px);
+            pointer-events: none; z-index: 0;
+        }
+
+        .popup-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 40px; height: 2px;
+            background: var(--cyan); box-shadow: 0 0 10px var(--cyan);
+        }
+
+        .popup-close {
+            background: transparent; border: none; color: var(--text-muted);
+            font-size: 1.5rem; position: absolute; top: 15px; right: 20px; z-index: 10;
+            transition: 0.3s;
+        }
+        .popup-close:hover { color: var(--cyan); transform: rotate(90deg); }
+
+        .popup-detail h3 { 
+            color: var(--cyan); font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            position: relative; z-index: 1;
+        }
+
+        .detail-row {
+            margin-bottom: 1rem; padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative; z-index: 1;
+        }
+
+        .detail-label {
+            font-size: 0.7rem; color: var(--sapphire);
+            text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+        }
+
+        .detail-value {
+            font-weight: 400; font-size: 0.95rem; line-height: 1.6;
+            margin-top: 0.3rem; color: #e2e8f0;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center; padding: 2rem; border-top: 1px solid var(--border-color);
+            font-size: 0.8rem; color: var(--text-muted); background: rgba(15, 23, 42, 0.9);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media screen and (max-width: 900px) {
+            .main-container { padding: 1.5rem 1rem; gap: 1.5rem; }
+            .card { padding: 1.5rem; }
+            .filter-select { width: 100%; }
+            .filter-row { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- EFEK GLOW PULSE (AURA) -->
+    <div id="cursor-aura"></div>
+
+    <!-- HEADER NAVIGASI (SMART HUD) -->
+    <header class="header-wrapper">
+        <div class="svg-wrapper">
+            <svg class="header-svg" viewBox="0 0 1200 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="gradSapphire" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#1e3a8a" />
+                        <stop offset="100%" stop-color="#2563eb" />
+                    </linearGradient>
+                    <linearGradient id="gradRuby" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#881337" />
+                        <stop offset="100%" stop-color="#e11d48" />
+                    </linearGradient>
+                </defs>
+
+                <a href="coe.html" class="nav-group">
+                    <polygon class="block-blue" points="0,0 190,0 150,35 70,35" />
+                    <text x="95" y="20" class="nav-text">COE</text>
+                </a>
+                
+                <a href="sop.html" class="nav-group">
+                    <polygon class="block-blue" points="130,0 335,0 285,50 195,50" />
+                    <text x="232.5" y="28" class="nav-text">SOP</text>
+                </a>
+                
+                <a href="mekanisasi.html" class="nav-group">
+                    <polygon class="block-blue" points="260,0 480,0 420,65 320,65" />
+                    <text x="370" y="36" class="nav-text">MEKANISASI</text>
+                </a>
+
+                <a href="index.html" class="nav-group">
+                    <polygon class="block-red" points="400,0 800,0 720,85 480,85" />
+                    <text x="600" y="32" class="nav-text-center">BAHAGIAN MEKANISASI &amp;</text>
+                    <text x="600" y="52" class="nav-text-center">PROJEK KHAS FPMSB</text>
+                </a>
+                
+                <a href="inovasi.html" class="nav-group">
+                    <polygon class="block-blue" points="720,0 940,0 880,65 780,65" />
+                    <text x="830" y="36" class="nav-text">INOVASI</text>
+                </a>
+                
+                <a href="paten.html" class="nav-group">
+                    <polygon class="block-blue" points="865,0 1070,0 1005,50 915,50" />
+                    <text x="967.5" y="28" class="nav-text">PATEN</text>
+                </a>
+                
+                <a href="budget.html" class="nav-group">
+                    <polygon class="block-blue" points="1010,0 1200,0 1130,35 1050,35" />
+                    <text x="1105" y="20" class="nav-text">BAJET</text>
+                </a>
+
+                <path class="neon-line" d="M 600,85 L 480,85 L 420,65 L 320,65 L 285,50 L 195,50 L 150,35 L 70,35 L 0,35" />
+                <path class="neon-line" d="M 600,85 L 720,85 L 780,65 L 880,65 L 915,50 L 1005,50 L 1050,35 L 1130,35 L 1200,35" />
+            </svg>
+        </div>
+    </header>
+
+    <!-- POPUP DETAIL PRODUK -->
+    <div id="detailPopup" class="popup-overlay" style="display: none;">
+        <div class="popup-card popup-detail" id="detailPopupContent">
+            <!-- Diisi oleh JS -->
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
+        
+        <!-- BAHAGIAN 1: 2 GRAF (WILAYAH & KATEGORI) -->
+        <div class="charts-grid">
+            <!-- Carta Bar (Wilayah) -->
+            <section class="card">
+                <div class="card-title">
+                    <i class="fas fa-chart-bar"></i> STATISTIK MENGIKUT WILAYAH 
+                    <span id="chartYearLabel" style="color:var(--cyan); font-size:0.9rem; margin-left:auto;">(2026)</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="wilayahChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Carta Donat (Kategori) -->
+            <section class="card">
+                <div class="card-title">
+                    <i class="fas fa-chart-pie"></i> PECAHAN MENGIKUT KATEGORI
+                </div>
+                <div class="chart-container">
+                    <canvas id="kategoriChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- BAHAGIAN 2: JADUAL DATA -->
+        <section class="card">
+            <div class="card-title"><i class="fas fa-flask"></i> SENARAI PRODUK INOVASI</div>
+
+            <!-- FILTER -->
+            <div class="filter-row">
+                <select id="tahunFilter" class="filter-select" onchange="applyAllFilters()">
+                    <option value="2026">Tahun: 2026</option>
+                    <option value="2025">Tahun: 2025</option>
+                    <option value="2024">Tahun: 2024</option>
+                </select>
+
+                <select id="wilayahFilter" class="filter-select" onchange="applyAllFilters()">
+                    <option value="SEMUA">Semua Wilayah</option>
+                </select>
+
+                <select id="kategoriFilter" class="filter-select" onchange="applyAllFilters()">
+                    <option value="SEMUA">Semua Kategori</option>
+                    <option value="Digital & Data">Digital & Data</option>
+                    <option value="Inovasi Operasi Ladang">Inovasi Operasi Ladang</option>
+                    <option value="ESG & Kesejahteraan">ESG & Kesejahteraan</option>
+                    <option value="Kejuruteraan & Infrastruktur">Kejuruteraan & Infrastruktur</option>
+                </select>
+
+                <div class="filter-badge" id="filterCount">0 / 0</div>
+                <button class="filter-reset" onclick="resetAllFilters()"><i class="fas fa-undo-alt"></i> Reset</button>
+            </div>
+
+            <!-- JADUAL -->
+            <div class="table-responsive">
+                 <table>
+                    <thead>
+                         <tr>
+                            <th>Bil</th>
+                            <th>Wilayah</th>
+                            <th>Nama Projek</th>
+                            <th>Kategori</th>
+                         </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                 </table>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="pagination">
+                <button class="pagination-btn" id="prevPage" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i> Prev</button>
+                <span class="pagination-info" id="pageInfo">Halaman 1 / 1</span>
+                <button class="pagination-btn" id="nextPage" onclick="changePage(1)">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
+                <i class="fas fa-hand-pointer"></i> Klik pada baris untuk lihat detail penuh
+            </p>
+        </section>
+
+    </main>
+    
+    <footer>
+        <i class="fas fa-copyright"></i> Bahagian Mekanisasi & Projek Khas · #InovasiLestari
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Logik Kursor Aura (Glow Pulse)
+        const aura = document.getElementById('cursor-aura');
+        document.addEventListener('mousemove', (e) => {
+            aura.style.left = e.clientX + 'px';
+            aura.style.top = e.clientY + 'px';
+        });
+        document.addEventListener('mouseleave', () => { aura.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { aura.style.opacity = '1'; });
+
+        // Data
+        const inovasi2024 = [
+            { wilayah: "Mempaga", projek: "Ek Releaer 2000", kategori: "Inovasi Operasi Ladang", obj: "Mempercepatkan Proses Penyebaran Kumbang E.k" },
+            { wilayah: "Mempaga", projek: "Pests Alarm Solar", kategori: "ESG & Kesejahteraan", obj: "Mengurangkan Gangguan Oleh Haiwan Perosak Di Kawasan Ladang" },
+            { wilayah: "Mempaga", projek: "Ram Pump", kategori: "Inovasi Operasi Ladang", obj: "Mengalirkan Alir Daripada Kawasan Rendah Ke Kawasan Tinggi" },
+            { wilayah: "Mempaga", projek: "Pest Alarm Solar", kategori: "ESG & Kesejahteraan", obj: "Kawalan Musuh" },
+            { wilayah: "Mempaga", projek: "Hatch And Carry", kategori: "Inovasi Operasi Ladang", obj: "Pembiakan Kumbang Ek" },
+            { wilayah: "Mempaga", projek: "Catch And Carry", kategori: "Inovasi Operasi Ladang", obj: "Pembiakan Kumbang Ek" },
+            { wilayah: "Mempaga", projek: "Water Vision", kategori: "Inovasi Operasi Ladang", obj: "Mengalirkan Alir Daripada Kawasan Rendah Ke Kawasan Tinggi" },
+            { wilayah: "Mempaga", projek: "Gelongsor Bts", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Pengeluaran Hasil Di Kawasan Bukit" },
+            { wilayah: "Mempaga", projek: "Pam Baja Nursery", kategori: "Inovasi Operasi Ladang", obj: "" },
+            { wilayah: "Jengka", projek: "Spreader Mudah Alih", kategori: "Inovasi Operasi Ladang", obj: "" },
+            { wilayah: "Jengka", projek: "Pecungkil Anak Sawit", kategori: "Inovasi Operasi Ladang", obj: "" },
+            { wilayah: "Jengka", projek: "Jantan Spike", kategori: "Inovasi Operasi Ladang", obj: "" },
+            { wilayah: "Jengka", projek: "Cattle Trap Murah", kategori: "Kejuruteraan & Infrastruktur", obj: "" },
+            { wilayah: "Jengka", projek: "Jambatan Mudah Alih", kategori: "Kejuruteraan & Infrastruktur", obj: "" },
+            { wilayah: "Jengka", projek: "Rumah Kerengge", kategori: "ESG & Kesejahteraan", obj: "" },
+            { wilayah: "Jengka", projek: "Ek Atap Nipah", kategori: "Inovasi Operasi Ladang", obj: "" },
+            { wilayah: "Jengka", projek: "Nerek Auto Gate", kategori: "Kejuruteraan & Infrastruktur", obj: "Mengurangkan Kos Pembinaan Cattle Trap Dan Mengelakkan Kemasukan Haiwan Perosak Ke Kawasan Pembangunan" },
+            { wilayah: "Jengka", projek: "Nerek Solar Water Supply", kategori: "Inovasi Operasi Ladang", obj: "Membekalakan Air Yang Mengcukupi Bagi Setiap Pokok Sawit Di Kawasan Berbukit" },
+            { wilayah: "Kuantan", projek: "Altimeter", kategori: "Digital & Data", obj: "" },
+            { wilayah: "Kuantan", projek: "Ir Asfri", kategori: "Digital & Data", obj: "" },
+            { wilayah: "Kuantan", projek: "Lcc+ Drone", kategori: "Digital & Data", obj: "" },
+            { wilayah: "Kuantan", projek: "Traffic Light", kategori: "Kejuruteraan & Infrastruktur", obj: "" },
+            { wilayah: "Kuantan", projek: "Bukit Kuantan Sabit Ablation 'Sentak'", kategori: "Inovasi Operasi Ladang", obj: "Mempercepatkan Pertumbuhan Pokok" },
+            { wilayah: "Kuantan", projek: "Cik - Ct 01 Keratong 6", kategori: "ESG & Kesejahteraan", obj: "Toll Untuk Bancian Sebelum Dan Selepas Taburan Butik" },
+            { wilayah: "Kuantan", projek: "Rat C Selancar 4/5", kategori: "ESG & Kesejahteraan", obj: "Sebagai Alatan Bancian Sebelum Dan Selepas Program Penaburan Butik" },
+            { wilayah: "Kuantan", projek: "Ant - T Selancar 4/5", kategori: "ESG & Kesejahteraan", obj: "Untuk Mencegah Ulat Pemakan Daun" },
+            { wilayah: "Terengganu", projek: "Adjustable Pole", kategori: "Inovasi Operasi Ladang", obj: "Untuk Melancarkan Dan Memudahkan Operasi Kerja Penuaian Dan Prunning Di Ladang" },
+            { wilayah: "Terengganu", projek: "Qr My Blok", kategori: "Digital & Data", obj: "Memberi Dan Memudahkan Maklumat Asas Blok Ladang Secara Digital" },
+            { wilayah: "Terengganu", projek: "Gps Tracker Spreader", kategori: "Digital & Data", obj: "Merekod Dan Memantau Operasi Pembajaan Di Ladang Dengan Effisen" },
+            { wilayah: "Gua Musang", projek: "Pam Air Solar - Chiku 5", kategori: "Inovasi Operasi Ladang", obj: "Membekalkan Air Ke Pokok Sawit Di Ladang" },
+            { wilayah: "Gua Musang", projek: "Penckar Pelepah - Kemahang 3", kategori: "Inovasi Operasi Ladang", obj: "Menarik Pelepah Kering Yang Berselerak Di Ladang" },
+            { wilayah: "Johor Bahru", projek: "App Sheet Bunch Counter", kategori: "Digital & Data", obj: "Merekod Dan Memantau Operasi Penuaian Di Ladang Dengan Effisen" },
+            { wilayah: "Johor Bahru", projek: "Land Irrigation", kategori: "Inovasi Operasi Ladang", obj: "Sumber Nutrien Tambahan Dan Gap Dalam Penambahan Kelembapat Untuk Pokok Sawit" },
+            { wilayah: "Segamat", projek: "Mesin Pengisi Anah Polibag Tapak Semaian", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Produktiviti Isian Polibag" },
+            { wilayah: "Trolak", projek: "Gelongsor Bts", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Pengumpulan Bts Yang Dituai" },
+            { wilayah: "Trolak", projek: "Jalan Pintar (Jalan Pasir Dan Tayar)", kategori: "Kejuruteraan & Infrastruktur", obj: "Minimakan Kos Pembaikan Jalan Yang Rosak" },
+            { wilayah: "Trolak", projek: "Adjustable Hook - Fpmsb Soeharto", kategori: "Inovasi Operasi Ladang", obj: "Memastikan Bilangan Pelepah Yang Optimum" },
+            { wilayah: "Trolak", projek: "Besout Digital Census", kategori: "Digital & Data", obj: "Meningkatkan Keberkesanan Bancian Upd" },
+            { wilayah: "Alor Setar", projek: "Penggera Pir Suria - Teloi Timur", kategori: "ESG & Kesejahteraan", obj: "Kawalan Serangan Musuh Tanaman" },
+            { wilayah: "Alor Setar", projek: "Irrigation Solar - Teloi Timur/chuping 2", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Tahap Kelembapan Tanah" },
+            { wilayah: "Raja Alias", projek: "Elevating Belt Converyor (Fldr4 Lift Loader)", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Produktiviti & Mengurangkan Keperluan Pekerja Membaja" },
+            { wilayah: "Raja Alias", projek: "Rain Water Catcment System", kategori: "Inovasi Operasi Ladang", obj: "Mengumpul Lebihan Air Dari Jalan Dan Mengalirkan Ke Teres Pit & Pokok" },
+            { wilayah: "Raja Alias", projek: "Lightweight Applicator Handheld (Lah) Spreader", kategori: "Inovasi Operasi Ladang", obj: "Spreader Pembajaan Bersaiz Mini" }
+        ].map((item, index) => ({ bil: index + 1, ...item }));
+
+        const inovasi2025 = [
+            { wilayah: "Mempaga", projek: "Catch & Carry V2", kategori: "Inovasi Operasi Ladang", obj: "Mengembangkan Populasi Kumbang Pendebungaan" },
+            { wilayah: "Mempaga", projek: "Smart Legume Operation (Slop)", kategori: "Inovasi Operasi Ladang", obj: "Alat Tanaman Kacang" },
+            { wilayah: "Mempaga", projek: "Solar Automatic Gate", kategori: "Kejuruteraan & Infrastruktur", obj: "Menggantikan Pintu Pagar Manual" },
+            { wilayah: "Kuantan", projek: "Kotak Sarang Burung Hantu Bergerak", kategori: "ESG & Kesejahteraan", obj: "Merekabentuk Sarang Burung Hantu Yang Boleh Dipindahkan" },
+            { wilayah: "Kuantan", projek: "X-trans", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Pindahan Benih Atau Pokok" },
+            { wilayah: "Terengganu", projek: "Loose Fruit Collector", kategori: "Inovasi Operasi Ladang", obj: "Kutipan Biji Lerai Yang Lebih Efisin" },
+            { wilayah: "Terengganu", projek: "Fertiliser Tank", kategori: "Inovasi Operasi Ladang", obj: "Elakan Pembaziran Baja Semasa Beg Baja Dibuka" },
+            { wilayah: "Gua Musang", projek: "Smart Bunch Marker", kategori: "Digital & Data", obj: "Kawalan Dan Pemantauan Hasil" },
+            { wilayah: "Gua Musang", projek: "E-bbc", kategori: "Digital & Data", obj: "Memudahkan Dan Maklumat Dapat Di Perolehi Dengan Cepat" },
+            { wilayah: "Segamat", projek: "Driller Machine", kategori: "Inovasi Operasi Ladang", obj: "Pasang Dan Guna, Boleh Digunakan 2 Dalam 1" },
+            { wilayah: "Segamat", projek: "Perangkap @ Tadahan Kabus (Fog's Catcher)", kategori: "Inovasi Operasi Ladang", obj: "Mengatasi Masalah Defisit Air" },
+            { wilayah: "Segamat", projek: "Lenga Smartcode", kategori: "Digital & Data", obj: "Pemantauan Secara Cross Check Dikawasan Tuai Yang Bermasalah" },
+            { wilayah: "Segamat", projek: "Maokil Bunch Marker", kategori: "Digital & Data", obj: "Menggantikan Penggunaan Cop Tandan" },
+            { wilayah: "Segamat", projek: "Siren Gajah", kategori: "ESG & Kesejahteraan", obj: "Sebagai Alternatif Bagi Mengalau Gajah" },
+            { wilayah: "Segamat", projek: "Up Smartcode Attendence", kategori: "Digital & Data", obj: "Rekod Kehadiran Pekerja Secara Digital" },
+            { wilayah: "Alor Setar", projek: "Sharp Shooter Seed (3s)", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Proses Penanaman Kpb" },
+            { wilayah: "Alor Setar", projek: "Adjustable Rail", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan Produktivi Serta Menjaga Keselamatan Pekerja" },
+            { wilayah: "Alor Setar", projek: "Troli Portable", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Mengutip Scrub" },
+            { wilayah: "Alor Setar", projek: "Smart Terrace Tools", kategori: "Inovasi Operasi Ladang", obj: "Menentukan Jarak Kecuraman Teres Dengan Lebih Tepat" },
+            { wilayah: "Alor Setar", projek: "Hidroelektrik", kategori: "Kejuruteraan & Infrastruktur", obj: "Menjana Tenaga Elektrik Dari Sumber Air" }
+        ].map((item, index) => ({ bil: index + 1, ...item }));
+
+        const inovasi2026 = [
+            { wilayah: "Gua Musang", projek: "Manpower Rekod (Mpr)", kategori: "Digital & Data", obj: "Mentransformasikan Pengurusan Kehadiran Daripada Kaedah Tradisional Kepada Ekosistem Digital" },
+            { wilayah: "Gua Musang", projek: "Intergrated Bunch Monitoring Sistem (IBMS)", kategori: "Digital & Data", obj: "Mempercepatkan Proses Membuat Rumusan Bbc" },
+            { wilayah: "Gua Musang", projek: "J-Fosil", kategori: "Digital & Data", obj: "Kawalan Penggunaan Bahan Api Dan Tambah Baik Pengurusan Risiko" },
+            { wilayah: "Mempaga", projek: "Magnetobucket", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Mengutip Dan Mengasingkan Biji Relai" },
+            { wilayah: "Mempaga", projek: "Klau Cross Water", kategori: "Inovasi Operasi Ladang", obj: "Sistem Penghadang Air (Water Barrier) Untuk Tebing Kolam Pecah" },
+            { wilayah: "Mempaga", projek: "Predanest-klau", kategori: "ESG & Kesejahteraan", obj: "Rumah Selamat Untuk Burung Pungguk Kawal Tikus" },
+            { wilayah: "Mempaga", projek: "Rodentxklau", kategori: "Inovasi Operasi Ladang", obj: "Smart Rat Trap Box Untuk Kawalan Tikus" },
+            { wilayah: "Mempaga", projek: "E-checkroll", kategori: "Digital & Data", obj: "Alternatif Digital menggantikan Buku Pocket Checkroll" },
+            { wilayah: "Mempaga", projek: "Kepayang Flexipole", kategori: "Inovasi Operasi Ladang", obj: "MENYAMBUNG GALAH PENUAIAN TANPA KLIP - MEMPERCEPAT PROSES MELARAS KETINGGIAN GALAH - DAPAT MEMINDAHKAN GALAH DARI POKOK KE POKOK DENGAN PANTAS" },
+            { wilayah: "Mempaga", projek: "Mayam Traction Ace", kategori: "Inovasi Operasi Ladang", obj: "KAWALAN TANGKAI PANJANG - EVAKUASI BTS KE LORONG TUAI - MELAKSANA 3 KERJA DALAM SATU MASA" },
+            { wilayah: "Mempaga", projek: "Mendi Water Portable", kategori: "Inovasi Operasi Ladang", obj: "MENYELESAIKAN MASALAH SUMBER AIR DI KAWASAN SULAMAN DAN KAWASAN PEMBANGUNAN (TERES) - MUDAH ALIH" },
+            { wilayah: "Johor Bahru", projek: "Pluvio Data Sense (Pds)", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Hujan Secara Automatik" },
+            { wilayah: "Johor Bahru", projek: "Tunggal Piezometer", kategori: "Inovasi Operasi Ladang", obj: "Memantau Paras Air Dalam Tanah" },
+            { wilayah: "Johor Bahru", projek: "Wira Soil Lestari", kategori: "Digital & Data", obj: "Menentukan Siri Tanah, Ph Tanah, Elemen Kandungan Tanah" },
+            { wilayah: "Kuantan", projek: "Finger-kit Note", kategori: "ESG & Kesejahteraan", obj: "Menambah Nilai Penyelia Ladang" },
+            { wilayah: "Kuantan", projek: "Jumbo Informer", kategori: "ESG & Kesejahteraan", obj: "Mengesan Kehadiran Gajah Liar" },
+            { wilayah: "Kuantan", projek: "Agromeasure Pro", kategori: "Inovasi Operasi Ladang", obj: "Alat Pengukuran Pelbagai Fungsi" },
+            { wilayah: "Kuantan", projek: "Bailey Bridge", kategori: "Kejuruteraan & Infrastruktur", obj: "Meningkatkan Kelancaran Operasi" },
+            { wilayah: "Kuantan", projek: "Mud Grip", kategori: "Inovasi Operasi Ladang", obj: "Penyelesaian Praktikal Untuk Operasi Pengangkutan" },
+            { wilayah: "Kuantan", projek: "Spy Cam Bbc", kategori: "Digital & Data", obj: "Bancian Tandan Hitam Buah Sawit" },
+            { wilayah: "Kuantan", projek: "Ryg Platform Counting", kategori: "Inovasi Operasi Ladang", obj: "Transformasi Digital Pengurusan Hasil Tuaian" },
+            { wilayah: "Kuantan", projek: "Agro Bait Box Cencus (Abc)", kategori: "ESG & Kesejahteraan", obj: "Mengenalpasti Jenis, Saiz, Populasi Tikus" },
+            { wilayah: "Kuantan", projek: "Agro Water Level", kategori: "Inovasi Operasi Ladang", obj: "Memantau Dan Mengawal Paras Air Serta Ph Air" },
+            { wilayah: "Kuantan", projek: "Smart Water System Mini (Swsm)", kategori: "Inovasi Operasi Ladang", obj: "Pemantauan Cuaca Di Ladang Secara Sistematik" },
+            { wilayah: "Segamat", projek: "Rootex (Root Extraction Tool)", kategori: "Inovasi Operasi Ladang", obj: "Alat Mesra Pengguna Untuk Cabut Akar" },
+            { wilayah: "Segamat", projek: "Eogs (Eco Owl Guard System)", kategori: "ESG & Kesejahteraan", obj: "Memikat Burung Pungguk Menginap Di Sarang" },
+            { wilayah: "Segamat", projek: "ANIMO", kategori: "Inovasi Operasi Ladang", obj: "Memberi Maklumat Awal Kemasukan Haiwan Liar" },
+            { wilayah: "Segamat", projek: "SARANG BURUNG BOLEH LARAS", kategori: "ESG & Kesejahteraan", obj: "Memudahkan Kerja Bancian Dan Penjagaan" },
+            { wilayah: "Segamat", projek: "E-HASIL", kategori: "Digital & Data", obj: "Pantas dan mudah untuk lihat hasil" },
+            { wilayah: "Segamat", projek: "Roller Biji Relai", kategori: "Inovasi Operasi Ladang", obj: "Meningkatkan kecekapan mengutip biji relai" },
+            { wilayah: "Segamat", projek: "E-ATTENDANCE", kategori: "Digital & Data", obj: "Pengambilan Rekod Kehadiran Pekerja" },
+            { wilayah: "Segamat", projek: "PROTECTING HAVEST RUBBER TAPPING RAIN GUARD", kategori: "Inovasi Operasi Ladang", obj: "Rain Guard Untuk Perlindungan" },
+            { wilayah: "Segamat", projek: "SEREN PENGHALAU GAJAH", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Kemasukan Gajah Ke Dalam Ladang" },
+            { wilayah: "Segamat", projek: "CHECKING CHIPPING", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Penyemakan Standard Chipping" },
+            { wilayah: "Alor Setar", projek: "2-stroke", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Ablation" },
+            { wilayah: "Alor Setar", projek: "Smart Terrace Tool", kategori: "Inovasi Operasi Ladang", obj: "Menentukan Jarak Kecuraman Teres" },
+            { wilayah: "Alor Setar", projek: "Sharp Shooter Seed (3s)", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Proses Penanaman Kpb" },
+            { wilayah: "Alor Setar", projek: "E-perolehan", kategori: "Digital & Data", obj: "Pengurusan Dokumen" },
+            { wilayah: "Alor Setar", projek: "E-quit", kategori: "Digital & Data", obj: "Kualiti Btb Dihantar Ke Kilang" },
+            { wilayah: "Alor Setar", projek: "E-mandor", kategori: "Digital & Data", obj: "Data Tepat Dari Mandor Ladang" },
+            { wilayah: "Raja Alias", projek: "Fertilizer Box", kategori: "Inovasi Operasi Ladang", obj: "Memudahkan Kerja Membaja" },
+            { wilayah: "Raja Alias", projek: "Escalator Loose Friut Collector (ELFC)", kategori: "Inovasi Operasi Ladang", obj: "Mengangkut Biji Relai Dari Pentas Tuai" },
+            { wilayah: "Trolak", projek: "1 Document Centre Wilayah Trolak (1dct)", kategori: "Digital & Data", obj: "Pendigitalan Rekod Kerja Harian" },
+            { wilayah: "Trolak", projek: "sato chamber", kategori: "Kejuruteraan & Infrastruktur", obj: "Alat pengukur sudut kecembungan jalan" },
+            { wilayah: "Terengganu", projek: "E-trespasser Alert V2", kategori: "Digital & Data", obj: "Keselamatan Dan Kurangkan Risiko Kehilangan Hasil" },
+            { wilayah: "Terengganu", projek: "Tank Fertilizer (Ft)", kategori: "Inovasi Operasi Ladang", obj: "Mengurangkan Pembaziran Baja" },
+            { wilayah: "Jengka", projek: "PERUMAH AIR DAN BAJA", kategori: "Inovasi Operasi Ladang", obj: "Mengekalkan kelembapan pokok dan baja tambahan, sasaran 18 tan/ha untuk tahun pertama" },
+            { wilayah: "Jengka", projek: "J5/4 SMART RAIN GAUGE", kategori: "Inovasi Operasi Ladang", obj: "MENGUKUR JUMLAH HUJAN SECARA AUTOMATIK, MEMBANTU MEMBERI AMARAN AWAL HUJAN LEBAT ATAU BANJIR" }
+        ].map((item, index) => ({ bil: index + 1, ...item }));
+
+        const semuaData = { 2024: inovasi2024, 2025: inovasi2025, 2026: inovasi2026 };
+
+        let currentTahun = "2026";
+        let currentData = [...inovasi2026];
+        let filteredData = [...currentData];
+        let currentPage = 1;
+        const rowsPerPage = 15;
+        
+        let wilayahChartInstance = null;
+        let kategoriChartInstance = null;
+
+        // ==========================================
+        // CUSTOM PLUGIN 1: Garisan Label Donat (Kategori)
+        // ==========================================
+        const customLeaderLinePlugin = {
+            id: 'customLeaderLine',
+            afterDraw(chart, args, options) {
+                const { ctx } = chart;
+                const meta = chart.getDatasetMeta(0);
+                if (!meta.data || meta.data.length === 0) return;
+
+                const centerX = meta.data[0].x;
+                const centerY = meta.data[0].y;
+                const radius = meta.data[0].outerRadius;
+                const data = chart.data.datasets[0].data;
+                const labels = chart.data.labels;
+                const colors = chart.data.datasets[0].backgroundColor;
+
+                ctx.save();
+                ctx.font = "bold 10px 'Roboto'";
+                ctx.fillStyle = "#cbd5e1";
+                ctx.textBaseline = "middle";
+
+                meta.data.forEach((element, index) => {
+                    const angle = (element.startAngle + element.endAngle) / 2;
+                    const midCos = Math.cos(angle);
+                    const midSin = Math.sin(angle);
+
+                    const startX = centerX + midCos * radius;
+                    const startY = centerY + midSin * radius;
+                    const elbowX = centerX + midCos * (radius + 10);
+                    const elbowY = centerY + midSin * (radius + 10);
+                    const isRight = midCos >= 0;
+                    const endX = elbowX + (isRight ? 15 : -15);
+                    const endY = elbowY;
+
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(elbowX, elbowY);
+                    ctx.lineTo(endX, endY);
+                    ctx.strokeStyle = colors[index];
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(endX, endY, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = colors[index];
+                    ctx.fill();
+
+                    ctx.textAlign = isRight ? "left" : "right";
+                    const textX = endX + (isRight ? 5 : -5);
+                    const labelText = `${labels[index]} (${data[index]})`;
+                    ctx.fillText(labelText, textX, endY);
+                });
+                ctx.restore();
+            }
+        };
+
+        // ==========================================
+        // CUSTOM PLUGIN 2: Label Nombor pada Carta Bar (Wilayah)
+        // ==========================================
+        const customBarLabelsPlugin = {
+            id: 'customBarLabels',
+            afterDatasetsDraw(chart) {
+                const { ctx, data } = chart;
+                const meta = chart.getDatasetMeta(0);
+                
+                if (!meta.hidden) {
+                    meta.data.forEach((element, index) => {
+                        const value = data.datasets[0].data[index];
+                        
+                        ctx.save();
+                        ctx.font = "bold 13px 'Orbitron'"; // Font Futuristik
+                        ctx.fillStyle = "#00e5ff"; // Warna Cyan Neon
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+                        
+                        // Efek Glow pada teks
+                        ctx.shadowColor = "#00e5ff";
+                        ctx.shadowBlur = 8;
+                        
+                        // Lukis teks sedikit di atas bar
+                        ctx.fillText(value, element.x, element.y - 8);
+                        ctx.restore();
+                    });
+                }
+            }
+        };
+
+        // Fungsi-fungsi Utama
+        function populateWilayahFilter() {
+            const wilayahSet = new Set(currentData.map(item => item.wilayah));
+            const sortedWilayah = Array.from(wilayahSet).sort();
+            const filterSelect = document.getElementById('wilayahFilter');
+            filterSelect.innerHTML = '<option value="SEMUA">Semua Wilayah</option>';
+            sortedWilayah.forEach(w => { const opt = document.createElement('option'); opt.value = w; opt.textContent = w; filterSelect.appendChild(opt); });
+        }
+
+        function applyAllFilters() {
+            const tahun = document.getElementById('tahunFilter').value;
+            const wilayah = document.getElementById('wilayahFilter').value;
+            const kategori = document.getElementById('kategoriFilter').value;
+
+            currentData = [...semuaData[tahun]];
+            document.getElementById('chartYearLabel').innerText = `(${tahun})`;
+            
+            let filtered = [...currentData];
+            if (wilayah !== "SEMUA") filtered = filtered.filter(item => item.wilayah === wilayah);
+            if (kategori !== "SEMUA") filtered = filtered.filter(item => item.kategori === kategori);
+
+            filteredData = filtered;
+            currentPage = 1;
+
+            populateWilayahFilter();
+            renderTable();
+            
+            renderWilayahChart(tahun);
+            renderKategoriChart(tahun);
+        }
+
+        function resetAllFilters() {
+            document.getElementById('tahunFilter').value = "2026";
+            document.getElementById('wilayahFilter').value = "SEMUA";
+            document.getElementById('kategoriFilter').value = "SEMUA";
+            applyAllFilters();
+        }
+
+        function renderTable() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = filteredData.slice(start, end);
+
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = pageData.map(item => `
+                <tr onclick="showDetailPopup(${item.bil})">
+                    <td>${item.bil}</td>
+                    <td>${item.wilayah}</td>
+                    <td style="font-weight:500; color:#fff;">${item.projek}</td>
+                    <td>${item.kategori}</td>
+                </tr>
+            `).join('');
+
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            document.getElementById('pageInfo').innerText = `Halaman ${currentPage} / ${totalPages || 1}`;
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+            document.getElementById('filterCount').innerText = `${filteredData.length} / ${currentData.length} Produk`;
+        }
+
+        function changePage(direction) {
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            renderTable();
+        }
+
+        // GRAF 1: Carta Bar Wilayah (Guna Custom Label Plugin)
+        function renderWilayahChart(tahun) {
+            const dataTahun = semuaData[tahun];
+            const wilayahCount = {};
+            dataTahun.forEach(item => {
+                wilayahCount[item.wilayah] = (wilayahCount[item.wilayah] || 0) + 1;
+            });
+            
+            const labels = Object.keys(wilayahCount);
+            const dataValues = Object.values(wilayahCount);
+            
+            const ctx = document.getElementById('wilayahChart').getContext('2d');
+            if (wilayahChartInstance) wilayahChartInstance.destroy();
+
+            wilayahChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Bilangan Inovasi',
+                        data: dataValues,
+                        backgroundColor: 'rgba(37, 99, 235, 0.6)',
+                        borderColor: '#2563eb',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        hoverBackgroundColor: '#00e5ff',
+                        hoverBorderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: { padding: { top: 25 } }, // Padding atas untuk teks label
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0f172a',
+                            titleFont: { family: 'Montserrat', size: 13 },
+                            bodyFont: { family: 'Roboto', size: 14 },
+                            borderColor: '#2563eb',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8', font: { family: 'Roboto', size: 11 } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { family: 'Roboto', size: 10 } }
+                        }
+                    }
+                },
+                plugins: [customBarLabelsPlugin] // Daftarkan plugin
+            });
+        }
+
+        // GRAF 2: Carta Donat Kategori (Guna Garisan Label Plugin)
+        function renderKategoriChart(tahun) {
+            const dataTahun = semuaData[tahun];
+            const kategoriCount = {};
+            dataTahun.forEach(item => {
+                kategoriCount[item.kategori] = (kategoriCount[item.kategori] || 0) + 1;
+            });
+
+            const labels = Object.keys(kategoriCount);
+            const dataValues = Object.values(kategoriCount);
+
+            const ctx = document.getElementById('kategoriChart').getContext('2d');
+            if (kategoriChartInstance) kategoriChartInstance.destroy();
+
+            kategoriChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataValues,
+                        backgroundColor: [
+                            '#2563eb', // Sapphire
+                            '#00e5ff', // Cyan
+                            '#e11d48', // Ruby
+                            '#cbd5e1'  // Platinum
+                        ],
+                        borderColor: '#0f172a',
+                        borderWidth: 2,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: { padding: { top: 20, bottom: 20, left: 70, right: 70 } },
+                    cutout: '55%', 
+                    plugins: {
+                        legend: { display: false }, 
+                        tooltip: {
+                            backgroundColor: '#0f172a',
+                            titleFont: { family: 'Montserrat', size: 13 },
+                            bodyFont: { family: 'Roboto', size: 14 },
+                            borderColor: '#00e5ff',
+                            borderWidth: 1
+                        }
+                    }
+                },
+                plugins: [customLeaderLinePlugin] 
+            });
+        }
+
+        function showDetailPopup(bil) {
+            const item = currentData.find(i => i.bil === bil);
+            if (!item) return;
+            const popup = document.getElementById('detailPopupContent');
+            popup.innerHTML = `
+                <button class="popup-close" onclick="closeDetailPopup()"><i class="fas fa-times-circle"></i></button>
+                <h3><i class="fas fa-folder-open"></i> ${item.projek}</h3>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Wilayah</div>
+                    <div class="detail-value">${item.wilayah}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Kategori</div>
+                    <div class="detail-value">${item.kategori}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Bil</div>
+                    <div class="detail-value">#${item.bil}</div>
+                </div>
+                <div class="detail-row" style="border:none;">
+                    <div class="detail-label">Objektif / Keterangan</div>
+                    <div class="detail-value">${item.obj || "Tiada keterangan terperinci."}</div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button onclick="closeDetailPopup()" style="background:transparent; color:var(--cyan); border:1px solid var(--cyan); padding:0.6rem 2rem; font-weight:600; cursor:pointer; font-family:'Montserrat'; text-transform:uppercase; letter-spacing:1px; transition:0.3s; border-radius:4px;" onmouseover="this.style.background='rgba(0, 229, 255, 0.1)'" onmouseout="this.style.background='transparent'">Tutup</button>
+                </div>
+            `;
+            document.getElementById('detailPopup').style.display = 'flex';
+        }
+
+        function closeDetailPopup() { 
+            document.getElementById('detailPopup').style.display = 'none'; 
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateWilayahFilter();
+            renderTable();
+            renderWilayahChart(currentTahun);
+            renderKategoriChart(currentTahun);
+        });
+
+        window.showDetailPopup = showDetailPopup;
+        window.closeDetailPopup = closeDetailPopup;
+        window.applyAllFilters = applyAllFilters;
+        window.resetAllFilters = resetAllFilters;
+        window.changePage = changePage;
+    </script>
+</body>
+</html>

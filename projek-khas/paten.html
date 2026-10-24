@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Produk Paten · Bahagian Mekanisasi & Projek Khas</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== RESET & VARIABLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-base: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --sapphire: #2563eb;
+            --ruby: #e11d48;
+            --platinum: #cbd5e1;
+            --cyan: #00e5ff;
+            --green: #00e676;
+            --orange: #f59e0b;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            
+            /* Kursor Mentol Inovasi (Biru Sapphire) */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path d="M18 2C11.5 2 6.5 7 6.5 13.5C6.5 17.5 9 20.5 11 23V27H25V23C27 20.5 29.5 17.5 29.5 13.5C29.5 7 24.5 2 18 2Z" fill="%232563eb" stroke="%23cbd5e1" stroke-width="1.5"/><path d="M12 28H24V31C24 32.5 22.5 34 21 34H15C13.5 34 12 32.5 12 31V28Z" fill="%23cbd5e1" stroke="%23cbd5e1" stroke-width="1"/><path d="M18 9V17 M15 12L18 17 L21 12" stroke="%2300e5ff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="18" cy="17" r="1.5" fill="%2300e5ff"/></svg>') 18 18, auto;
+            
+            /* Efek Carbon Fibre */
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.15) 0%, transparent 70%),
+                linear-gradient(27deg, #1e293b 5px, transparent 5px),
+                linear-gradient(207deg, #1e293b 5px, transparent 5px),
+                linear-gradient(27deg, #0f172a 5px, transparent 5px),
+                linear-gradient(207deg, #0f172a 5px, transparent 5px),
+                linear-gradient(90deg, #111827 10px, transparent 10px),
+                linear-gradient(90deg, #111827 10px, transparent 10px);
+            background-size: 100% 100%, 20px 20px, 20px 20px, 20px 20px, 20px 20px, 20px 20px, 20px 20px;
+            background-position: 0 0, 0 0, 10px 10px, 10px 10px, 20px 20px, 0 0, 10px 10px;
+        }
+
+        /* Kursor Mentol (Merah Ruby) untuk hover */
+        a, button, .accordion-header, .trl-card, .commercial-header {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path d="M18 2C11.5 2 6.5 7 6.5 13.5C6.5 17.5 9 20.5 11 23V27H25V23C27 20.5 29.5 17.5 29.5 13.5C29.5 7 24.5 2 18 2Z" fill="%23e11d48" stroke="%23cbd5e1" stroke-width="1.5"/><path d="M12 28H24V31C24 32.5 22.5 34 21 34H15C13.5 34 12 32.5 12 31V28Z" fill="%23cbd5e1" stroke="%23cbd5e1" stroke-width="1"/><path d="M18 9V17 M15 12L18 17 L21 12" stroke="%23ffffff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="18" cy="17" r="1.5" fill="%23ffffff"/></svg>') 18 18, pointer !important;
+        }
+
+        /* Efek Glow Pulse (Aura Kursor) */
+        #cursor-aura {
+            position: fixed;
+            top: 0; left: 0;
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.4) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            animation: pulseAura 1.5s infinite alternate;
+            mix-blend-mode: screen;
+            transition: width 0.2s, height 0.2s, background 0.2s;
+        }
+        body:has(a:hover) #cursor-aura, body:has(.trl-card:hover) #cursor-aura, body:has(.commercial-header:hover) #cursor-aura {
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.5) 0%, transparent 60%);
+        }
+        @keyframes pulseAura {
+            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--sapphire); }
+
+        /* =========================================
+           HEADER NAVIGASI (SMART HUD)
+           ========================================= */
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            background: var(--bg-base); 
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.9));
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .svg-wrapper {
+            position: relative;
+            z-index: 2; 
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .header-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            overflow: visible;
+        }
+
+        .block-blue { fill: url(#gradSapphire); stroke: #1e3a8a; stroke-width: 1; stroke-linejoin: round; transition: 0.3s; }
+        .block-red { fill: url(#gradRuby); stroke: #881337; stroke-width: 1; stroke-linejoin: round; transition: 0.3s; }
+        
+        .nav-text {
+            fill: #ffffff; stroke: #0f172a; stroke-width: 0.5px; paint-order: stroke fill;
+            font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800;
+            text-anchor: middle; dominant-baseline: middle; pointer-events: none; letter-spacing: 0.5px;
+        }
+        .nav-text-center {
+            fill: #ffffff; stroke: #0f172a; stroke-width: 0.5px; paint-order: stroke fill;
+            font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 800;
+            text-anchor: middle; dominant-baseline: middle; pointer-events: none; letter-spacing: 0.5px;
+        }
+
+        .nav-group { transition: 0.3s; }
+        .nav-group:hover .block-blue { fill: #3b82f6; filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.5)); }
+        .nav-group:hover .block-red { fill: #f43f5e; filter: drop-shadow(0 0 8px rgba(225, 29, 72, 0.5)); }
+        .nav-group:hover .nav-text { fill: #fff; stroke: none; }
+
+        .neon-line {
+            fill: none; stroke: var(--platinum); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+            stroke-dasharray: 1000; stroke-dashoffset: 1000;
+            filter: drop-shadow(0 0 4px #ffffff);
+            pointer-events: none; animation: expandFromCenter 4s linear infinite;
+        }
+        @keyframes expandFromCenter {
+            0% { stroke-dashoffset: 1000; opacity: 1; }
+            70% { stroke-dashoffset: 0; opacity: 1; }
+            100% { stroke-dashoffset: 0; opacity: 0; }
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .main-container {
+            flex: 1;
+            padding: 3rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 6px; 
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .card::before, .card::after {
+            content: ''; position: absolute; width: 30px; height: 2px; background: var(--platinum);
+        }
+        .card::before { top: -1px; left: -1px; }
+        .card::after { bottom: -1px; right: -1px; }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        .card-title i { color: var(--platinum); font-size: 1.2rem; }
+
+        /* ========== STATS ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-box {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--sapphire);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .stat-box i { font-size: 2rem; color: var(--platinum); }
+        .stat-info { display: flex; flex-direction: column; }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+
+        /* =========================================
+           TRL SECTION
+           ========================================= */
+        .trl-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--platinum);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trl-title span { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; }
+
+        .trl-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trl-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 6px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trl-card:hover {
+            border-color: var(--sapphire);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .trl-card.expanded {
+            grid-column: span 3;
+        }
+
+        .trl-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .trl-badge {
+            background: var(--sapphire);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 4px;
+        }
+
+        .trl-level {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--platinum);
+        }
+
+        .trl-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .trl-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .trl-card.expanded .trl-detail {
+            max-height: 300px;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .trl-detail-list { list-style: none; padding: 0; }
+        .trl-detail-list li {
+            padding: 0.6rem 0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            color: #cbd5e1;
+        }
+        .trl-detail-list li:last-child { border-bottom: none; }
+        .trl-detail-list i { color: var(--cyan); }
+
+        .trl-expand-icon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            color: var(--sapphire);
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .trl-card.expanded .trl-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        /* =========================================
+           COMMERCIAL TIMELINE
+           ========================================= */
+        .commercial-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--platinum);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .commercial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: 0.2s;
+            user-select: none;
+        }
+        
+        .commercial-header:hover { border-color: var(--sapphire); }
+        
+        .commercial-header-left { display: flex; align-items: center; gap: 1rem; }
+        .commercial-header-left h4 { color: #fff; font-family: 'Montserrat', sans-serif; font-size: 1rem; }
+        .product-tag {
+            background: var(--sapphire); color: #fff; font-weight: 600;
+            font-size: 0.7rem; padding: 0.2rem 0.8rem; border-radius: 4px; text-transform: uppercase;
+        }
+        
+        .commercial-toggle {
+            color: var(--sapphire); font-size: 1.2rem; transition: 0.3s;
+        }
+        .commercial-toggle.open { transform: rotate(180deg); }
+        
+        .commercial-body {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            background: rgba(10, 18, 27, 0.8);
+            border: 1px solid var(--border-color); border-top: none;
+            border-radius: 0 0 6px 6px;
+        }
+        .commercial-body.open {
+            max-height: 2000px; padding: 2rem;
+        }
+        
+        /* Timeline Styles */
+        .timeline { position: relative; padding-left: 2.5rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+            width: 2px; background: linear-gradient(to bottom, var(--sapphire), rgba(37,99,235,0.1));
+        }
+        
+        .timeline-item { position: relative; margin-bottom: 2rem; padding-left: 1.5rem; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.1rem; top: 5px;
+            width: 14px; height: 14px; border-radius: 50%;
+            border: 2px solid var(--sapphire); background: #0f172a;
+            z-index: 1;
+        }
+        
+        .timeline-item.completed::before { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+        .timeline-item.completed::after {
+            content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; left: -2.05rem; top: 5px; font-size: 0.5rem; color: #000; z-index: 2;
+        }
+        
+        .timeline-item.upcoming::before { border-color: var(--orange); }
+        
+        .timeline-item .tl-header {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 0.5rem;
+        }
+        
+        .timeline-item .tl-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .timeline-item .tl-date {
+            font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.8rem; border-radius: 4px;
+        }
+        .timeline-item .tl-date.completed-date { color: var(--cyan); background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.3); }
+        .timeline-item .tl-date.upcoming-date { color: var(--orange); background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); }
+        
+        .timeline-item .tl-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+        /* =========================================
+           JADUAL
+           ========================================= */
+        .table-responsive {
+            width: 100%; overflow-x: auto;
+            border: 1px solid var(--border-color); border-radius: 4px;
+        }
+
+        table {
+            width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 1000px;
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.9); color: var(--platinum);
+            font-family: 'Montserrat', sans-serif; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 1rem; text-align: left; border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 1.2rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1; vertical-align: top;
+        }
+
+        tr { transition: 0.2s; }
+        tr:hover td { background: rgba(37, 99, 235, 0.1); color: #fff; }
+
+        .patent-number {
+            font-family: 'Orbitron', monospace; font-weight: 600; color: var(--cyan);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem; border-radius: 4px;
+            font-weight: 600; font-size: 0.75rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        
+        .status-approved { background: rgba(0, 230, 118, 0.1); color: var(--green); border: 1px solid var(--green); }
+        .status-process { background: rgba(245, 158, 11, 0.1); color: var(--orange); border: 1px solid var(--orange); }
+
+        .inventor-list { list-style: none; padding: 0; }
+        .inventor-list li { margin-bottom: 0.3rem; display: flex; gap: 0.5rem; font-size: 0.85rem; }
+        .inventor-list .num { color: var(--sapphire); font-weight: 600; }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center; padding: 2rem; border-top: 1px solid var(--border-color);
+            font-size: 0.8rem; color: var(--text-muted); background: rgba(15, 23, 42, 0.9);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media screen and (max-width: 900px) {
+            .main-container { padding: 1.5rem 1rem; gap: 1.5rem; }
+            .card { padding: 1.5rem; }
+            .trl-grid { grid-template-columns: 1fr; }
+            .trl-card.expanded { grid-column: span 1; }
+            .timeline-item .tl-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- EFEK GLOW PULSE (AURA) -->
+    <div id="cursor-aura"></div>
+
+    <!-- HEADER NAVIGASI (SMART HUD) -->
+    <header class="header-wrapper">
+        <div class="svg-wrapper">
+            <svg class="header-svg" viewBox="0 0 1200 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="gradSapphire" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#1e3a8a" />
+                        <stop offset="100%" stop-color="#2563eb" />
+                    </linearGradient>
+                    <linearGradient id="gradRuby" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#881337" />
+                        <stop offset="100%" stop-color="#e11d48" />
+                    </linearGradient>
+                </defs>
+
+                <a href="coe.html" class="nav-group">
+                    <polygon class="block-blue" points="0,0 190,0 150,35 70,35" />
+                    <text x="95" y="20" class="nav-text">COE</text>
+                </a>
+                
+                <a href="sop.html" class="nav-group">
+                    <polygon class="block-blue" points="130,0 335,0 285,50 195,50" />
+                    <text x="232.5" y="28" class="nav-text">SOP</text>
+                </a>
+                
+                <a href="mekanisasi.html" class="nav-group">
+                    <polygon class="block-blue" points="260,0 480,0 420,65 320,65" />
+                    <text x="370" y="36" class="nav-text">MEKANISASI</text>
+                </a>
+
+                <a href="index.html" class="nav-group">
+                    <polygon class="block-red" points="400,0 800,0 720,85 480,85" />
+                    <text x="600" y="32" class="nav-text-center">BAHAGIAN MEKANISASI &amp;</text>
+                    <text x="600" y="52" class="nav-text-center">PROJEK KHAS FPMSB</text>
+                </a>
+                
+                <a href="inovasi.html" class="nav-group">
+                    <polygon class="block-blue" points="720,0 940,0 880,65 780,65" />
+                    <text x="830" y="36" class="nav-text">INOVASI</text>
+                </a>
+                
+                <a href="paten.html" class="nav-group">
+                    <polygon class="block-blue" points="865,0 1070,0 1005,50 915,50" />
+                    <text x="967.5" y="28" class="nav-text">PATEN</text>
+                </a>
+                
+                <a href="budget.html" class="nav-group">
+                    <polygon class="block-blue" points="1010,0 1200,0 1130,35 1050,35" />
+                    <text x="1105" y="20" class="nav-text">BAJET</text>
+                </a>
+
+                <path class="neon-line" d="M 600,85 L 480,85 L 420,65 L 320,65 L 285,50 L 195,50 L 150,35 L 70,35 L 0,35" />
+                <path class="neon-line" d="M 600,85 L 720,85 L 780,65 L 880,65 L 915,50 L 1005,50 L 1050,35 L 1130,35 L 1200,35" />
+            </svg>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
+        
+        <section class="card">
+            <div class="card-title"><i class="fas fa-crown"></i> PRODUK PATEN</div>
+            
+            <!-- STATISTIK -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <i class="fas fa-file-invoice" style="color: var(--sapphire);"></i>
+                    <div class="stat-info">
+                        <span class="stat-value">4</span>
+                        <span class="stat-label">Jumlah Paten</span>
+                    </div>
+                </div>
+                <div class="stat-box" style="border-left-color: var(--green);">
+                    <i class="fas fa-check-circle" style="color: var(--green);"></i>
+                    <div class="stat-info">
+                        <span class="stat-value">3</span>
+                        <span class="stat-label">Filing Complete</span>
+                    </div>
+                </div>
+                <div class="stat-box" style="border-left-color: var(--orange);">
+                    <i class="fas fa-clock" style="color: var(--orange);"></i>
+                    <div class="stat-info">
+                        <span class="stat-value">1</span>
+                        <span class="stat-label">Dalam Proses</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== TRL SECTION ========== -->
+            <div class="trl-title">
+                <i class="fas fa-chart-line"></i> PELAN PENGURUSAN PATEN & KOMERSIAL
+                <span>(Technology Readiness Level - TRL)</span>
+            </div>
+            
+            <div class="trl-grid">
+                <div class="trl-card" onclick="toggleTRL(this)">
+                    <div class="trl-header">
+                        <span class="trl-badge">TRL 1-3</span>
+                        <span class="trl-level">Pembentukan Konsep</span>
+                    </div>
+                    <div class="trl-desc">Pembentukan konsep, kajian awal dan pembuktian prinsip asas.</div>
+                    <div class="trl-detail">
+                        <ul class="trl-detail-list">
+                            <li><i class="fas fa-book-open"></i> Kajian literatur dan analisis keperluan</li>
+                            <li><i class="fas fa-chalkboard-user"></i> Pembangunan model konsep dan simulasi awal</li>
+                            <li><i class="fas fa-flask"></i> Pembuktian prinsip asas (proof of concept)</li>
+                        </ul>
+                    </div>
+                    <i class="fas fa-chevron-down trl-expand-icon"></i>
+                </div>
+                
+                <div class="trl-card" onclick="toggleTRL(this)">
+                    <div class="trl-header">
+                        <span class="trl-badge">TRL 4-6</span>
+                        <span class="trl-level">Pembangunan Prototaip</span>
+                    </div>
+                    <div class="trl-desc">Fasa pembangunan prototaip dan pengujian dalam persekitaran relevan.</div>
+                    <div class="trl-detail">
+                        <ul class="trl-detail-list">
+                            <li><i class="fas fa-cogs"></i> Pembangunan prototaip awal (TRL 4)</li>
+                            <li><i class="fas fa-vial"></i> Pengujian dalam persekitaran makmal (TRL 5)</li>
+                            <li><i class="fas fa-truck"></i> Demonstrasi dalam persekitaran relevan (TRL 6)</li>
+                            <li><i class="fas fa-file-signature"></i> Kerjasama NDA dengan pihak luar</li>
+                        </ul>
+                    </div>
+                    <i class="fas fa-chevron-down trl-expand-icon"></i>
+                </div>
+                
+                <div class="trl-card" onclick="toggleTRL(this)">
+                    <div class="trl-header">
+                        <span class="trl-badge">TRL 7-9</span>
+                        <span class="trl-level">Paten & Komersial</span>
+                    </div>
+                    <div class="trl-desc">Paten, Pengkomersialan & Aplikasi Operasi sebenar.</div>
+                    <div class="trl-detail">
+                        <ul class="trl-detail-list">
+                            <li><i class="fas fa-file-invoice"></i> Permohonan paten dan perlindungan harta intelek</li>
+                            <li><i class="fas fa-chart-line"></i> Pengkomersialan produk (TRL 8)</li>
+                            <li><i class="fas fa-check-double"></i> Teknologi terbukti berfungsi dalam operasi (TRL 9)</li>
+                            <li><i class="fas fa-handshake"></i> Pelesenan dan kerjasama strategik</li>
+                        </ul>
+                    </div>
+                    <i class="fas fa-chevron-down trl-expand-icon"></i>
+                </div>
+            </div>
+
+            <!-- ========== COMMERCIALISATION TIMELINE (DEFAULT COLLAPSED) ========== -->
+            <div class="commercial-title">
+                <i class="fas fa-rocket"></i> PENGKOMERSIALAN PRODUK <span>(Timeline & Status)</span>
+            </div>
+            
+            <div class="commercial-header" onclick="toggleCommercial()">
+                <div class="commercial-header-left">
+                    <h4><i class="fas fa-crown" style="color: var(--sapphire);"></i> Jantan Spike</h4>
+                    <span class="product-tag">Wilayah Jengka</span>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">PA/99/0078</span>
+                </div>
+                <!-- Toggle icon tanpa kelas 'open' -->
+                <i class="fas fa-chevron-down commercial-toggle" id="commercialToggle"></i>
+            </div>
+            
+            <!-- Body tanpa kelas 'open' -->
+            <div class="commercial-body" id="commercialBody">
+                <div class="timeline">
+                    <!-- Item 1 - Selesai -->
+                    <div class="timeline-item completed">
+                        <div class="tl-header">
+                            <span class="tl-title">Mesyuarat Komersial Produk Jantan Spike</span>
+                            <span class="tl-date completed-date"><i class="fas fa-calendar-check"></i> 10/04/2026</span>
+                        </div>
+                        <div class="tl-desc">Mesyuarat komersial awal produk Jantan Spike bersama pasukan pembangunan</div>
+                    </div>
+                    
+                    <!-- Item 2 - Selesai -->
+                    <div class="timeline-item completed">
+                        <div class="tl-header">
+                            <span class="tl-title">Mesyuarat Komersial Bersama Pembekal</span>
+                            <span class="tl-date completed-date"><i class="fas fa-calendar-check"></i> 13/05/2026</span>
+                        </div>
+                        <div class="tl-desc">Perbincangan spesifikasi dan keperluan bersama pembekal</div>
+                    </div>
+                    
+                    <!-- Item 3 - Selesai -->
+                    <div class="timeline-item completed">
+                        <div class="tl-header">
+                            <span class="tl-title">Tandatangan Perjanjian Kerahsiaan (NDA)</span>
+                            <span class="tl-date completed-date"><i class="fas fa-calendar-check"></i> 08/06/2026</span>
+                        </div>
+                        <div class="tl-desc">Sesi tandatangan NDA bersama pembekal</div>
+                    </div>
+                    
+                    <!-- Item 4 - Akan datang -->
+                    <div class="timeline-item upcoming">
+                        <div class="tl-header">
+                            <span class="tl-title">Permohonan Kelulusan Komersial</span>
+                            <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> Julai - Ogos 2026</span>
+                        </div>
+                        <div class="tl-desc">Permohonan kelulusan komersial melalui saluran yang ditetapkan</div>
+                    </div>
+                    
+                    <!-- Item 5 - Akan datang -->
+                    <div class="timeline-item upcoming">
+                        <div class="tl-header">
+                            <span class="tl-title">Perolehan Bekalan Bahan Asas</span>
+                            <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> September - Oktober 2026</span>
+                        </div>
+                        <div class="tl-desc">Perolehan bahan asas untuk proses pembuatan</div>
+                    </div>
+                    
+                    <!-- Item 6 - Akan datang -->
+                    <div class="timeline-item upcoming">
+                        <div class="tl-header">
+                            <span class="tl-title">Proses Pembuatan</span>
+                            <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> Oktober - November 2026</span>
+                        </div>
+                        <div class="tl-desc">Proses pembuatan produk Jantan Spike secara komersial</div>
+                    </div>
+                    
+                    <!-- Item 7 - Akan datang -->
+                    <div class="timeline-item upcoming">
+                        <div class="tl-header">
+                            <span class="tl-title">Serahan Produk ke Wilayah</span>
+                            <span class="tl-date upcoming-date"><i class="fas fa-calendar-alt"></i> Selepas November 2026</span>
+                        </div>
+                        <div class="tl-desc">Serahan produk siap ke Wilayah untuk kegunaan operasi</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== JADUAL PATEN ========== -->
+            <div class="table-responsive" style="margin-top: 2.5rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bil</th>
+                            <th>Nama Produk</th>
+                            <th>Inventor</th>
+                            <th>No. Pendaftaran</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Lightweight Applicator Handheld Spreader (LAH Spreader) - Wilayah Raja Alias</strong></td>
+                            <td>
+                                <ul class="inventor-list">
+                                    <li><span class="num">1.</span> Mohd Shahrizal Bin Md Jali</li>
+                                    <li><span class="num">2.</span> Azwan Ariff Bin Azmi</li>
+                                    <li><span class="num">3.</span> Mohd Nazri Bin Hasim</li>
+                                </ul>
+                            </td>
+                            <td class="patent-number">PA/99/0077</td>
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><strong>Jantan Spike - Wilayah Jengka</strong></td>
+                            <td><em>Akan dikemaskini</em></td>
+                            <td class="patent-number">PA/99/0078</td>
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>Besout Digital Cencus - Wilayah Trolak</strong></td>
+                            <td><em>Akan dikemaskini</em></td>
+                            <td class="patent-number">PA/99/0079</td>
+                            <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Filing Complete</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><strong>SATO Chamber - Wilayah Trolak</strong></td>
+                            <td><em>Akan dikemaskini</em></td>
+                            <td class="patent-number"><em>Dalam proses</em></td>
+                            <td><span class="status-badge status-process"><i class="fas fa-clock"></i> Dalam Proses</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p style="text-align: right; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.8rem;">
+                <i class="fas fa-info-circle"></i> Kemaskini terakhir: 11 Mac 2026
+            </p>
+        </section>
+
+    </main>
+    
+    <footer>
+        <i class="fas fa-copyright"></i> Bahagian Mekanisasi & Projek Khas · #InovasiLestari
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Logik Kursor Aura (Glow Pulse)
+        const aura = document.getElementById('cursor-aura');
+        document.addEventListener('mousemove', (e) => {
+            aura.style.left = e.clientX + 'px';
+            aura.style.top = e.clientY + 'px';
+        });
+        document.addEventListener('mouseleave', () => { aura.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { aura.style.opacity = '1'; });
+
+        // Toggle TRL Cards
+        function toggleTRL(element) {
+            const allCards = document.querySelectorAll('.trl-card');
+            allCards.forEach(card => {
+                if (card !== element && card.classList.contains('expanded')) {
+                    card.classList.remove('expanded');
+                }
+            });
+            element.classList.toggle('expanded');
+            if (element.classList.contains('expanded')) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        // Toggle Commercial Accordion
+        function toggleCommercial() {
+            const body = document.getElementById('commercialBody');
+            const toggle = document.getElementById('commercialToggle');
+            body.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
