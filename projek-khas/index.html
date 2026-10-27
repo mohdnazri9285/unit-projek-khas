@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-    <!-- Chart.js 3 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     
     <style>
         /* ========== RESET & VARIABLES ========== */
@@ -59,7 +57,7 @@
         }
 
         /* Kursor Mentol (Merah Ruby) untuk hover */
-        a, button, .machine-card, .close-btn, .timeline-item, .nav-group {
+        a, button, .accordion-header {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path d="M18 2C11.5 2 6.5 7 6.5 13.5C6.5 17.5 9 20.5 11 23V27H25V23C27 20.5 29.5 17.5 29.5 13.5C29.5 7 24.5 2 18 2Z" fill="%23e11d48" stroke="%23cbd5e1" stroke-width="1.5"/><path d="M12 28H24V31C24 32.5 22.5 34 21 34H15C13.5 34 12 32.5 12 31V28Z" fill="%23cbd5e1" stroke="%23cbd5e1" stroke-width="1"/><path d="M18 9V17 M15 12L18 17 L21 12" stroke="%23ffffff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="18" cy="17" r="1.5" fill="%23ffffff"/></svg>') 18 18, pointer !important;
         }
 
@@ -174,14 +172,61 @@
         }
         .card-title i { color: #cbd5e1; font-size: 1.2rem; }
 
-        /* ========== TABLE RESPONSIVE (DIKEMASKINI) ========== */
+        /* =========================================
+           ACCORDION (EXPAND/COLLAPSE) STYLE
+           ========================================= */
+        .accordion {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .accordion-header {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .accordion-header:hover { background: rgba(37, 99, 235, 0.2); }
+        .accordion.active .accordion-header { border-bottom-color: rgba(255, 255, 255, 0.08); }
+
+        .accordion-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .accordion-icon {
+            color: #2563eb;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.active .accordion-icon { transform: rotate(180deg); }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .accordion.active .accordion-content { max-height: 2000px; }
+
+        /* ========== TABLE RESPONSIVE ========== */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 4px;
-            margin-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .mekanisasi-table {
@@ -490,158 +535,93 @@
         <section class="card">
             <div class="card-title"><i class="fas fa-tractor"></i> KEDUDUKAN MEKANISASI 2026</div>
             
-            <!-- DI SINI PEMBETULANNYA: Tambah class table-responsive -->
-            <div class="table-responsive">
-                <table class="mekanisasi-table">
-                    <thead>
-                        <tr>
-                            <th>Kategori</th>
-                            <th>Jenis Jentera</th>
-                            <th>Nama Jentera</th>
-                            <th>Bil (Unit)</th>
-                            <th>Ratio Guna (Hektar)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- MAIC -->
-                        <tr>
-                            <td rowspan="10" class="text-left">MAIC</td>
-                            <td rowspan="5">3-WHEELER</td>
-                            <td class="text-left">Badang</td>
-                            <td>310</td>
-                            <td><span class="ratio-badge">1 : 184.05</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Tough Far</td>
-                            <td>19</td>
-                            <td><span class="ratio-badge">1 : 157.32</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Gingga</td>
-                            <td>1</td>
-                            <td><span class="ratio-badge">1 : 240.50</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Electric Vehicle</td>
-                            <td>103</td>
-                            <td><span class="ratio-badge">1 : 253.31</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Ck Tank</td>
-                            <td>53</td>
-                            <td><span class="ratio-badge">1 : 246.60</span></td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Crawler</td>
-                            <td class="text-left">Land Surf</td>
-                            <td>3</td>
-                            <td><span class="ratio-badge">1 : 146.24</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Komodo</td>
-                            <td>134</td>
-                            <td><span class="ratio-badge">1 : 235.00</span></td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3">4-WHEELER</td>
-                            <td class="text-left">Lion</td>
-                            <td>6</td>
-                            <td><span class="ratio-badge">1 : 237.17</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Mini Traktor</td>
-                            <td>116</td>
-                            <td><span class="ratio-badge">1 : 198.42</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Mini Traktor Grabber</td>
-                            <td>8</td>
-                            <td><span class="ratio-badge">1 : 323.71</span></td>
-                        </tr>
-
-                        <!-- JUMLAH MAIC -->
-                        <tr class="total-row">
-                            <td colspan="3" class="text-right">JUMLAH MAIC</td>
-                            <td>753</td>
-                            <td><span class="ratio-badge" style="background:var(--sapphire); color:#fff; border:none;">1 : 210.36</span></td>
-                        </tr>
-
-                        <!-- PENUAIAN -->
-                        <tr>
-                            <td class="text-left">Penuaian</td>
-                            <td>Alat Tuai</td>
-                            <td class="text-left">Palm Cutter</td>
-                            <td>5</td>
-                            <td><span class="ratio-badge">1 : 0.00</span></td>
-                        </tr>
-
-                        <!-- PEMBAJAAN -->
-                        <tr>
-                            <td rowspan="2" class="text-left">Pembajaan</td>
-                            <td rowspan="2">Alat Membaja</td>
-                            <td class="text-left">Spreader</td>
-                            <td>17</td>
-                            <td><span class="ratio-badge">1 : 524.75</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Traktor Spreader</td>
-                            <td>2</td>
-                            <td><span class="ratio-badge">1 : 350.12</span></td>
-                        </tr>
-
-                        <!-- MERACUN -->
-                        <tr>
-                            <td rowspan="3" class="text-left">Meracun/Mencuci Merumput</td>
-                            <td rowspan="3">Alat Meracun/Potong Rumput</td>
-                            <td class="text-left">Pam CDA</td>
-                            <td>2</td>
-                            <td><span class="ratio-badge">1 : 157.00</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Grass Cutter</td>
-                            <td>1</td>
-                            <td><span class="ratio-badge">1 : 28.80</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Sprayer</td>
-                            <td>3</td>
-                            <td><span class="ratio-badge">1 : 205.50</span></td>
-                        </tr>
-
-                        <!-- EVAKUASI BTS -->
-                        <tr>
-                            <td class="text-left">Evakuasi BTS</td>
-                            <td>Bin Sistem</td>
-                            <td class="text-left">Lori</td>
-                            <td>17</td>
-                            <td><span class="ratio-badge">1 : 606.73</span></td>
-                        </tr>
-
-                        <!-- JALAN PERTANIAN -->
-                        <tr>
-                            <td class="text-left">Jalan Pertanian</td>
-                            <td>Buat/Baiki Jalan Pertanian</td>
-                            <td class="text-left">Mid-Mount Grader</td>
-                            <td>5</td>
-                            <td><span class="ratio-badge">1 : 205.16</span></td>
-                        </tr>
-
-                        <!-- JUMLAH JENTERA ALATAN -->
-                        <tr class="total-row">
-                            <td colspan="3" class="text-right">JUMLAH JENTERA/ALATAN</td>
-                            <td>52</td>
-                            <td><span class="ratio-badge" style="background:var(--sapphire); color:#fff; border:none;">1 : 421.55</span></td>
-                        </tr>
-
-                        <!-- JUMLAH KESELURUHAN -->
-                        <tr class="grand-total-row">
-                            <td colspan="3" class="text-right">JUMLAH KESELURUHAN</td>
-                            <td>805</td>
-                            <td><span class="ratio-badge" style="background:var(--ruby); color:#fff; border:none;">1 : 224.01</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- ACCORDION MAIC -->
+            <div class="accordion" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <div class="accordion-title"><i class="fas fa-truck-monster"></i> MAIC (Machinery)</div>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="table-responsive">
+                        <table class="mekanisasi-table">
+                            <thead>
+                                <tr>
+                                    <th>Kategori</th>
+                                    <th>Jenis Jentera</th>
+                                    <th>Nama Jentera</th>
+                                    <th>Bil (Unit)</th>
+                                    <th>Ratio Guna (Hektar)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td rowspan="5" class="text-left">3-WHEELER</td><td class="text-left">Badang</td><td>310</td><td><span class="ratio-badge">1 : 184.05</span></td></tr>
+                                <tr><td class="text-left">Tough Far</td><td>19</td><td><span class="ratio-badge">1 : 157.32</span></td></tr>
+                                <tr><td class="text-left">Gingga</td><td>1</td><td><span class="ratio-badge">1 : 240.50</span></td></tr>
+                                <tr><td class="text-left">Electric Vehicle</td><td>103</td><td><span class="ratio-badge">1 : 253.31</span></td></tr>
+                                <tr><td class="text-left">Ck Tank</td><td>53</td><td><span class="ratio-badge">1 : 246.60</span></td></tr>
+                                <tr><td rowspan="2">Crawler</td><td class="text-left">Land Surf</td><td>3</td><td><span class="ratio-badge">1 : 146.24</span></td></tr>
+                                <tr><td class="text-left">Komodo</td><td>134</td><td><span class="ratio-badge">1 : 235.00</span></td></tr>
+                                <tr><td rowspan="3">4-WHEELER</td><td class="text-left">Lion</td><td>6</td><td><span class="ratio-badge">1 : 237.17</span></td></tr>
+                                <tr><td class="text-left">Mini Traktor</td><td>116</td><td><span class="ratio-badge">1 : 198.42</span></td></tr>
+                                <tr><td class="text-left">Mini Traktor Grabber</td><td>8</td><td><span class="ratio-badge">1 : 323.71</span></td></tr>
+                                <tr class="total-row">
+                                    <td colspan="3" class="text-right">JUMLAH MAIC</td>
+                                    <td>753</td>
+                                    <td><span class="ratio-badge" style="background:var(--sapphire); color:#fff; border:none;">1 : 210.36</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+
+            <!-- ACCORDION ALATAN -->
+            <div class="accordion" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <div class="accordion-title"><i class="fas fa-tools"></i> ALATAN & JENTERA SOKONGAN</div>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="table-responsive">
+                        <table class="mekanisasi-table">
+                            <thead>
+                                <tr>
+                                    <th>Kategori</th>
+                                    <th>Jenis Alat</th>
+                                    <th>Nama Alat</th>
+                                    <th>Bil (Unit)</th>
+                                    <th>Ratio Guna (Hektar)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="text-left">Penuaian</td><td>Alat Tuai</td><td class="text-left">Palm Cutter</td><td>5</td><td><span class="ratio-badge">1 : 0.00</span></td></tr>
+                                <tr><td rowspan="2" class="text-left">Pembajaan</td><td rowspan="2">Alat Membaja</td><td class="text-left">Spreader</td><td>17</td><td><span class="ratio-badge">1 : 524.75</span></td></tr>
+                                <tr><td class="text-left">Traktor Spreader</td><td>2</td><td><span class="ratio-badge">1 : 350.12</span></td></tr>
+                                <tr><td rowspan="3" class="text-left">Meracun/Mencuci</td><td rowspan="3">Alat Meracun</td><td class="text-left">Pam CDA</td><td>2</td><td><span class="ratio-badge">1 : 157.00</span></td></tr>
+                                <tr><td class="text-left">Grass Cutter</td><td>1</td><td><span class="ratio-badge">1 : 28.80</span></td></tr>
+                                <tr><td class="text-left">Sprayer</td><td>3</td><td><span class="ratio-badge">1 : 205.50</span></td></tr>
+                                <tr><td class="text-left">Evakuasi BTS</td><td>Bin Sistem</td><td class="text-left">Lori</td><td>17</td><td><span class="ratio-badge">1 : 606.73</span></td></tr>
+                                <tr><td class="text-left">Jalan Pertanian</td><td>Buat/Baiki Jalan</td><td class="text-left">Mid-Mount Grader</td><td>5</td><td><span class="ratio-badge">1 : 205.16</span></td></tr>
+                                <tr class="total-row">
+                                    <td colspan="3" class="text-right">JUMLAH ALATAN</td>
+                                    <td>52</td>
+                                    <td><span class="ratio-badge" style="background:var(--sapphire); color:#fff; border:none;">1 : 421.55</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRAND TOTAL (SENTIASA TERBUKA) -->
+            <div class="grand-total-box">
+                <div class="grand-total-text">Jumlah Keseluruhan</div>
+                <div class="grand-total-values">
+                    <span><i class="fas fa-cogs" style="font-size:0.9rem; color:var(--ruby);"></i> 805 Unit</span>
+                    <span><i class="fas fa-chart-pie" style="font-size:0.9rem; color:var(--ruby);"></i> 1 : 224.01 Hektar</span>
+                </div>
+            </div>
+
         </section>
 
         <!-- BAHAGIAN 2: KATEGORI INOVASI -->
@@ -705,6 +685,23 @@
         });
         document.addEventListener('mouseleave', () => { aura.style.opacity = '0'; });
         document.addEventListener('mouseenter', () => { aura.style.opacity = '1'; });
+
+        // Fungsi Accordion
+        function toggleAccordion(element) {
+            const allAccordions = document.querySelectorAll('.accordion');
+            
+            // Jika accordion yang diklik sudah aktif, tutup ia.
+            if (element.classList.contains('active')) {
+                element.classList.remove('active');
+                return;
+            }
+
+            // Tutup semua accordion lain
+            allAccordions.forEach(acc => acc.classList.remove('active'));
+            
+            // Buka accordion yang diklik
+            element.classList.add('active');
+        }
 
         // Data Kategori Inovasi
         const inovasiData = [
@@ -821,6 +818,7 @@
 
         window.showKategoriPopup = showKategoriPopup;
         window.closeDetailPopup = closeDetailPopup;
+        window.toggleAccordion = toggleAccordion;
     </script>
 </body>
 </html>
